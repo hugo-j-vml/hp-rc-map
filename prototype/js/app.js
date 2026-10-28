@@ -268,7 +268,7 @@
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 21 : 8;
+      var r = g.items.length > 1 ? 21 : g.items[0].id === state.selected ? 22 : 8;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -283,8 +283,8 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM && !selected ? placeLabel(placedLabels, i, g.sx, g.sy, c.name) : null;
-      return '<button type="button" class="marker' + (g.faded ? " faded" : "") + (selected ? " selected" : "") + '" ' + style +
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, selected ? 26 : 14) : null;
+      return '<button type="button" class="marker' + (g.faded ? " faded" : "") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<span class="dot' + (c.story ? " story" : "") + (g.faded ? " faded" : "") + '"></span>' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
@@ -296,14 +296,15 @@
   // Puts a community's name in the first free spot around its dot: right, then left, above, below and the
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
-  function placeLabel(placed, owner, x, y, text) {
-    var w = textWidth(text), h = 16, gap = 10;
+  function placeLabel(placed, owner, x, y, text, gap) {
+    var w = textWidth(text), h = 16, corner = gap === 14 ? 4 : 12;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
-        : spot.indexOf("right") > 0 ? x + 4 + w / 2 : spot.indexOf("left") > 0 ? x - 4 - w / 2 : x;
+        : spot.indexOf("right") > 0 ? x + corner + w / 2 : spot.indexOf("left") > 0 ? x - corner - w / 2 : x;
       var cy = spot.indexOf("top") === 0 ? y - gap - h / 2 : spot.indexOf("bottom") === 0 ? y + gap + h / 2 : y;
-      var box = { x1: cx - w / 2 - 2, x2: cx + w / 2 + 2, y1: cy - h / 2, y2: cy + h / 2 };
+      // Sized for the bold highlighted state, so the name still fits when hovered or selected.
+      var box = { x1: cx - w / 2 - 6, x2: cx + w / 2 + 6, y1: cy - h / 2 - 1, y2: cy + h / 2 + 1 };
       var clash = placed.some(function (b) {
         return b.owner !== owner && box.x1 < b.x2 && box.x2 > b.x1 && box.y1 < b.y2 && box.y2 > b.y1;
       });
@@ -317,7 +318,7 @@
 
   var measureCtx = document.createElement("canvas").getContext("2d");
   function textWidth(text) {
-    measureCtx.font = "500 13px Inter, system-ui, sans-serif";
+    measureCtx.font = "600 13px Inter, system-ui, sans-serif";
     return measureCtx.measureText(text).width;
   }
 
@@ -390,6 +391,9 @@
     var dist = pts.length > 1 ? Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y) : 0;
     return { cx: cx, cy: cy, dist: dist };
   }
+
+  // Focusing an off-screen marker (e.g. by tabbing) would scroll the clipped map layer out of line with the outline.
+  el.map.addEventListener("scroll", function () { el.map.scrollTop = 0; el.map.scrollLeft = 0; });
 
   el.viewport.addEventListener("wheel", function (e) {
     e.preventDefault();

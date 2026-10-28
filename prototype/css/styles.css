@@ -338,22 +338,31 @@ a { color: inherit; }
   outline: 2px solid var(--grey-900); outline-offset: 5px;
 }
 .marker.selected { z-index: 3; }
+/* --gap is the space between the dot and its name; the selected dot is bigger, so its name sits further out. */
 .marker-label {
-  position: absolute; left: calc(50% + 10px); top: 50%; transform: translateY(-50%); line-height: 16px;
+  --gap: 14px; --corner: 4px;
+  position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 16px;
   font-size: 13px; font-weight: 500; color: var(--grey-700); white-space: nowrap;
   pointer-events: none;
   text-shadow: 0 0 3px var(--map-bg), 0 0 3px var(--map-bg), 0 0 3px var(--map-bg);
+  /* Padding is cancelled out by the negative margin so the text stays put when the highlight appears. */
+  padding: 2px 6px; margin: -2px -6px; border-radius: var(--radius);
 }
-.marker-label.at-left { left: auto; right: calc(50% + 10px); }
-.marker-label.at-top { left: 50%; top: auto; bottom: calc(50% + 10px); transform: translateX(-50%); }
-.marker-label.at-bottom { left: 50%; top: calc(50% + 10px); transform: translateX(-50%); }
-.marker-label.at-top-right { left: calc(50% + 4px); top: auto; bottom: calc(50% + 10px); transform: none; }
-.marker-label.at-top-left { left: auto; right: calc(50% + 4px); top: auto; bottom: calc(50% + 10px); transform: none; }
-.marker-label.at-bottom-right { left: calc(50% + 4px); top: calc(50% + 10px); transform: none; }
-.marker-label.at-bottom-left { left: auto; right: calc(50% + 4px); top: calc(50% + 10px); transform: none; }
+.marker.selected .marker-label { --gap: 26px; --corner: 12px; }
+.marker-label.at-left { left: auto; right: calc(50% + var(--gap)); }
+.marker-label.at-top { left: 50%; top: auto; bottom: calc(50% + var(--gap)); transform: translateX(-50%); }
+.marker-label.at-bottom { left: 50%; top: calc(50% + var(--gap)); transform: translateX(-50%); }
+.marker-label.at-top-right { left: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-top-left { left: auto; right: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-bottom-right { left: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-bottom-left { left: auto; right: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
 .marker.faded .marker-label { color: var(--grey-500); }
-.marker:hover .tooltip, .marker:focus-visible .tooltip, .marker.selected .tooltip { display: block; }
-.marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label { display: none; }
+/* Hover, focus and selection highlight the name where it already sits. Dots without a visible name get the tooltip. */
+.marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label {
+  background: var(--grey-900); color: var(--white); font-weight: 600; text-shadow: none;
+}
+.marker:hover, .marker:focus-visible { z-index: 5; }
+.marker:not(.has-label):hover .tooltip, .marker:not(.has-label):focus-visible .tooltip, .marker.selected:not(.has-label) .tooltip { display: block; }
 .tooltip {
   display: none; position: absolute; bottom: calc(50% + 14px); left: 50%; transform: translateX(-50%);
   background: var(--grey-900); color: var(--white); border-radius: var(--radius);
