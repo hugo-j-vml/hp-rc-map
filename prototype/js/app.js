@@ -517,9 +517,7 @@
   // Option: the stat tiles as progress through the four milestones of each community's transition.
   function renderProgress() {
     var total = communities.length;
-    var invest = C.stats[0];
     return '<section class="progress" aria-labelledby="progress-h">' +
-      '<p class="progress-invest"><strong>' + esc(invest.value) + "</strong> " + esc(invest.label) + "</p>" +
       '<div class="progress-head"><h2 id="progress-h">Community transition progress</h2><span>Communities</span></div>' +
       '<ol class="milestones">' + C.milestones.map(function (m) {
         var n = m.count === "{count}" ? total : m.count;
