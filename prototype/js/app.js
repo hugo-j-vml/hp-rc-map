@@ -671,6 +671,9 @@
       case "share":
         share();
         break;
+      case "soon":
+        toast("This page is not part of the prototype");
+        break;
       case "stories":
         if (state.view !== "home") goHome();
         state.expanded = true;
@@ -710,10 +713,7 @@
     if (e.key === "Escape" && state.view !== "home") goHome();
   });
 
-  document.querySelector('.site-nav a[href="#about"]').addEventListener("click", function (e) {
-    e.preventDefault();
-    toast("The About page is not part of this prototype yet");
-  });
+
 
   window.addEventListener("hashchange", routeFromHash);
   function routeFromHash() {
