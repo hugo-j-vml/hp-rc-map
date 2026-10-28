@@ -58,6 +58,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
   - Zoomed-in artefacts on the simplified coastline are accepted for the prototype.
 - **Labels.** Each name takes the first free spot around its dot: right, left, top, bottom, then the corners. Other dots and names count as obstacles.
   - Hover, focus and selection highlight the name **in place**. The floating tooltip only shows for dots without a visible name.
+  - Names are part of their dot's button, so clicking or tapping a name selects the community just like its dot. A drag that starts on a name still pans the map.
   - Names are nudged 2px down to sit optically centred.
 - **Selected marker:** 26px overall (dark centre, white gap, thin ring). Its name sits 25px out.
 - **Header:** a greyscale wireframe of the live HP Remote Communities site header (logo; Contact us, Login, Search; Program purpose, Community progress, Latest news, Community members). Header Search focuses the map search; the other links show a "not part of the prototype" notice.

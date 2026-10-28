@@ -372,7 +372,7 @@ a { color: inherit; }
   --gap: 14px; --corner: 4px;
   position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 16px;
   font-size: 13px; font-weight: 500; color: var(--grey-700); white-space: nowrap;
-  pointer-events: none;
+  pointer-events: auto; cursor: pointer; /* clicking the name selects the community, like its dot */
   text-shadow: 0 0 3px var(--map-bg), 0 0 3px var(--map-bg), 0 0 3px var(--map-bg);
   /* Padding is cancelled out by the negative margin so the text stays put when the highlight appears. */
   padding: 2px 6px; margin: -2px -6px; border-radius: var(--radius);
