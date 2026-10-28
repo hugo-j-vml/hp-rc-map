@@ -31,9 +31,11 @@ It is built only from two inputs:
 
 Press **Shift + O** to open the options panel in the bottom-right corner. It holds layout experiments that can be switched on and off.
 
-- **Floating story cards:** featured stories sit in the empty space around WA (the sea, and NT/SA), as close to their community as they fit (keeping 24px clear of the coast, border and map edges), with a thin line to the dot. They are placed once against the opening view and stay put on screen while the map moves; only their lines follow the dots. They show on the opening view and the first two zoom steps, then fade out. Clicking a card opens that community. On narrower screens WA shifts left to make room. A card that would sit more than about 280px from its community is left out. Desktop only.
+- **Floating story cards:** featured stories sit in the empty space around WA (the sea, and NT/SA), as close to their community as they fit (keeping 24px clear of the coast, border and map edges), with a thin line to the dot. They are placed once against the opening view and stay put on screen while the map moves; only their lines follow the dots. They show on the opening view and the first zoom step, and are gone by the second. Clicking a card opens that community. On narrower screens WA shifts left to make room. A card that would sit more than about 280px from its community is left out. Desktop only.
 
-Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1`), which overrides the remembered settings, so you can send someone a specific layout.
+- **Pin story cards to the map** (needs floating story cards on): the same cards, but fixed to map positions in the empty space. They grow and shrink with the zoom like the map itself, so they never cover land or communities and never fade out. Dragging or scrolling over a card still moves the map.
+
+Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1&pinned=1`), which overrides the remembered settings, so you can send someone a specific layout.
 
 ### What is placeholder
 

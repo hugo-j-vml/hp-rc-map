@@ -835,6 +835,8 @@
   // URL parameters (e.g. ?cards=1) override them so a particular set-up can be shared as a link.
   var OPTIONS = [
     { id: "cards", label: "Floating story cards", description: "Featured stories in the empty space around WA, on the opening zoom levels.", initial: false },
+    { id: "pinned", label: "Pin story cards to the map", requires: "cards",
+      description: "Cards sit at fixed map positions in the empty space and grow and shrink with the zoom, instead of staying put on screen.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
@@ -862,8 +864,10 @@
       '<div class="options-head"><h2 id="options-title">Prototype options</h2>' +
       '<button type="button" data-options="close" aria-label="Close options">' + icon("close") + "</button></div>" +
       '<ul class="options-list">' + OPTIONS.map(function (o) {
-        return '<li><label class="option-row"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
-          '<input type="checkbox" role="switch" data-option="' + o.id + '"' + (options[o.id] ? " checked" : "") + '><span class="switch" aria-hidden="true"></span></label></li>';
+        // An option that builds on another (e.g. pinning needs the cards) is greyed out until that one is on.
+        var off = o.requires && !options[o.requires];
+        return '<li><label class="option-row' + (o.requires ? " sub" : "") + (off ? " disabled" : "") + '"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
+          '<input type="checkbox" role="switch" data-option="' + o.id + '"' + (options[o.id] ? " checked" : "") + (off ? " disabled" : "") + '><span class="switch" aria-hidden="true"></span></label></li>';
       }).join("") + "</ul>" +
       '<div class="options-foot"><button type="button" data-options="copy">Copy link with these options</button><small>Shift + O to show or hide</small></div>';
   }
@@ -879,6 +883,9 @@
     options[id] = e.target.checked;
     saveOptions();
     applyOptions();
+    renderOptions();
+    var again = el.options.querySelector('[data-option="' + id + '"]');
+    if (again) again.focus();
   });
   el.options.addEventListener("click", function (e) {
     var t = e.target.closest("[data-options]");
@@ -900,13 +907,14 @@
   // Featured stories sit in the empty space around WA (sea, and NT/SA), as close to their community as they fit,
   // with a leader line to the dot. They are placed once, against the opening view, and stay put on screen;
   // only the leader lines follow the dots. They fade out once you zoom in past the first couple of steps.
-  var CARD_W = 248, CARD_H = 80, CARD_MAX_ZOOM = 2.7;
+  var CARD_W = 248, CARD_H = 80;
+  var CARD_MAX_ZOOM = 2.2; // gone by the second zoom step (each step is x1.6)
   var CARD_LAND_CLEAR = 24;  // breathing room between a card and the coast or border
   var CARD_EDGE = 24;        // and between a card and the edge of the map area
   var CARD_GAP = 12;         // between cards, and around the key and zoom buttons
   var CARD_MAX_REACH = 280;  // a card further than this from its community is left out rather than drawn across the state
   var cardLayer = document.getElementById("story-cards");
-  var cardLayout = null;     // { communityId: { x, y } } card positions in the map area, in screen pixels
+  var cardLayout = null;     // { communityId: { x, y, ux, uy } } card positions on the opening view (screen px) and on the map (outline units)
   var cardEls = null;
   var homeView = null;       // the opening, whole-of-WA view the cards are laid out against
 
@@ -923,7 +931,7 @@
 
   cardLayer.addEventListener("click", function (e) {
     var t = e.target.closest("[data-open]");
-    if (t) openProfile(t.dataset.open);
+    if (t && !moved) openProfile(t.dataset.open);
   });
 
   function renderStoryCards() {
@@ -935,7 +943,9 @@
     }
     if (!cardEls) buildStoryCards();
     if (!cardLayout) cardLayout = layoutStoryCards();
-    cardLayer.classList.toggle("is-hidden", zoomLevel() >= CARD_MAX_ZOOM);
+    // Pinned cards live in the empty space on the map itself, so they never need to get out of the way.
+    cardLayer.classList.toggle("is-hidden", !options.pinned && zoomLevel() >= CARD_MAX_ZOOM);
+    cardLayer.classList.toggle("pinned", !!options.pinned);
     positionStoryCards();
   }
 
@@ -945,13 +955,20 @@
     C.stories.forEach(function (s) {
       var c = byId[s.community], card = cardEls[c.id], pos = cardLayout[c.id];
       if (!pos) { card.hidden = true; return; }
+      // Fixed cards keep their opening-view spot on screen; pinned cards follow their map position and scale with the zoom.
+      var x = pos.x, y = pos.y, scale = 1;
+      if (options.pinned) {
+        var at = toScreen(pos.ux, pos.uy);
+        x = at.x; y = at.y; scale = view.k / homeView.k;
+      }
       card.hidden = false;
-      card.style.left = pos.x + "px";
-      card.style.top = pos.y + "px";
+      card.style.left = x + "px";
+      card.style.top = y + "px";
+      card.style.transform = scale === 1 ? "" : "scale(" + scale + ")";
       card.classList.toggle("faded", filtering && !matches(c));
       // Leader line from the dot (wherever the map has moved it) to the nearest point on the card's edge.
-      var dot = toScreen(c.x, c.y);
-      var nx = Math.max(pos.x, Math.min(dot.x, pos.x + CARD_W)), ny = Math.max(pos.y, Math.min(dot.y, pos.y + CARD_H));
+      var dot = toScreen(c.x, c.y), cw = CARD_W * scale, ch = CARD_H * scale;
+      var nx = Math.max(x, Math.min(dot.x, x + cw)), ny = Math.max(y, Math.min(dot.y, y + ch));
       lines += '<line x1="' + dot.x + '" y1="' + dot.y + '" x2="' + nx + '" y2="' + ny + '"/>';
     });
     cardLayer.querySelector(".story-lines").innerHTML = lines;
@@ -1010,7 +1027,7 @@
       for (var i = 0; i < candidates.length; i++) {
         var cand = candidates[i];
         if (fits(cand.x, cand.y)) {
-          layout[c.id] = { x: cand.x, y: cand.y };
+          layout[c.id] = { x: cand.x, y: cand.y, ux: (cand.x - v.x) / v.k, uy: (cand.y - v.y) / v.k };
           blocked.push({ x1: cand.x - CARD_GAP, y1: cand.y - CARD_GAP, x2: cand.x + CARD_W + CARD_GAP, y2: cand.y + CARD_H + CARD_GAP });
           break;
         }

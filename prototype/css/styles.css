@@ -483,6 +483,7 @@ a { color: inherit; }
   pointer-events: auto;
 }
 .story-float[hidden] { display: none; }
+.story-cards.pinned .story-float { transform-origin: 0 0; }
 .story-float:hover { border-color: var(--grey-900); }
 .story-float.faded { opacity: .5; }
 .story-float .placeholder { width: 64px; height: 64px; padding: 0; font-size: 12px; }
@@ -513,6 +514,8 @@ a { color: inherit; }
 .option-text strong { display: block; font-weight: 600; }
 .option-text small { display: block; font-size: 12px; color: #b5b5b5; margin-top: 2px; }
 .option-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.option-row.sub { padding-left: 16px; }
+.option-row.disabled { opacity: .4; cursor: default; }
 .switch {
   position: relative; flex-shrink: 0; width: 40px; height: 24px;
   border: 2px solid var(--white); border-radius: 12px; transition: background .15s ease;
