@@ -520,23 +520,24 @@
     var invest = C.stats[0];
     return '<section class="progress" aria-labelledby="progress-h">' +
       '<p class="progress-invest"><strong>' + esc(invest.value) + "</strong> " + esc(invest.label) + "</p>" +
-      '<h2 id="progress-h">Community transition progress</h2>' +
+      '<div class="progress-head"><h2 id="progress-h">Community transition progress</h2><span>Communities</span></div>' +
       '<ol class="milestones">' + C.milestones.map(function (m) {
         var n = m.count === "{count}" ? total : m.count;
         var shown = m.placeholder ? "[" + n + "]" : String(n);
         var done = n >= total;
-        return '<li class="milestone' + (done ? " done" : "") + '">' +
+        var label = m.title + ": " + n + " of " + total + " communities" + (done && m.note ? ". " + m.note : "");
+        return '<li class="milestone' + (done ? " done" : "") + '" title="' + esc(done && m.note ? m.note : "") + '">' +
           icon(m.icon) +
           '<div class="milestone-body"><div class="milestone-head"><span class="step">' + esc(m.step) + "</span>" +
-          '<span class="title">' + esc(m.title) + "</span></div>" +
-          '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + n + '" aria-label="' + esc(m.title) + '">' +
-          '<span style="width:' + (n / total * 100).toFixed(1) + '%"></span></div>' +
-          '<p class="milestone-meta"><span>' + (done ? icon("check") + esc(m.note || "Complete") : "In progress") + "</span>" +
-          "<span><strong>" + esc(shown) + "</strong> of " + total + " communities</span></p></div></li>";
+          '<span class="title">' + esc(m.title) + "</span>" +
+          '<span class="count">' + (done ? icon("check") : "") + "<span><strong>" + esc(shown) + "</strong>/" + total + "</span></span></div>" +
+          '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + n + '" aria-label="' + esc(label) + '">' +
+          '<span style="width:' + (n / total * 100).toFixed(1) + '%"></span></div></div></li>';
       }).join("") + "</ol>" +
-      '<p class="note">Stages 2 to 4 use illustrative numbers until Horizon Power supplies the real ones.</p>' +
+      '<p class="note">Stage 1 is complete: all communities visited in person. Stages 2 to 4 use illustrative numbers.</p>' +
       "</section>";
   }
+
 
   // ---------- Panel: filters ----------
   function tile(group, item, opts) {

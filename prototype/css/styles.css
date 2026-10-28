@@ -457,8 +457,7 @@ a { color: inherit; }
   .home .intro { display: none; }
   .stats { order: 3; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -20px; padding: 0 20px; }
   .progress { order: 3; }
-  .milestone { grid-template-columns: 32px 1fr; gap: 12px; padding: 12px; }
-  .milestone > .icon { width: 32px; height: 32px; }
+
   .stat { flex: 0 0 165px; scroll-snap-align: start; padding: 20px; }
   .search { order: 2; }
   .results { order: 2; }
@@ -540,24 +539,20 @@ a { color: inherit; }
 .options-foot small { font-size: 12px; color: #8a8a8a; text-align: right; }
 
 /* ---------- Option: progress bars instead of stat tiles ---------- */
-.progress { display: flex; flex-direction: column; gap: 12px; }
+.progress { display: flex; flex-direction: column; gap: 10px; }
 .progress-invest { font-size: 16px; color: var(--grey-700); }
 .progress-invest strong { font-size: 28px; font-weight: 600; color: var(--grey-900); margin-right: 4px; }
-.progress h2 { font-size: 18px; font-weight: 600; margin-top: 4px; }
-.milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.milestone {
-  display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start;
-  padding: 16px; background: var(--grey-100); border-radius: var(--radius);
-}
-.milestone > .icon { width: 40px; height: 40px; }
-.milestone-head { display: flex; gap: 8px; align-items: baseline; }
-.milestone-head .step { font-size: 14px; font-weight: 600; color: var(--grey-700); }
-.milestone-head .title { font-size: 16px; font-weight: 600; line-height: 22px; }
-.bar { height: 8px; margin: 10px 0 8px; background: var(--grey-300); border-radius: 4px; overflow: hidden; }
-.bar span { display: block; height: 100%; background: var(--grey-900); border-radius: 4px; }
-.milestone-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--grey-700); }
-.milestone-meta span:first-child { display: inline-flex; align-items: center; gap: 4px; }
-.milestone-meta .icon { width: 18px; height: 18px; }
-.milestone-meta span:last-child { white-space: nowrap; }
-.milestone-meta strong { color: var(--grey-900); font-weight: 600; }
-.milestone.done .milestone-meta span:first-child { color: var(--grey-900); font-weight: 600; }
+.progress-head { display: flex; justify-content: space-between; align-items: baseline; margin-top: 2px; }
+.progress-head h2 { font-size: 16px; font-weight: 600; }
+.progress-head span { font-size: 12px; color: var(--grey-700); }
+.milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.milestone { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: center; }
+.milestone > .icon { width: 28px; height: 28px; }
+.milestone-head { display: flex; gap: 6px; align-items: baseline; }
+.milestone-head .step { font-size: 13px; font-weight: 600; color: var(--grey-700); }
+.milestone-head .title { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; line-height: 18px; }
+.milestone-head .count { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; color: var(--grey-700); white-space: nowrap; }
+.milestone-head .count strong { color: var(--grey-900); font-weight: 600; }
+.milestone-head .count .icon { width: 16px; height: 16px; }
+.bar { height: 6px; margin-top: 6px; background: var(--grey-200); border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--grey-900); border-radius: 3px; }
