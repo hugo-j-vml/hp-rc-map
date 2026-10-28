@@ -23,13 +23,16 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 | File | What it holds |
 |---|---|
-| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite (HP RC icons from Figma) |
+| `index.html` (repo root) | Forwards to `prototype/`, so GitHub Pages serves the prototype from the repo root |
+| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, the four milestone icons from HP's Community progress page, and a filter icon drawn to match (the kit has none) |
 | `prototype/css/styles.css` | All styles. Tokens at the top. Mobile rules under `@media (max-width: 900px)` |
 | `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel, floating story cards |
 | `prototype/js/content.js` | Stats, regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
 | `prototype/js/outline.js` | The WA outline (exported from Figma), the four service-area shapes and label spots, and `projectWA(lat, lng)` |
 | `prototype/js/data.js` | **Generated.** The 117 communities. Don't hand-edit; run `tools/build_data.py` |
+| `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
 | `tools/build_data.py` | Spreadsheet → `data.js`. Writes public fields only |
+| `.gitignore` | Keeps font files and any stray `shots/` screenshots out of the repo |
 
 ## Inputs and where they live
 
@@ -48,8 +51,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 - **Regions.** Use HP's four service areas: Kimberley, Pilbara, Gascoyne/Mid West, Esperance/Goldfields. The South West Interconnected System area stays blank.
   - Each community's region comes from HP's **district code** (spreadsheet column K: WKIM/EKIM → Kimberley, WPIL/EPIL → Pilbara, GS-NOMW/COMW → Gascoyne/Mid West, CEMW → Esperance/Goldfields), not from where it sits on the drawing. Counts: 78 / 17 / 8 / 14.
-  - **Open question for the client:** the poster's boundaries agree with the district codes for 105 of the 117 communities. The 11 Ngaanyatjarra (NG) lands communities sit in the poster's Gascoyne/Mid West band but are coded Esperance/Goldfields (serviced from Esperance). Kurrawang sits in the blank SWIS notch near Kalgoorlie.
-  - The "Goldfields takes in the NG lands" option shows the alternative drawing. The client is to decide.
+  - The poster's boundaries agree with the district codes for 105 of the 117 communities. The 11 Ngaanyatjarra (NG) lands communities sit in the poster's Gascoyne/Mid West band but are coded Esperance/Goldfields (serviced from Esperance), and Kurrawang sits in the blank SWIS notch near Kalgoorlie. The "Goldfields takes in the NG lands" option shows the alternative drawing (see open questions).
 - **Names.** "Blackstone" is shown as **Papulankutja** (also known as Blackstone), per the brief and Figma. Parenthetical and contract-name variants become "also known as" names and are searchable.
 - **Map.** Plain SVG with an equirectangular projection calibrated to the Figma outline (see `outline.js`). There is no basemap or tile service.
   - Max zoom is 80× the state view, so the closest pair (Embulgun/Munget, about 700 m apart) separate. At full zoom there is no clustering.
@@ -58,16 +60,28 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
   - Hover, focus and selection highlight the name **in place**. The floating tooltip only shows for dots without a visible name.
   - Names are nudged 2px down to sit optically centred.
 - **Selected marker:** 26px overall (dark centre, white gap, thin ring). Its name sits 25px out.
+- **Header:** a greyscale wireframe of the live HP Remote Communities site header (logo; Contact us, Login, Search; Program purpose, Community progress, Latest news, Community members). Header Search focuses the map search; the other links show a "not part of the prototype" notice.
 - **Sidebar:** 560px for every view on desktop, so it never jumps width.
+- **Search row:** search box and Filters button split the panel 50/50. The search button is a 48px square flush in the field. The search box uses the Filters button's type (16px semibold, grey 900) and border (2px grey 900, 4px corners). The placeholder is just "Search", because "Search communities" doesn't fit the half-width field in semibold; the field is still labelled "Search communities" for screen readers. Filters has a sliders icon and shows a count of active filters.
 - **Key:** shows on load, then collapses to a "Key" pill on first map interaction. On mobile it starts as the pill.
 - **Mobile map controls:** the key pill and zoom buttons sit bottom right, just above the bottom sheet, and move up with the sheet when a profile opens (the sheet heights, 40% and 71%, are shared between `styles.css` and `visibleArea()` in `app.js`).
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
 - **Placeholder data:** population, languages, Traditional Owners, service providers (RSPs) and works are placeholders for the life of this prototype. Program, type of work and status filters run on the sample works in `content.js` (from the Figma profiles).
 
+## Open questions for the client
+
+- **NG lands region:** should the 11 Ngaanyatjarra lands communities be drawn in Esperance/Goldfields (their HP district) or Gascoyne/Mid West (the poster)? Compare with the "Goldfields takes in the NG lands" option.
+- **Transition milestones:** real counts for stages 2 to 4 (safety inspections and upgrades; future energy system planning and endorsement; delivery). The prototype uses illustrative [86], [41] and [12].
+- **Community details:** population, languages, Traditional Owners, and RSP contacts per community.
+- **Works data:** activities by community, program, type and status, to replace the sample works.
+- **Story content:** final stories for the five flagships, including whether Four Mile or Embulgun is the fifth.
+- **Filter icon:** the HP RC icon set has no filter icon; ask the designer for an official one.
+- **Which layout options to keep:** floating vs pinned story cards, and progress bars vs tiles.
+
 ## Prototype options panel (Shift + O)
 
-Layout experiments the user can switch on and off to compare. They are stored in `localStorage` (`rcm-prototype-options`) and can be overridden by URL parameters (`?cards=1&pinned=1&ngLands=1`).
+Layout experiments the user can switch on and off to compare. They are stored in `localStorage` (`rcm-prototype-options`) and can be overridden by URL parameters (`?cards=1&pinned=1&ngLands=1&progress=1`).
 
 To add an option:
 1. Add an entry to the `OPTIONS` array in `app.js`: `{ id, label, description, initial, requires? }`. `requires` greys it out until another option is on.
@@ -82,6 +96,7 @@ Current options: `cards` (floating story cards), `pinned` (cards fixed to map co
 - **Figma image downloads (`www.figma.com/api/mcp/asset/…`) are blocked** by the network policy. To get SVGs, export them through the Figma MCP `use_figma` tool (`node.exportAsync({ format: 'SVG_STRING' })`). That's how the icons and the WA outline were obtained.
 - `*.horizonpower.com.au` is allowed. `*.github.io` is not, so you can't check the live site from a session.
 - Deleting remote branches was blocked by the session permissions. That's fine: we only use `main`.
+- **Testing in Beausite:** the user can upload the `.otf` files. Convert them in the scratchpad (`pip install fonttools brotli`, then `TTFont(path)`, `flavor = 'woff2'`, `save(...)`), copy them into `prototype/fonts/` to test, and check `git status` shows nothing new. Don't commit them.
 
 ## Updating community data
 

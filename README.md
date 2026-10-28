@@ -26,20 +26,19 @@ It is built only from three inputs:
   - A simpler profile for everyone else (Figma D04).
   - Every profile lists the nearest communities, worked out from the real coordinates.
 - Deep links (`index.html#community=kiwirrkurra`) and Share (copies the link).
-- Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet.
+- Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet, with the key and zoom buttons bottom right just above it.
+- A greyscale wireframe of the live Horizon Power Remote Communities site header.
 
 ### Prototype options (Shift + O)
 
 Press **Shift + O** to open the options panel in the bottom-right corner. It holds layout experiments that can be switched on and off.
 
 - **Floating story cards:** featured stories sit in the empty space around WA (the sea, and NT/SA), as close to their community as they fit (keeping 24px clear of the coast, border and map edges), with a thin line to the dot. They are placed once against the opening view and stay put on screen while the map moves; only their lines follow the dots. They show on the opening view and the first zoom step, and are gone by the second. Clicking a card opens that community. On narrower screens WA shifts left to make room. A card that would sit more than about 280px from its community is left out. Desktop only.
-
-- **Goldfields takes in the NG lands:** the poster puts the 11 Ngaanyatjarra lands communities (Papulankutja, Warburton, Warakurna and others) inside the Gascoyne/Mid West band, but Horizon Power's district codes put them in Esperance/Goldfields. Either way they are counted in Esperance/Goldfields; this toggle only changes the drawing, redrawing Esperance/Goldfields north along the border so the shading matches.
 - **Pin story cards to the map** (needs floating story cards on): the same cards, but fixed to map positions in the empty space. They grow and shrink with the zoom like the map itself, so they never cover land or communities and never fade out. Dragging or scrolling over a card still moves the map.
-
+- **Goldfields takes in the NG lands:** the poster puts the 11 Ngaanyatjarra lands communities (Papulankutja, Warburton, Warakurna and others) inside the Gascoyne/Mid West band, but Horizon Power's district codes put them in Esperance/Goldfields. Either way they are counted in Esperance/Goldfields; this toggle only changes the drawing, redrawing Esperance/Goldfields north along the border so the shading matches.
 - **Progress bars instead of tiles:** swaps the four stat tiles for a compact "Community transition progress" list: the four milestones from HP's Community progress page (with its icons), each with a slim bar and a count out of 117, taking about the same height as the tiles. Stage 1 (build strong community connections) is complete, as HP has visited all 117 communities. Stages 2 to 4 use illustrative numbers in [brackets]. The $65.8M investment figure stays as a single line above.
 
-Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1&pinned=1`), which overrides the remembered settings, so you can send someone a specific layout.
+Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1&pinned=1&ngLands=0&progress=1`), which overrides the remembered settings, so you can send someone a specific layout.
 
 ### Fonts
 
@@ -59,12 +58,13 @@ The program, type of work and status filters run on the handful of sample works 
 
 | File | What it is |
 |---|---|
-| `prototype/index.html` | Page shell and the HP RC icon set (as an inline SVG sprite) |
+| `prototype/index.html` | Page shell, wireframe of the HP site header, and the icon set (as an inline SVG sprite) |
 | `prototype/css/styles.css` | All styles. Tokens at the top match the v2 wireframe kit |
-| `prototype/js/app.js` | Map, clustering, zoom and pan, panels, search, filters, routing |
-| `prototype/js/outline.js` | WA outline exported from Figma, and the latitude/longitude projection onto it |
+| `prototype/js/app.js` | Map, clustering, zoom and pan, panels, search, filters, routing, options panel |
+| `prototype/js/outline.js` | WA outline exported from Figma, the four service-area shapes, and the latitude/longitude projection onto it |
 | `prototype/js/data.js` | The 117 communities, generated from the spreadsheet |
-| `prototype/js/content.js` | Stats, programs, work types, stories and sample works from the brief and Figma |
+| `prototype/js/content.js` | Stats, milestones, regions, programs, work types, stories and sample works from the brief, Figma and HP's site |
+| `prototype/fonts/` | Beausite Classic font files, on your own machine only (not committed) |
 | `tools/build_data.py` | Rebuilds `data.js` from the spreadsheet |
 
 ### Updating the community data
