@@ -1040,7 +1040,10 @@
     }
 
     var layout = {};
-    C.stories.forEach(function (s) {
+    // Place cards for the northernmost communities first, so stacked cards run in the same order as their
+    // dots and the leader lines don't cross (e.g. Four Mile sits just north of Cockatoo Springs).
+    var northFirst = C.stories.slice().sort(function (a, b) { return byId[b.community].lat - byId[a.community].lat; });
+    northFirst.forEach(function (s) {
       var c = byId[s.community], dot = home(c);
       var candidates = [];
       for (var y = CARD_EDGE; y + CARD_H <= h - CARD_EDGE; y += 8) {
