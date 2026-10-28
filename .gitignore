@@ -1,0 +1,6 @@
+# Licensed Beausite font files: kept on your own machine only, never committed (see prototype/fonts/README.md).
+prototype/fonts/*
+!prototype/fonts/README.md
+
+# Test screenshots belong in the session scratchpad, not the repo.
+shots/

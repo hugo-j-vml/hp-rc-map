@@ -41,6 +41,10 @@ Press **Shift + O** to open the options panel in the bottom-right corner. It hol
 
 Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1&pinned=1`), which overrides the remembered settings, so you can send someone a specific layout.
 
+### Fonts
+
+The prototype uses Horizon Power's brand font, **Beausite Classic**, when it's available, and Inter otherwise. Beausite is licensed for internal use only, so the font files are not in this repo and the public site shows Inter. To see Beausite, put the four `.woff2` files in `prototype/fonts/` in your own copy (see the README in that folder), or install the font on your computer.
+
 ### What is placeholder
 
 Anything in `[square brackets]` is placeholder copy, carried over from Figma. These are not in the spreadsheet yet:

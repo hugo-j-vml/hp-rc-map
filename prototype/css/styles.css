@@ -1,3 +1,22 @@
+/* Horizon Power's brand font. Licensed for internal use only, so the files live in prototype/fonts/ on your own
+   machine and are never committed (see fonts/README.md). Without them, everything falls back to Inter. */
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 400; font-display: swap;
+  src: local("Beausite Classic Regular"), local("BeausiteClassic-Regular"), url("../fonts/BeausiteClassic-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 500; font-display: swap;
+  src: local("Beausite Classic Medium"), local("BeausiteClassic-Medium"), url("../fonts/BeausiteClassic-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 600; font-display: swap;
+  src: local("Beausite Classic Semibold"), local("BeausiteClassic-Semibold"), url("../fonts/BeausiteClassic-Semibold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 700; font-display: swap;
+  src: local("Beausite Classic Bold"), local("BeausiteClassic-Bold"), url("../fonts/BeausiteClassic-Bold.woff2") format("woff2");
+}
+
 /* Tokens from the v2 wireframe kit (HP Design System lookalikes, greyscale). */
 :root {
   --grey-050: #f7f7f7;
@@ -13,7 +32,7 @@
   --radius: 4px;
   --header-h: 138px;
   --panel-w: 560px;
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: "Beausite Classic", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }

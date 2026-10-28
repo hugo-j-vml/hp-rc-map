@@ -364,7 +364,7 @@
 
   var measureCtx = document.createElement("canvas").getContext("2d");
   function textWidth(text) {
-    measureCtx.font = "600 13px Inter, system-ui, sans-serif";
+    measureCtx.font = "600 13px " + getComputedStyle(document.body).fontFamily;
     return measureCtx.measureText(text).width;
   }
 
@@ -1098,6 +1098,8 @@
   // ---------- Start ----------
   drawOutline();
   showRegionVariant();
+  // Name labels are placed using measured text widths, so re-place them once the brand font has loaded.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderMarkers(); });
   render();
   fitState();
   routeFromHash();
