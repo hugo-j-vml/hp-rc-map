@@ -133,9 +133,11 @@
     // With floating story cards on, shift WA left if needed so a column of cards fits beside the NT/SA border.
     if (options.cards && !isMobile()) {
       var rightGap = a.w - (view.x + OUTLINE.width * baseK);
-      var need = CARD_W + CARD_CLEAR * 2 + 12;
+      var need = CARD_W + CARD_LAND_CLEAR + CARD_EDGE;
       if (rightGap < need) view.x -= Math.min(need - rightGap, view.x - pad);
     }
+    homeView = { k: view.k, x: view.x, y: view.y };
+    cardLayout = null;
     applyView();
   }
   function zoomLevel() { return view.k / baseK; }
@@ -896,13 +898,17 @@
 
   // ---------- Option: floating story cards ----------
   // Featured stories sit in the empty space around WA (sea, and NT/SA), as close to their community as they fit,
-  // with a leader line to the dot. They show on the opening zoom levels and fade out as you zoom in further.
-  var CARD_W = 248, CARD_H = 80, CARD_MAX_ZOOM = 2.7, CARD_CLEAR = 10;
-  var CARD_MAX_REACH = 280; // a card further than this from its community is left out rather than drawn across the state
+  // with a leader line to the dot. They are placed once, against the opening view, and stay put on screen;
+  // only the leader lines follow the dots. They fade out once you zoom in past the first couple of steps.
+  var CARD_W = 248, CARD_H = 80, CARD_MAX_ZOOM = 2.7;
+  var CARD_LAND_CLEAR = 24;  // breathing room between a card and the coast or border
+  var CARD_EDGE = 24;        // and between a card and the edge of the map area
+  var CARD_GAP = 12;         // between cards, and around the key and zoom buttons
+  var CARD_MAX_REACH = 280;  // a card further than this from its community is left out rather than drawn across the state
   var cardLayer = document.getElementById("story-cards");
-  var cardLayout = null;   // { communityId: { dx, dy } } offsets from the dot, in screen pixels
-  var cardTimer = null;
+  var cardLayout = null;     // { communityId: { x, y } } card positions in the map area, in screen pixels
   var cardEls = null;
+  var homeView = null;       // the opening, whole-of-WA view the cards are laid out against
 
   function buildStoryCards() {
     cardLayer.innerHTML = '<svg class="story-lines" aria-hidden="true"></svg>' + C.stories.map(function (s) {
@@ -921,48 +927,44 @@
   });
 
   function renderStoryCards() {
-    if (!options.cards || isMobile()) {
+    if (!options.cards || isMobile() || !homeView) {
       cardLayer.classList.add("is-hidden");
       cardLayer.innerHTML = "";
       cardEls = null;
       return;
     }
     if (!cardEls) buildStoryCards();
-    var visible = zoomLevel() < CARD_MAX_ZOOM;
-    cardLayer.classList.toggle("is-hidden", !visible);
-    // Re-fit the cards once the map stops moving; in the meantime they travel with their dots.
-    clearTimeout(cardTimer);
-    if (visible) cardTimer = setTimeout(function () { cardLayout = layoutStoryCards(); positionStoryCards(); }, cardLayout ? 160 : 0);
+    if (!cardLayout) cardLayout = layoutStoryCards();
+    cardLayer.classList.toggle("is-hidden", zoomLevel() >= CARD_MAX_ZOOM);
     positionStoryCards();
   }
 
   function positionStoryCards() {
-    if (!cardEls || !cardLayout) return;
     var filtering = activeFilterCount() > 0;
     var lines = "";
     C.stories.forEach(function (s) {
-      var c = byId[s.community], card = cardEls[c.id], off = cardLayout[c.id];
-      if (!off) { card.hidden = true; return; }
-      var dot = toScreen(c.x, c.y);
-      var x = dot.x + off.dx, y = dot.y + off.dy;
+      var c = byId[s.community], card = cardEls[c.id], pos = cardLayout[c.id];
+      if (!pos) { card.hidden = true; return; }
       card.hidden = false;
-      card.style.left = x + "px";
-      card.style.top = y + "px";
+      card.style.left = pos.x + "px";
+      card.style.top = pos.y + "px";
       card.classList.toggle("faded", filtering && !matches(c));
-      // Leader line from the dot to the nearest point on the card's edge.
-      var nx = Math.max(x, Math.min(dot.x, x + CARD_W)), ny = Math.max(y, Math.min(dot.y, y + CARD_H));
+      // Leader line from the dot (wherever the map has moved it) to the nearest point on the card's edge.
+      var dot = toScreen(c.x, c.y);
+      var nx = Math.max(pos.x, Math.min(dot.x, pos.x + CARD_W)), ny = Math.max(pos.y, Math.min(dot.y, pos.y + CARD_H));
       lines += '<line x1="' + dot.x + '" y1="' + dot.y + '" x2="' + nx + '" y2="' + ny + '"/>';
     });
     cardLayer.querySelector(".story-lines").innerHTML = lines;
   }
 
   function layoutStoryCards() {
-    var size = mapSize(), w = size.w, h = size.h;
+    var size = mapSize(), w = size.w, h = size.h, v = homeView;
+    function home(c) { return { x: v.x + c.x * v.k, y: v.y + c.y * v.k }; }
     // Paint the state onto a hidden canvas so we can test whether a card would cover land.
     var canvas = document.createElement("canvas");
     canvas.width = w; canvas.height = h;
     var ctx = canvas.getContext("2d");
-    ctx.setTransform(view.k, 0, 0, view.k, view.x, view.y);
+    ctx.setTransform(v.k, 0, 0, v.k, v.x, v.y);
     ctx.fill(new Path2D(OUTLINE.state));
     var land = ctx.getImageData(0, 0, w, h).data;
     function isLand(px, py) { return land[((py | 0) * w + (px | 0)) * 4 + 3] > 0; }
@@ -971,22 +973,21 @@
     var blocked = [];
     [document.getElementById("legend"), document.querySelector(".zoom")].forEach(function (node) {
       var r = node.getBoundingClientRect();
-      blocked.push({ x1: r.left - mapRect.left - CARD_CLEAR, y1: r.top - mapRect.top - CARD_CLEAR, x2: r.right - mapRect.left + CARD_CLEAR, y2: r.bottom - mapRect.top + CARD_CLEAR });
+      blocked.push({ x1: r.left - mapRect.left - CARD_GAP, y1: r.top - mapRect.top - CARD_GAP, x2: r.right - mapRect.left + CARD_GAP, y2: r.bottom - mapRect.top + CARD_GAP });
     });
     communities.forEach(function (c) {
-      var p = toScreen(c.x, c.y);
+      var p = home(c);
       blocked.push({ x1: p.x - 12, y1: p.y - 12, x2: p.x + 12, y2: p.y + 12 });
     });
 
     function fits(x, y) {
-      if (x < 12 || y < 12 || x + CARD_W > w - 12 || y + CARD_H > h - 12) return false;
       var x2 = x + CARD_W, y2 = y + CARD_H;
       for (var i = 0; i < blocked.length; i++) {
         var b = blocked[i];
         if (x < b.x2 && x2 > b.x1 && y < b.y2 && y2 > b.y1) return false;
       }
-      for (var sy = y - CARD_CLEAR; sy <= y2 + CARD_CLEAR; sy += 6) {
-        for (var sx = x - CARD_CLEAR; sx <= x2 + CARD_CLEAR; sx += 6) {
+      for (var sy = y - CARD_LAND_CLEAR; sy <= y2 + CARD_LAND_CLEAR; sy += 6) {
+        for (var sx = x - CARD_LAND_CLEAR; sx <= x2 + CARD_LAND_CLEAR; sx += 6) {
           if (sx >= 0 && sy >= 0 && sx < w && sy < h && isLand(sx, sy)) return false;
         }
       }
@@ -995,32 +996,28 @@
 
     var layout = {};
     C.stories.forEach(function (s) {
-      var c = byId[s.community], dot = toScreen(c.x, c.y);
+      var c = byId[s.community], dot = home(c);
       var candidates = [];
-      for (var y = 12; y + CARD_H <= h - 12; y += 12) {
-        for (var x = 12; x + CARD_W <= w - 12; x += 12) {
+      for (var y = CARD_EDGE; y + CARD_H <= h - CARD_EDGE; y += 8) {
+        for (var x = CARD_EDGE; x + CARD_W <= w - CARD_EDGE; x += 8) {
           var dx = Math.max(x - dot.x, 0, dot.x - (x + CARD_W));
           var dy = Math.max(y - dot.y, 0, dot.y - (y + CARD_H));
-          candidates.push({ x: x, y: y, d: dx * dx + dy * dy });
+          var d = dx * dx + dy * dy;
+          if (d <= CARD_MAX_REACH * CARD_MAX_REACH) candidates.push({ x: x, y: y, d: d });
         }
       }
-      candidates = candidates.filter(function (cand) { return cand.d <= CARD_MAX_REACH * CARD_MAX_REACH; });
       candidates.sort(function (a, b) { return a.d - b.d; });
       for (var i = 0; i < candidates.length; i++) {
         var cand = candidates[i];
         if (fits(cand.x, cand.y)) {
-          layout[c.id] = { dx: cand.x - dot.x, dy: cand.y - dot.y };
-          blocked.push({ x1: cand.x - CARD_CLEAR, y1: cand.y - CARD_CLEAR, x2: cand.x + CARD_W + CARD_CLEAR, y2: cand.y + CARD_H + CARD_CLEAR });
+          layout[c.id] = { x: cand.x, y: cand.y };
+          blocked.push({ x1: cand.x - CARD_GAP, y1: cand.y - CARD_GAP, x2: cand.x + CARD_W + CARD_GAP, y2: cand.y + CARD_H + CARD_GAP });
           break;
         }
       }
     });
     return layout;
   }
-
-  document.getElementById("legend-toggle").addEventListener("click", function () {
-    setTimeout(function () { cardLayout = null; renderStoryCards(); }, 0);
-  });
 
   // ---------- Start ----------
   drawOutline();
