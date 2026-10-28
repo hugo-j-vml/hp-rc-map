@@ -8,6 +8,16 @@ window.RC_CONTENT = {
     { value: "18", label: "communities with smart meters" },
   ],
 
+  // The four milestones of each community's transition, from HP's Community progress page.
+  // Stage 1 is done: HP has visited all communities in person. Counts in [brackets] are illustrative only.
+  milestones: [
+    { step: "01", title: "Build strong community connections", icon: "connections", count: "{count}",
+      note: "All communities visited in person" },
+    { step: "02", title: "Complete initial safety inspections and upgrades", icon: "safety", count: 86, placeholder: true },
+    { step: "03", title: "Future energy system planning and endorsement", icon: "planning", count: 41, placeholder: true },
+    { step: "04", title: "Future energy system delivery", icon: "delivery", count: 12, placeholder: true },
+  ],
+
   regions: [
     // Horizon Power's four service areas, as on its "Service area" poster.
     { id: "kimberley", name: "Kimberley" },

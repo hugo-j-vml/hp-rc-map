@@ -481,9 +481,9 @@
   function renderHome() {
     var count = activeFilterCount();
     var results = search(state.query);
-    var stats = C.stats.map(function (s) {
+    var stats = options.progress ? renderProgress() : '<div class="stats">' + C.stats.map(function (s) {
       return '<div class="stat"><strong>' + esc(s.value.replace("{count}", communities.length)) + "</strong><span>" + esc(s.label) + "</span></div>";
-    }).join("");
+    }).join("") + "</div>";
     var resultsHtml = "";
     if (state.query.trim()) {
       resultsHtml = '<ul class="results" id="results" aria-label="Search results">' + (results.length
@@ -503,7 +503,7 @@
     return '<div class="home">' +
       "<h1>Power for remote communities</h1>" +
       '<p class="intro">See the work we\'re doing with ' + communities.length + " remote Aboriginal communities across WA to keep the power on, safely and reliably.</p>" +
-      '<div class="stats">' + stats + "</div>" +
+      stats +
       '<form class="search" role="search" id="search-form">' +
       '<label class="visually-hidden" for="search-input">Search communities</label>' +
       '<div class="search-field"><input id="search-input" type="search" autocomplete="off" placeholder="Search communities" value="' + esc(state.query) + '" aria-controls="results">' +
@@ -512,6 +512,30 @@
       "</form>" + resultsHtml +
       '<section class="stories" id="stories" aria-label="Community stories">' + stories + "</section>" +
       "</div>";
+  }
+
+  // Option: the stat tiles as progress through the four milestones of each community's transition.
+  function renderProgress() {
+    var total = communities.length;
+    var invest = C.stats[0];
+    return '<section class="progress" aria-labelledby="progress-h">' +
+      '<p class="progress-invest"><strong>' + esc(invest.value) + "</strong> " + esc(invest.label) + "</p>" +
+      '<h2 id="progress-h">Community transition progress</h2>' +
+      '<ol class="milestones">' + C.milestones.map(function (m) {
+        var n = m.count === "{count}" ? total : m.count;
+        var shown = m.placeholder ? "[" + n + "]" : String(n);
+        var done = n >= total;
+        return '<li class="milestone' + (done ? " done" : "") + '">' +
+          icon(m.icon) +
+          '<div class="milestone-body"><div class="milestone-head"><span class="step">' + esc(m.step) + "</span>" +
+          '<span class="title">' + esc(m.title) + "</span></div>" +
+          '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + n + '" aria-label="' + esc(m.title) + '">' +
+          '<span style="width:' + (n / total * 100).toFixed(1) + '%"></span></div>' +
+          '<p class="milestone-meta"><span>' + (done ? icon("check") + esc(m.note || "Complete") : "In progress") + "</span>" +
+          "<span><strong>" + esc(shown) + "</strong> of " + total + " communities</span></p></div></li>";
+      }).join("") + "</ol>" +
+      '<p class="note">Stages 2 to 4 use illustrative numbers until Horizon Power supplies the real ones.</p>' +
+      "</section>";
   }
 
   // ---------- Panel: filters ----------
@@ -855,10 +879,12 @@
   // URL parameters (e.g. ?cards=1) override them so a particular set-up can be shared as a link.
   var OPTIONS = [
     { id: "cards", label: "Floating story cards", description: "Featured stories in the empty space around WA, on the opening zoom levels.", initial: false },
-    { id: "ngLands", label: "Goldfields takes in the NG lands",
-      description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
     { id: "pinned", label: "Pin story cards to the map", requires: "cards",
       description: "Cards sit at fixed map positions in the empty space and grow and shrink with the zoom, instead of staying put on screen.", initial: false },
+    { id: "ngLands", label: "Goldfields takes in the NG lands",
+      description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
+    { id: "progress", label: "Progress bars instead of tiles",
+      description: "Swaps the four stat tiles for progress through the four milestones of each community's transition.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
@@ -926,6 +952,7 @@
 
   function applyOptions() {
     showRegionVariant();
+    if (state.view === "home") render({ keepScroll: true });
     cardLayout = null;
     if (!state.selected) fitState();
     renderStoryCards();
