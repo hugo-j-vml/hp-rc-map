@@ -6,6 +6,8 @@ Horizon Power Remote Communities Interactive Map.
 
 A plain HTML, CSS and vanilla JavaScript prototype in [`prototype/`](prototype/). There is no build step, framework or server. Open `prototype/index.html` in a browser, or host the folder on any static host.
 
+Live on GitHub Pages at https://hugo-j-vml.github.io/hp-rc-map/ (served from `main`, root folder). The root `index.html` forwards to `prototype/`, so any push to `main` updates the site.
+
 It is built only from two inputs:
 
 - **Figma wireframes v2** ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map)): layout, copy, icons, markers and the WA outline.
