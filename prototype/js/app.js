@@ -268,7 +268,7 @@
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 21 : g.items[0].id === state.selected ? 22 : 8;
+      var r = g.items.length > 1 ? 21 : g.items[0].id === state.selected ? 14 : 8;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -283,7 +283,7 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, selected ? 26 : 14) : null;
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, selected ? 25 : 14) : null;
       return '<button type="button" class="marker' + (g.faded ? " faded" : "") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<span class="dot' + (c.story ? " story" : "") + (g.faded ? " faded" : "") + '"></span>' +
@@ -297,7 +297,7 @@
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
   function placeLabel(placed, owner, x, y, text, gap) {
-    var w = textWidth(text), h = 16, corner = gap === 14 ? 4 : 12;
+    var w = textWidth(text), h = 16, corner = gap === 14 ? 4 : 10;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
