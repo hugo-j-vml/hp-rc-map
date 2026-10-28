@@ -15,8 +15,9 @@ It is built only from two inputs:
 
 ### What works
 
-- A zoomable, pannable map of WA. It supports the mouse wheel, drag, pinch on touch, and the + and − buttons. Zoom is capped so the map never gets down to street level.
-- Communities are grouped into numbered clusters when crowded. Click a cluster to zoom in. Names appear once you are zoomed in.
+- A zoomable, pannable map of WA. It supports the mouse wheel, drag, pinch on touch, and the + and − buttons. At full zoom every community shows on its own, even the closest pair (Embulgun and Munget, about 700 m apart). There is no street basemap.
+- The key shows on load, then tucks into a "Key" button the first time someone uses the map. On mobile it starts as the button.
+- Communities are grouped into numbered clusters when crowded, and the groups shrink as you zoom in. Click a cluster to zoom in. Names appear once you are zoomed in.
 - Search by community name, other name (for example "Balgo" or "Blackstone") or region.
 - Filters for region, program, type of work and status. Communities outside the filter fade, as in Figma.
 - Community profiles:

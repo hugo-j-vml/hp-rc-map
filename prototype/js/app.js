@@ -105,7 +105,9 @@
   // The outline lives in a 600 x 820 space; view.k is pixels per unit and view.x / view.y the offset.
   var view = { k: 1, x: 0, y: 0 };
   var baseK = 1;
-  var MAX_ZOOM = 14; // relative to the whole-state view, so the map never gets down to street level
+  // Relative to the whole-state view. Deep enough to pull apart the closest communities (Embulgun and
+  // Munget are about 700 m apart); there is no street basemap, so this never shows anything finer.
+  var MAX_ZOOM = 80;
   var LABEL_ZOOM = 3.5;
   var CLUSTER_RADIUS = 34;
   var STORY_SOLO_ZOOM = 2.5;
@@ -208,14 +210,22 @@
   function toScreen(ux, uy) { return { x: view.x + ux * view.k, y: view.y + uy * view.k }; }
 
   // ---------- Map: markers and clusters ----------
+  // Groups shrink as you zoom in, and at full zoom every community shows on its own.
+  function clusterRadius() {
+    var zoom = zoomLevel();
+    if (zoom >= MAX_ZOOM * 0.98) return 0;
+    return zoom >= 12 ? 18 : CLUSTER_RADIUS;
+  }
+
   function cluster(list) {
     var groups = [];
+    var radius = clusterRadius();
     list.forEach(function (c) {
       var p = toScreen(c.x, c.y);
       var hit = null;
       for (var i = 0; i < groups.length; i++) {
         var g = groups[i];
-        if (Math.abs(g.sx - p.x) < CLUSTER_RADIUS && Math.abs(g.sy - p.y) < CLUSTER_RADIUS) { hit = g; break; }
+        if (Math.abs(g.sx - p.x) < radius && Math.abs(g.sy - p.y) < radius) { hit = g; break; }
       }
       if (hit) {
         hit.items.push(c);
@@ -291,7 +301,29 @@
   var gesture = null;
   var moved = false;
 
+  // ---------- Map: key ----------
+  // The key shows on load, then tucks away into a "Key" button the first time someone uses the map.
+  var legend = document.getElementById("legend");
+  var legendToggle = document.getElementById("legend-toggle");
+  var legendTouched = false;
+  function setLegend(open) {
+    legend.classList.toggle("collapsed", !open);
+    legendToggle.setAttribute("aria-expanded", String(open));
+  }
+  function collapseLegendOnFirstUse() {
+    if (legendTouched) return;
+    legendTouched = true;
+    setLegend(false);
+  }
+  legendToggle.addEventListener("click", function () {
+    legendTouched = true;
+    setLegend(legend.classList.contains("collapsed"));
+  });
+  legend.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+  if (isMobile()) { legendTouched = true; setLegend(false); }
+
   el.viewport.addEventListener("pointerdown", function (e) {
+    collapseLegendOnFirstUse();
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     moved = false;
     gesture = startGesture();
@@ -336,6 +368,7 @@
 
   el.viewport.addEventListener("wheel", function (e) {
     e.preventDefault();
+    collapseLegendOnFirstUse();
     var rect = el.viewport.getBoundingClientRect();
     zoomAt(Math.exp(-e.deltaY * 0.0022), e.clientX - rect.left, e.clientY - rect.top);
   }, { passive: false });
@@ -352,6 +385,7 @@
 
   document.querySelectorAll("[data-zoom]").forEach(function (button) {
     button.addEventListener("click", function () {
+      collapseLegendOnFirstUse();
       var a = visibleArea();
       zoomAt(button.dataset.zoom === "in" ? 1.6 : 1 / 1.6, a.x + a.w / 2, a.y + a.h / 2);
     });
@@ -570,7 +604,6 @@
     el.body.innerHTML = html;
     el.body.scrollTop = opts.keepScroll ? scroll : 0;
 
-    el.panel.classList.toggle("wide", state.view === "profile" && !!(c && c.story));
     el.panel.classList.toggle("profile", state.view === "profile");
     el.panel.classList.toggle("filters-open", state.view === "filters");
     el.panel.classList.toggle("expanded", state.expanded);
@@ -587,8 +620,7 @@
     state.query = "";
     setHash("community=" + id);
     render();
-    // Let the panel settle (it widens for story profiles) before centring the map.
-    setTimeout(function () { centreOn(c.x, c.y, Math.max(zoomLevel(), 5), !opts.instant); }, opts.instant ? 0 : 220);
+    centreOn(c.x, c.y, Math.max(zoomLevel(), 5), !opts.instant);
     var title = document.getElementById("profile-title");
     if (title && !opts.instant) { title.setAttribute("tabindex", "-1"); title.focus({ preventScroll: true }); }
   }

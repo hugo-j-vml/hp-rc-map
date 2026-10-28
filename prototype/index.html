@@ -70,8 +70,10 @@
       </div>
 
       <div class="legend" id="legend">
-        <p class="legend-title">Key</p>
-        <ul>
+        <button type="button" class="legend-toggle" id="legend-toggle" aria-expanded="true" aria-controls="legend-list">
+          <span>Key</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+        </button>
+        <ul id="legend-list">
           <li><span class="m"><span class="dot"></span></span>Community</li>
           <li><span class="m"><span class="dot story"></span></span>Community with a story</li>
           <li><span class="m"><span class="dot faded"></span></span>Not in current filter</li>
