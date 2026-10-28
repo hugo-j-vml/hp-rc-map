@@ -59,6 +59,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Selected marker:** 26px overall (dark centre, white gap, thin ring). Its name sits 25px out.
 - **Sidebar:** 560px for every view on desktop, so it never jumps width.
 - **Key:** shows on load, then collapses to a "Key" pill on first map interaction. On mobile it starts as the pill.
+- **Mobile map controls:** the key pill and zoom buttons sit bottom right, just above the bottom sheet, and move up with the sheet when a profile opens (the sheet heights, 40% and 71%, are shared between `styles.css` and `visibleArea()` in `app.js`).
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
 - **Placeholder data:** population, languages, Traditional Owners, service providers (RSPs) and works are placeholders for the life of this prototype. Program, type of work and status filters run on the sample works in `content.js` (from the Figma profiles).

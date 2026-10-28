@@ -434,8 +434,11 @@ a { color: inherit; }
 
   .layout { position: relative; display: block; }
   .map { position: absolute; inset: 0; }
-  .legend { left: 10px; top: 16px; bottom: auto; }
-  .zoom { top: 16px; right: 10px; bottom: auto; }
+  /* Key and zoom sit bottom right of the strip of map left above the sheet (sheet heights below). */
+  .legend, .zoom { top: auto; bottom: calc(40% + 12px); transition: bottom .25s ease; }
+  .map.sheet-profile .legend, .map.sheet-profile .zoom { bottom: calc(71% + 12px); }
+  .zoom { right: 10px; }
+  .legend { left: auto; right: 66px; }
 
   .panel {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;

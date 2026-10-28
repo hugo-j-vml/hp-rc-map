@@ -704,6 +704,7 @@
     el.body.scrollTop = opts.keepScroll ? scroll : 0;
 
     el.panel.classList.toggle("profile", state.view === "profile");
+    el.map.classList.toggle("sheet-profile", state.view === "profile");
     el.panel.classList.toggle("filters-open", state.view === "filters");
     el.panel.classList.toggle("expanded", state.expanded);
     renderMarkers();
