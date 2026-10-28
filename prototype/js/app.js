@@ -534,7 +534,6 @@
           '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + n + '" aria-label="' + esc(label) + '">' +
           '<span style="width:' + (n / total * 100).toFixed(1) + '%"></span></div></div></li>';
       }).join("") + "</ol>" +
-      '<p class="note">Stage 1 is complete: all communities visited in person. Stages 2 to 4 use illustrative numbers.</p>' +
       "</section>";
   }
 
