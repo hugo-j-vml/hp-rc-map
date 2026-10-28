@@ -914,7 +914,7 @@
       '<ul class="options-list">' + OPTIONS.map(function (o) {
         // An option that builds on another (e.g. pinning needs the cards) is greyed out until that one is on.
         var off = o.requires && !options[o.requires];
-        return '<li><label class="option-row' + (o.requires ? " sub" : "") + (off ? " disabled" : "") + '"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
+        return '<li><label class="option-row' + (off ? " disabled" : "") + '"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
           '<input type="checkbox" role="switch" data-option="' + o.id + '"' + (options[o.id] ? " checked" : "") + (off ? " disabled" : "") + '><span class="switch" aria-hidden="true"></span></label></li>';
       }).join("") + "</ul>" +
       '<div class="options-foot"><button type="button" data-options="copy">Copy link with these options</button><small>Shift + O to show or hide</small></div>';
