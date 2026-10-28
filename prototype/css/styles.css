@@ -111,23 +111,25 @@ a { color: inherit; }
 }
 .link-arrow .icon { width: 24px; height: 24px; }
 
-.search { display: flex; gap: 8px; }
-.search-field { flex: 1; display: flex; height: 48px; min-width: 0; }
+/* Search and Filters split the panel width 50/50. */
+.search { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.search-field { display: flex; height: 48px; min-width: 0; }
 .search-field input {
   flex: 1; min-width: 0;
   border: 1px solid var(--grey-500); border-right: 0;
   border-radius: var(--radius) 0 0 var(--radius);
-  padding: 12px 16px; font: inherit; color: var(--grey-900);
+  padding: 12px 12px 12px 14px; font: inherit; color: var(--grey-900);
 }
 .search-field input::placeholder { color: var(--grey-700); }
 .search-field button {
-  width: 32px; flex-shrink: 0;
+  width: 48px; flex-shrink: 0;
   display: grid; place-items: center;
   background: var(--grey-900); color: var(--white);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
-.search-field button .icon { width: 30px; height: 30px; }
-.search .btn-secondary { height: 48px; min-width: 93px; }
+.search-field button .icon { width: 28px; height: 28px; }
+.search .btn-secondary { height: 48px; min-width: 0; }
+.progress + .search { margin-top: 12px; }
 .search .btn-secondary .count {
   display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
   border-radius: 11px; background: var(--grey-900); color: var(--white); font-size: 12px;
