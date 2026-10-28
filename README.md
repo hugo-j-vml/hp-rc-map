@@ -27,6 +27,14 @@ It is built only from two inputs:
 - Deep links (`index.html#community=kiwirrkurra`) and Share (copies the link).
 - Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet.
 
+### Prototype options (Shift + O)
+
+Press **Shift + O** to open the options panel in the bottom-right corner. It holds layout experiments that can be switched on and off.
+
+- **Floating story cards:** featured stories sit in the empty space around WA (the sea, and NT/SA), as close to their community as they fit, with a thin line to the dot. They show on the opening view and the first two zoom steps, then fade out. Clicking a card opens that community. On narrower screens WA shifts left to make room. A card that would sit more than about 280px from its community is left out. Desktop only.
+
+Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1`), which overrides the remembered settings, so you can send someone a specific layout.
+
 ### What is placeholder
 
 Anything in `[square brackets]` is placeholder copy, carried over from Figma. These are not in the spreadsheet yet:

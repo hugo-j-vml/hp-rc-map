@@ -130,6 +130,12 @@
     view.k = baseK;
     view.x = a.x + (a.w - OUTLINE.width * baseK) / 2;
     view.y = a.y + (a.h - OUTLINE.height * baseK) / 2;
+    // With floating story cards on, shift WA left if needed so a column of cards fits beside the NT/SA border.
+    if (options.cards && !isMobile()) {
+      var rightGap = a.w - (view.x + OUTLINE.width * baseK);
+      var need = CARD_W + CARD_CLEAR * 2 + 12;
+      if (rightGap < need) view.x -= Math.min(need - rightGap, view.x - pad);
+    }
     applyView();
   }
   function zoomLevel() { return view.k / baseK; }
@@ -252,14 +258,31 @@
     // Stories and the selected community always show on their own; everything else groups when crowded.
     var solo = [], inFilter = [], outFilter = [];
     communities.forEach(function (c) {
-      if (c.id === state.selected || (c.story && zoom >= STORY_SOLO_ZOOM)) solo.push(c);
+      // Floating story cards point at their community, so stories stay as their own dots while cards show.
+      var cardsShowing = options.cards && !isMobile() && zoom < CARD_MAX_ZOOM;
+      if (c.id === state.selected || (c.story && (zoom >= STORY_SOLO_ZOOM || cardsShowing))) solo.push(c);
       else if (matches(c)) inFilter.push(c);
       else outFilter.push(c);
     });
 
-    var groups = [].concat(
+    var clusters = [].concat(
       cluster(outFilter).map(function (g) { g.faded = true; return g; }),
-      cluster(inFilter),
+      cluster(inFilter)
+    );
+    // Nudge any group that would sit on top of a story or selected dot just clear of it.
+    solo.forEach(function (c) {
+      var p = toScreen(c.x, c.y);
+      clusters.forEach(function (g) {
+        if (g.items.length < 2) return;
+        var dx = g.sx - p.x, dy = g.sy - p.y, d = Math.hypot(dx, dy), min = 34;
+        if (d >= min) return;
+        if (d < 0.5) { dx = -1; dy = 1; d = Math.SQRT2; }
+        g.sx = p.x + dx / d * min;
+        g.sy = p.y + dy / d * min;
+      });
+    });
+    var groups = [].concat(
+      clusters,
       solo.map(function (c) {
         var p = toScreen(c.x, c.y);
         return { sx: p.x, sy: p.y, items: [c], faded: filtering && !matches(c) };
@@ -291,6 +314,7 @@
         '<span class="tooltip">' + esc(displayName(c)) + "</span></button>";
     }).join("");
     el.markers.innerHTML = html;
+    renderStoryCards();
   }
 
   // Puts a community's name in the first free spot around its dot: right, then left, above, below and the
@@ -771,6 +795,16 @@
   });
 
   document.addEventListener("keydown", function (e) {
+    var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== "checkbox";
+    if (e.shiftKey && e.key.toLowerCase() === "o" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      toggleOptions();
+      return;
+    }
+    if (e.key === "Escape" && !el.options.hidden) {
+      toggleOptions(false);
+      return;
+    }
     if (e.key === "Escape" && state.view !== "home") goHome();
   });
 
@@ -789,7 +823,203 @@
       var c = state.selected && byId[state.selected];
       fitState();
       if (c) centreOn(c.x, c.y, 5, false);
+      cardLayout = null;
+      renderStoryCards();
     }, 150);
+  });
+
+  // ---------- Prototype options (Shift + O) ----------
+  // Layout experiments that can be switched on and off. Settings are remembered in this browser, and
+  // URL parameters (e.g. ?cards=1) override them so a particular set-up can be shared as a link.
+  var OPTIONS = [
+    { id: "cards", label: "Floating story cards", description: "Featured stories in the empty space around WA, on the opening zoom levels.", initial: false },
+  ];
+  var OPTIONS_KEY = "rcm-prototype-options";
+  el.options = document.getElementById("options");
+  var options = loadOptions();
+
+  function loadOptions() {
+    var out = {};
+    OPTIONS.forEach(function (o) { out[o.id] = o.initial; });
+    try { Object.assign(out, JSON.parse(localStorage.getItem(OPTIONS_KEY)) || {}); } catch (err) { /* storage unavailable */ }
+    var params = new URLSearchParams(location.search);
+    OPTIONS.forEach(function (o) { if (params.has(o.id)) out[o.id] = params.get(o.id) === "1"; });
+    return out;
+  }
+  function saveOptions() {
+    try { localStorage.setItem(OPTIONS_KEY, JSON.stringify(options)); } catch (err) { /* storage unavailable */ }
+  }
+  function optionsLink() {
+    var url = new URL(location.href);
+    OPTIONS.forEach(function (o) { url.searchParams.set(o.id, options[o.id] ? "1" : "0"); });
+    return url.toString();
+  }
+
+  function renderOptions() {
+    el.options.innerHTML =
+      '<div class="options-head"><h2 id="options-title">Prototype options</h2>' +
+      '<button type="button" data-options="close" aria-label="Close options">' + icon("close") + "</button></div>" +
+      '<ul class="options-list">' + OPTIONS.map(function (o) {
+        return '<li><label class="option-row"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
+          '<input type="checkbox" role="switch" data-option="' + o.id + '"' + (options[o.id] ? " checked" : "") + '><span class="switch" aria-hidden="true"></span></label></li>';
+      }).join("") + "</ul>" +
+      '<div class="options-foot"><button type="button" data-options="copy">Copy link with these options</button><small>Shift + O to show or hide</small></div>';
+  }
+  function toggleOptions(show) {
+    show = show === undefined ? el.options.hidden : show;
+    if (show) renderOptions();
+    el.options.hidden = !show;
+    if (show) el.options.querySelector("input").focus();
+  }
+  el.options.addEventListener("change", function (e) {
+    var id = e.target.dataset.option;
+    if (!id) return;
+    options[id] = e.target.checked;
+    saveOptions();
+    applyOptions();
+  });
+  el.options.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-options]");
+    if (!t) return;
+    if (t.dataset.options === "close") toggleOptions(false);
+    if (t.dataset.options === "copy") {
+      var link = optionsLink();
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(function () { toast("Link copied"); }, function () { toast(link); });
+      else toast(link);
+    }
+  });
+  function applyOptions() {
+    cardLayout = null;
+    if (!state.selected) fitState();
+    renderStoryCards();
+  }
+
+  // ---------- Option: floating story cards ----------
+  // Featured stories sit in the empty space around WA (sea, and NT/SA), as close to their community as they fit,
+  // with a leader line to the dot. They show on the opening zoom levels and fade out as you zoom in further.
+  var CARD_W = 248, CARD_H = 80, CARD_MAX_ZOOM = 2.7, CARD_CLEAR = 10;
+  var CARD_MAX_REACH = 280; // a card further than this from its community is left out rather than drawn across the state
+  var cardLayer = document.getElementById("story-cards");
+  var cardLayout = null;   // { communityId: { dx, dy } } offsets from the dot, in screen pixels
+  var cardTimer = null;
+  var cardEls = null;
+
+  function buildStoryCards() {
+    cardLayer.innerHTML = '<svg class="story-lines" aria-hidden="true"></svg>' + C.stories.map(function (s) {
+      var c = byId[s.community];
+      return '<button type="button" class="story-float" data-open="' + c.id + '" aria-label="Read the story: ' + esc(displayName(c)) + '">' +
+        '<span class="placeholder">Image</span><span class="text"><strong>' + esc(s.label || displayName(c)) + "</strong>" +
+        "<small>" + esc(s.summary) + "</small></span></button>";
+    }).join("");
+    cardEls = {};
+    cardLayer.querySelectorAll(".story-float").forEach(function (b) { cardEls[b.dataset.open] = b; });
+  }
+
+  cardLayer.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-open]");
+    if (t) openProfile(t.dataset.open);
+  });
+
+  function renderStoryCards() {
+    if (!options.cards || isMobile()) {
+      cardLayer.classList.add("is-hidden");
+      cardLayer.innerHTML = "";
+      cardEls = null;
+      return;
+    }
+    if (!cardEls) buildStoryCards();
+    var visible = zoomLevel() < CARD_MAX_ZOOM;
+    cardLayer.classList.toggle("is-hidden", !visible);
+    // Re-fit the cards once the map stops moving; in the meantime they travel with their dots.
+    clearTimeout(cardTimer);
+    if (visible) cardTimer = setTimeout(function () { cardLayout = layoutStoryCards(); positionStoryCards(); }, cardLayout ? 160 : 0);
+    positionStoryCards();
+  }
+
+  function positionStoryCards() {
+    if (!cardEls || !cardLayout) return;
+    var filtering = activeFilterCount() > 0;
+    var lines = "";
+    C.stories.forEach(function (s) {
+      var c = byId[s.community], card = cardEls[c.id], off = cardLayout[c.id];
+      if (!off) { card.hidden = true; return; }
+      var dot = toScreen(c.x, c.y);
+      var x = dot.x + off.dx, y = dot.y + off.dy;
+      card.hidden = false;
+      card.style.left = x + "px";
+      card.style.top = y + "px";
+      card.classList.toggle("faded", filtering && !matches(c));
+      // Leader line from the dot to the nearest point on the card's edge.
+      var nx = Math.max(x, Math.min(dot.x, x + CARD_W)), ny = Math.max(y, Math.min(dot.y, y + CARD_H));
+      lines += '<line x1="' + dot.x + '" y1="' + dot.y + '" x2="' + nx + '" y2="' + ny + '"/>';
+    });
+    cardLayer.querySelector(".story-lines").innerHTML = lines;
+  }
+
+  function layoutStoryCards() {
+    var size = mapSize(), w = size.w, h = size.h;
+    // Paint the state onto a hidden canvas so we can test whether a card would cover land.
+    var canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(view.k, 0, 0, view.k, view.x, view.y);
+    ctx.fill(new Path2D(OUTLINE.state));
+    var land = ctx.getImageData(0, 0, w, h).data;
+    function isLand(px, py) { return land[((py | 0) * w + (px | 0)) * 4 + 3] > 0; }
+
+    var mapRect = el.map.getBoundingClientRect();
+    var blocked = [];
+    [document.getElementById("legend"), document.querySelector(".zoom")].forEach(function (node) {
+      var r = node.getBoundingClientRect();
+      blocked.push({ x1: r.left - mapRect.left - CARD_CLEAR, y1: r.top - mapRect.top - CARD_CLEAR, x2: r.right - mapRect.left + CARD_CLEAR, y2: r.bottom - mapRect.top + CARD_CLEAR });
+    });
+    communities.forEach(function (c) {
+      var p = toScreen(c.x, c.y);
+      blocked.push({ x1: p.x - 12, y1: p.y - 12, x2: p.x + 12, y2: p.y + 12 });
+    });
+
+    function fits(x, y) {
+      if (x < 12 || y < 12 || x + CARD_W > w - 12 || y + CARD_H > h - 12) return false;
+      var x2 = x + CARD_W, y2 = y + CARD_H;
+      for (var i = 0; i < blocked.length; i++) {
+        var b = blocked[i];
+        if (x < b.x2 && x2 > b.x1 && y < b.y2 && y2 > b.y1) return false;
+      }
+      for (var sy = y - CARD_CLEAR; sy <= y2 + CARD_CLEAR; sy += 6) {
+        for (var sx = x - CARD_CLEAR; sx <= x2 + CARD_CLEAR; sx += 6) {
+          if (sx >= 0 && sy >= 0 && sx < w && sy < h && isLand(sx, sy)) return false;
+        }
+      }
+      return true;
+    }
+
+    var layout = {};
+    C.stories.forEach(function (s) {
+      var c = byId[s.community], dot = toScreen(c.x, c.y);
+      var candidates = [];
+      for (var y = 12; y + CARD_H <= h - 12; y += 12) {
+        for (var x = 12; x + CARD_W <= w - 12; x += 12) {
+          var dx = Math.max(x - dot.x, 0, dot.x - (x + CARD_W));
+          var dy = Math.max(y - dot.y, 0, dot.y - (y + CARD_H));
+          candidates.push({ x: x, y: y, d: dx * dx + dy * dy });
+        }
+      }
+      candidates = candidates.filter(function (cand) { return cand.d <= CARD_MAX_REACH * CARD_MAX_REACH; });
+      candidates.sort(function (a, b) { return a.d - b.d; });
+      for (var i = 0; i < candidates.length; i++) {
+        var cand = candidates[i];
+        if (fits(cand.x, cand.y)) {
+          layout[c.id] = { dx: cand.x - dot.x, dy: cand.y - dot.y };
+          blocked.push({ x1: cand.x - CARD_CLEAR, y1: cand.y - CARD_CLEAR, x2: cand.x + CARD_W + CARD_CLEAR, y2: cand.y + CARD_H + CARD_CLEAR });
+          break;
+        }
+      }
+    });
+    return layout;
+  }
+
+  document.getElementById("legend-toggle").addEventListener("click", function () {
+    setTimeout(function () { cardLayout = null; renderStoryCards(); }, 0);
   });
 
   // ---------- Start ----------

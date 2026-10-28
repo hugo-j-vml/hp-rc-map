@@ -81,6 +81,8 @@
         </ul>
       </div>
 
+      <div class="story-cards is-hidden" id="story-cards" aria-label="Featured stories"></div>
+
       <div class="zoom">
         <button type="button" data-zoom="in" aria-label="Zoom in"><svg class="icon"><use href="#i-add"/></svg></button>
         <button type="button" data-zoom="out" aria-label="Zoom out"><svg class="icon"><use href="#i-minus"/></svg></button>
@@ -89,6 +91,9 @@
   </main>
 
   <div class="toast" id="toast" role="status" hidden></div>
+
+  <!-- Prototype options: Shift + O shows or hides this panel. -->
+  <aside class="options" id="options" aria-labelledby="options-title" hidden></aside>
 
   <script src="js/outline.js"></script>
   <script src="js/data.js"></script>
