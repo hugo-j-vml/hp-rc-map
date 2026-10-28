@@ -506,7 +506,7 @@
       stats +
       '<form class="search" role="search" id="search-form">' +
       '<label class="visually-hidden" for="search-input">Search communities</label>' +
-      '<div class="search-field"><input id="search-input" type="search" autocomplete="off" placeholder="' + (isMobile() ? "Search" : "Search communities") + '" value="' + esc(state.query) + '" aria-controls="results">' +
+      '<div class="search-field"><input id="search-input" type="search" autocomplete="off" placeholder="Search" value="' + esc(state.query) + '" aria-controls="results">' +
       '<button type="submit" aria-label="Search">' + icon("search") + "</button></div>" +
       '<button type="button" class="btn btn-secondary" data-action="filters">' + icon("filter") + "Filters" + (count ? ' <span class="count">' + count + "</span>" : "") + "</button>" +
       "</form>" + resultsHtml +

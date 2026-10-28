@@ -138,8 +138,10 @@ a { color: inherit; }
   border: 1px solid var(--grey-500); border-right: 0;
   border-radius: var(--radius) 0 0 var(--radius);
   padding: 12px 12px 12px 14px; font: inherit; color: var(--grey-900);
+  /* Same type as the Filters button beside it. */
+  font-size: 16px; font-weight: 600; line-height: 22px;
 }
-.search-field input::placeholder { color: var(--grey-700); }
+.search-field input::placeholder { color: var(--grey-900); opacity: 1; }
 .search-field button {
   width: 48px; flex-shrink: 0;
   display: grid; place-items: center;
