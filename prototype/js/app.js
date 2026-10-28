@@ -214,7 +214,8 @@
   function clusterRadius() {
     var zoom = zoomLevel();
     if (zoom >= MAX_ZOOM * 0.98) return 0;
-    return zoom >= 12 ? 18 : CLUSTER_RADIUS;
+    // Once zoomed in, only dots that would actually overlap are grouped.
+    return zoom >= 12 ? 10 : CLUSTER_RADIUS;
   }
 
   function cluster(list) {
@@ -265,8 +266,12 @@
       })
     );
 
-    var placedLabels = [];
-    var html = groups.map(function (g) {
+    // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
+    var placedLabels = groups.map(function (g, i) {
+      var r = g.items.length > 1 ? 21 : 8;
+      return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
+    });
+    var html = groups.map(function (g, i) {
       var style = 'style="left:' + g.sx + "px;top:" + g.sy + 'px"';
       if (g.items.length > 1) {
         var names = g.items.length + " communities, including " + g.items.slice(0, 3).map(function (c) { return c.name; }).join(", ");
@@ -278,22 +283,42 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var showLabel = zoom >= LABEL_ZOOM && !selected && freeSpot(placedLabels, g.sx, g.sy, c.name);
+      var labelPos = zoom >= LABEL_ZOOM && !selected ? placeLabel(placedLabels, i, g.sx, g.sy, c.name) : null;
       return '<button type="button" class="marker' + (g.faded ? " faded" : "") + (selected ? " selected" : "") + '" ' + style +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<span class="dot' + (c.story ? " story" : "") + (g.faded ? " faded" : "") + '"></span>' +
-        (showLabel ? '<span class="marker-label">' + esc(c.name) + "</span>" : "") +
+        (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
         '<span class="tooltip">' + esc(displayName(c)) + "</span></button>";
     }).join("");
     el.markers.innerHTML = html;
   }
 
-  // Rough collision check so community name labels do not sit on top of each other.
-  function freeSpot(placed, x, y, text) {
-    var box = { x1: x + 8, x2: x + 14 + text.length * 7, y1: y - 9, y2: y + 9 };
-    var clash = placed.some(function (b) { return box.x1 < b.x2 && box.x2 > b.x1 && box.y1 < b.y2 && box.y2 > b.y1; });
-    if (!clash) placed.push(box);
-    return !clash;
+  // Puts a community's name in the first free spot around its dot: right, then left, above, below and the
+  // corners. Returns that position, or null when every spot would overlap another name or marker.
+  var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
+  function placeLabel(placed, owner, x, y, text) {
+    var w = textWidth(text), h = 16, gap = 10;
+    for (var i = 0; i < LABEL_SPOTS.length; i++) {
+      var spot = LABEL_SPOTS[i];
+      var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
+        : spot.indexOf("right") > 0 ? x + 4 + w / 2 : spot.indexOf("left") > 0 ? x - 4 - w / 2 : x;
+      var cy = spot.indexOf("top") === 0 ? y - gap - h / 2 : spot.indexOf("bottom") === 0 ? y + gap + h / 2 : y;
+      var box = { x1: cx - w / 2 - 2, x2: cx + w / 2 + 2, y1: cy - h / 2, y2: cy + h / 2 };
+      var clash = placed.some(function (b) {
+        return b.owner !== owner && box.x1 < b.x2 && box.x2 > b.x1 && box.y1 < b.y2 && box.y2 > b.y1;
+      });
+      if (!clash) {
+        placed.push(box);
+        return spot;
+      }
+    }
+    return null;
+  }
+
+  var measureCtx = document.createElement("canvas").getContext("2d");
+  function textWidth(text) {
+    measureCtx.font = "500 13px Inter, system-ui, sans-serif";
+    return measureCtx.measureText(text).width;
   }
 
   // ---------- Map: interaction ----------
