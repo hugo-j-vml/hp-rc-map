@@ -13,10 +13,14 @@ from pathlib import Path
 import openpyxl
 
 SHEET = "Remote Communities-consolidated"
+# Horizon Power's own district codes ("HP RC District" column), grouped into its four service areas.
 REGIONS = {
-    "KIMBERLEY": "kimberley",
-    "PILBARA-MIDWEST": "pilbara",
-    "GOLDFIELDS": "goldfields",
+    "WKIM": "kimberley",
+    "EKIM": "kimberley",
+    "WPIL": "pilbara",
+    "EPIL": "pilbara",
+    "GS-NOMW/COMW": "gascoyne",
+    "CEMW": "goldfields",
 }
 # Names confirmed in the brief and Figma, where the community's own name
 # differs from the name used in the spreadsheet.
@@ -48,7 +52,7 @@ def main(xlsx):
     communities = []
     for row in ws.iter_rows(min_row=2, values_only=True):
         source_name, lat, lng, _, contract_name = row[:5]
-        region = row[14]
+        district = row[10]
         if not source_name:
             continue
         source_name = source_name.strip()
@@ -67,7 +71,7 @@ def main(xlsx):
             "otherNames": other,
             "lat": round(float(lat), 4),
             "lng": round(float(lng), 4),
-            "region": REGIONS[region.strip()],
+            "region": REGIONS[district.strip()],
         })
 
     communities.sort(key=lambda c: c["name"].lower())

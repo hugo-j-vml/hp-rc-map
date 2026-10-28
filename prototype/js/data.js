@@ -6,7 +6,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -27.9646,
   "lng": 114.6034,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "baulu-wah",
@@ -96,7 +96,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -24.6512,
   "lng": 116.9327,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "chile-creek",
@@ -431,7 +431,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -26.1276,
   "lng": 118.6838,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "kiwirrkurra",
@@ -487,7 +487,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -26.33,
   "lng": 120.2341,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "la-djardarr",
@@ -721,7 +721,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -27.1224,
   "lng": 116.392,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "punju-njamal",
@@ -840,7 +840,7 @@ window.RC_COMMUNITIES = [
   ],
   "lat": -28.3847,
   "lng": 115.6099,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "wangkatjungka",
@@ -896,7 +896,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -26.3885,
   "lng": 122.2129,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "wingellina",
@@ -985,7 +985,7 @@ window.RC_COMMUNITIES = [
   "otherNames": [],
   "lat": -25.6173,
   "lng": 118.5577,
-  "region": "pilbara"
+  "region": "gascoyne"
  },
  {
   "id": "yulumbu",

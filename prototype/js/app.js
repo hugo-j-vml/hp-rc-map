@@ -189,16 +189,36 @@
     var group = document.createElementNS(svgNS, "g");
     el.stage.appendChild(group);
     el.stageGroup = group;
-    var shape = document.createElementNS(svgNS, "path");
-    shape.setAttribute("d", OUTLINE.state);
-    shape.setAttribute("class", "state");
-    group.appendChild(shape);
-    OUTLINE.regionLines.forEach(function (d) {
-      var line = document.createElementNS(svgNS, "path");
-      line.setAttribute("d", d);
-      line.setAttribute("class", "region-line");
-      group.appendChild(line);
+    function path(d, cls) {
+      var node = document.createElementNS(svgNS, "path");
+      node.setAttribute("d", d);
+      node.setAttribute("class", cls);
+      return node;
+    }
+    // The state is drawn blank, then each service area is shaded on top, clipped to the coastline.
+    var defs = document.createElementNS(svgNS, "defs");
+    var clip = document.createElementNS(svgNS, "clipPath");
+    clip.setAttribute("id", "state-clip");
+    clip.appendChild(path(OUTLINE.state, ""));
+    defs.appendChild(clip);
+    group.appendChild(defs);
+    group.appendChild(path(OUTLINE.state, "state"));
+    Object.keys(window.RC_REGION_SHAPES).forEach(function (variant) {
+      var shapes = window.RC_REGION_SHAPES[variant];
+      var regionGroup = document.createElementNS(svgNS, "g");
+      regionGroup.setAttribute("clip-path", "url(#state-clip)");
+      regionGroup.setAttribute("class", "regions");
+      regionGroup.dataset.variant = variant;
+      C.regions.forEach(function (r) {
+        var d = shapes[r.id].map(function (pt, i) {
+          var p = window.projectWA(pt[1], pt[0]);
+          return (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1);
+        }).join("") + "Z";
+        regionGroup.appendChild(path(d, "region region-" + r.id));
+      });
+      group.appendChild(regionGroup);
     });
+    group.appendChild(path(OUTLINE.state, "state-edge"));
     var labels = document.createElement("div");
     labels.className = "map-labels";
     labels.id = "map-labels";
@@ -250,9 +270,9 @@
 
   function renderMarkers() {
     var labels = document.getElementById("map-labels");
-    labels.innerHTML = OUTLINE.regionLabels.map(function (l) {
-      var p = toScreen(l.x, l.y);
-      return '<span class="region-label" style="left:' + p.x + "px;top:" + p.y + 'px">' + esc(l.text) + "</span>";
+    labels.innerHTML = C.regions.map(function (r) {
+      var at = window.RC_REGION_LABELS[r.id], u = window.projectWA(at[1], at[0]), p = toScreen(u.x, u.y);
+      return '<span class="region-label" style="left:' + p.x + "px;top:" + p.y + 'px">' + esc(r.name) + "</span>";
     }).join("");
 
     var zoom = zoomLevel();
@@ -835,6 +855,8 @@
   // URL parameters (e.g. ?cards=1) override them so a particular set-up can be shared as a link.
   var OPTIONS = [
     { id: "cards", label: "Floating story cards", description: "Featured stories in the empty space around WA, on the opening zoom levels.", initial: false },
+    { id: "ngLands", label: "Goldfields takes in the NG lands",
+      description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
     { id: "pinned", label: "Pin story cards to the map", requires: "cards",
       description: "Cards sit at fixed map positions in the empty space and grow and shrink with the zoom, instead of staying put on screen.", initial: false },
   ];
@@ -897,7 +919,13 @@
       else toast(link);
     }
   });
+  function showRegionVariant() {
+    var variant = options.ngLands ? "ngLands" : "poster";
+    el.stage.querySelectorAll(".regions").forEach(function (g) { g.style.display = g.dataset.variant === variant ? "" : "none"; });
+  }
+
   function applyOptions() {
+    showRegionVariant();
     cardLayout = null;
     if (!state.selected) fitState();
     renderStoryCards();
@@ -1038,6 +1066,7 @@
 
   // ---------- Start ----------
   drawOutline();
+  showRegionVariant();
   render();
   fitState();
   routeFromHash();

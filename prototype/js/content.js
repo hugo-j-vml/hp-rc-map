@@ -9,9 +9,11 @@ window.RC_CONTENT = {
   ],
 
   regions: [
+    // Horizon Power's four service areas, as on its "Service area" poster.
     { id: "kimberley", name: "Kimberley" },
-    { id: "pilbara", name: "Pilbara & Mid West / Gascoyne" },
-    { id: "goldfields", name: "Goldfields-Esperance" },
+    { id: "pilbara", name: "Pilbara" },
+    { id: "gascoyne", name: "Gascoyne/Mid West" },
+    { id: "goldfields", name: "Esperance/Goldfields" },
   ],
 
   programs: [

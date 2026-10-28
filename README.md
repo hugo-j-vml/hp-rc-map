@@ -11,7 +11,8 @@ Live on GitHub Pages at https://hugo-j-vml.github.io/hp-rc-map/ (served from `ma
 It is built only from two inputs:
 
 - **Figma wireframes v2** ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map)): layout, copy, icons, markers and the WA outline.
-- **The communities spreadsheet** (`RESP_communities v3.4`): names, other names, coordinates and region for all 117 communities.
+- **The communities spreadsheet** (`RESP_communities v3.4`): names, other names, coordinates and Horizon Power district for all 117 communities.
+- **Horizon Power's "Service area" poster:** the four service areas (Kimberley, Pilbara, Gascoyne/Mid West, Esperance/Goldfields). Boundaries are traced in `prototype/js/outline.js`. The south west, served by the South West Interconnected System, is left blank.
 
 ### What works
 
@@ -33,6 +34,7 @@ Press **Shift + O** to open the options panel in the bottom-right corner. It hol
 
 - **Floating story cards:** featured stories sit in the empty space around WA (the sea, and NT/SA), as close to their community as they fit (keeping 24px clear of the coast, border and map edges), with a thin line to the dot. They are placed once against the opening view and stay put on screen while the map moves; only their lines follow the dots. They show on the opening view and the first zoom step, and are gone by the second. Clicking a card opens that community. On narrower screens WA shifts left to make room. A card that would sit more than about 280px from its community is left out. Desktop only.
 
+- **Goldfields takes in the NG lands:** the poster puts the 11 Ngaanyatjarra lands communities (Papulankutja, Warburton, Warakurna and others) inside the Gascoyne/Mid West band, but Horizon Power's district codes put them in Esperance/Goldfields. Either way they are counted in Esperance/Goldfields; this toggle only changes the drawing, redrawing Esperance/Goldfields north along the border so the shading matches.
 - **Pin story cards to the map** (needs floating story cards on): the same cards, but fixed to map positions in the empty space. They grow and shrink with the zoom like the map itself, so they never cover land or communities and never fade out. Dragging or scrolling over a card still moves the map.
 
 Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?cards=1&pinned=1`), which overrides the remembered settings, so you can send someone a specific layout.
@@ -66,7 +68,7 @@ pip install openpyxl
 python3 tools/build_data.py path/to/RESP_communities.xlsx
 ```
 
-Only public fields are written out. Internal columns, such as document management IDs and links, are left out of the prototype.
+Each community's region comes from Horizon Power's district code (`HP RC District` column): WKIM/EKIM → Kimberley, WPIL/EPIL → Pilbara, GS-NOMW/COMW → Gascoyne/Mid West, CEMW → Esperance/Goldfields. Only public fields are written out. Internal columns, such as document management IDs and links, are left out of the prototype.
 
 ## Fuller build (parked)
 
