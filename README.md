@@ -21,6 +21,7 @@ It is built only from three inputs:
 - Communities are grouped into numbered clusters when crowded, and the groups shrink as you zoom in. Click a cluster to zoom in. Names appear once you are zoomed in.
 - Search by community name, other name (for example "Balgo" or "Blackstone") or region.
 - Filters for region, program, type of work and status. Communities outside the filter fade, as in Figma.
+- Story cards in the side panel are clickable as a whole, with no "Read more" links (better for accessibility).
 - Community profiles:
   - A full "story" profile for the five flagship communities (Figma D03).
   - A simpler profile for everyone else (Figma D04).

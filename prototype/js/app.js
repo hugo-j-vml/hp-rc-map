@@ -495,9 +495,9 @@
     }
     var stories = C.stories.map(function (s) {
       var c = byId[s.community];
-      return '<article class="story-card"><h3>' + esc(s.label || displayName(c)) + "</h3>" +
-        "<p>" + esc(s.summary) + '</p><div class="placeholder">Image</div>' +
-        '<a class="link-arrow" href="#community=' + c.id + '" data-open="' + c.id + '">Read more' + icon("arrow-right") + "</a></article>";
+      // The whole card is clickable: the title is its one link, stretched over the card (no "Read more").
+      return '<article class="story-card"><h3><a href="#community=' + c.id + '" data-open="' + c.id + '">' + esc(s.label || displayName(c)) + "</a></h3>" +
+        "<p>" + esc(s.summary) + '</p><div class="placeholder" aria-hidden="true">Image</div></article>';
     }).join("");
 
     return '<div class="home">' +
