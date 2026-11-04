@@ -33,6 +33,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
 | `tools/build_data.py` | Spreadsheet → `data.js`. Writes public fields only |
 | `.gitignore` | Keeps font files and any stray `shots/` screenshots out of the repo |
+| `FIGMA-CHANGES.md` | Everything the prototype now does differently from the Figma v2 frames, with exact values. **Use it as the checklist when making a v3 of the wireframes in Figma**, and keep it up to date with each visible change |
 
 ## Inputs and where they live
 

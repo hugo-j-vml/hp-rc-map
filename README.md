@@ -67,6 +67,7 @@ The program, type of work and status filters run on the handful of sample works 
 | `prototype/js/content.js` | Stats, milestones, regions, programs, work types, stories and sample works from the brief, Figma and HP's site |
 | `prototype/fonts/` | Beausite Classic font files, on your own machine only (not committed) |
 | `tools/build_data.py` | Rebuilds `data.js` from the spreadsheet |
+| `FIGMA-CHANGES.md` | What has changed since the Figma v2 wireframes, for updating Figma |
 
 ### Updating the community data
 
