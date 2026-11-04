@@ -67,6 +67,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Key:** shows on load, then collapses to a "Key" pill on first map interaction. On mobile it starts as the pill.
 - **Mobile map controls:** the key pill and zoom buttons sit bottom right, just above the bottom sheet, and move up with the sheet when a profile opens (the sheet heights, 40% and 71%, are shared between `styles.css` and `visibleArea()` in `app.js`).
 - **Sidebar story cards are whole-card links, with no "Read more":** "Read more" links aren't accessible (they all read the same out of context). Each card's title is its one link, named after the community, stretched over the card with `::after`. Hover underlines the title; keyboard focus outlines the whole card. Use the same pattern for any new cards.
+- **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
 - **Placeholder data:** population, languages, Traditional Owners, service providers (RSPs) and works are placeholders for the life of this prototype. Program, type of work and status filters run on the sample works in `content.js` (from the Figma profiles).
@@ -92,6 +93,18 @@ To add an option:
 4. Document it in the README.
 
 Current options: `cards` (floating story cards), `pinned` (cards fixed to map coordinates, scaling with zoom), `ngLands` (NG lands region drawing), `progress` (milestone progress bars instead of stat tiles; milestones in `content.js`, icons from HP's Community progress page).
+
+## Regression checklist (before each push)
+
+Test scripts live in the session scratchpad and don't survive between sessions, so rebuild them with Playwright as needed. Check:
+
+- **Console:** no errors at 1920×1080, 1440×900 and 390×844, apart from the four expected font "file not found" errors when `prototype/fonts/` is empty.
+- **Labels:** zoomed all the way in (e.g. open `#community=embulgun`, then press + until it stops), all 117 communities show a name. Hovering a name highlights it in place without moving it, and clicking a name opens that community.
+- **Story cards** (`?cards=1`): all 5 placed at 1920 and 1440 wide, with Four Mile above Cockatoo Springs. Positions don't change on zoom or drag, and the cards fade by the second zoom step. With `&pinned=1` they scale with the map.
+- **Options panel:** Shift + O opens it, toggles apply straight away and are remembered after a reload, and `?option=0/1` links override that.
+- **Side panel:** the story cards have no "Read more", clicking anywhere on a card opens its community, and Tab + Enter works.
+- **Filters:** region counts are 78 / 17 / 8 / 14.
+- **Mobile:** the key and zoom buttons sit bottom right, just above the sheet, and move up when a profile opens.
 
 ## Environment gotchas (cloud sessions)
 
