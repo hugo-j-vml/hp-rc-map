@@ -1,6 +1,6 @@
 # Changes since Figma v2
 
-Everything the live prototype now does differently from the **v2 frames** in Figma ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`). Use it as the checklist for a v3 of the wireframes. The prototype's code (`prototype/css/styles.css` in particular) is the exact spec. Values below are taken from it.
+Everything the live prototype now does differently from the **v2 frames** in Figma ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`). **The v3 frames have been built from this list** (section "v3 · Built from the live prototype (Nov 2026)", node `72:3749`, with kit `70:3703`). For changes made after that, add them here and update the v3 frames. The prototype's code (`prototype/css/styles.css` in particular) is the exact spec. Values below are taken from it.
 
 Colours are the v2 kit greys: grey 050 `#f7f7f7`, 100 `#eeeeee`, 200 `#dedede`, 300 `#c4c4c4`, 500 `#8a8a8a`, 700 `#4d4d4d`, 900 `#1f1f1f`. Corners are 4px unless stated.
 
@@ -8,7 +8,7 @@ Colours are the v2 kit greys: grey 050 `#f7f7f7`, 100 `#eeeeee`, 200 `#dedede`, 
 
 | Figma v2 | Prototype now |
 |---|---|
-| Inter | **Beausite Classic** (HP brand font; Regular 400, Medium 500, Semibold 600, Bold 700). Inter is only the fallback |
+| Inter | **Beausite Classic** (HP brand font; Regular 400, Medium 500, Semibold 600, Bold 700). Inter is only the fallback. The v3 Figma frames still use Inter, as Beausite isn't available in Figma |
 | Desktop side panel 400px (560px only for the rich profile) | **560px for every view** (home, filters, both profiles), so it never jumps width |
 
 ## Header (D01–D04 desktop, M01–M04 mobile)

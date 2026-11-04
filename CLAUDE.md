@@ -33,12 +33,13 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
 | `tools/build_data.py` | Spreadsheet → `data.js`. Writes public fields only |
 | `.gitignore` | Keeps font files and any stray `shots/` screenshots out of the repo |
-| `FIGMA-CHANGES.md` | Everything the prototype now does differently from the Figma v2 frames, with exact values. **Use it as the checklist when making a v3 of the wireframes in Figma**, and keep it up to date with each visible change |
+| `FIGMA-CHANGES.md` | Everything the prototype does differently from the Figma v2 frames, with exact values. The v3 frames were built from it. Keep it up to date with each visible change, and update the v3 frames to match |
 
 ## Inputs and where they live
 
-- **Figma:** [Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`. **Use the v2 frames only. Ignore v1.**
-  - Kit: "Wireframe kit v2 (HP design system lookalikes)" `45:1926`.
+- **Figma:** [Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`. **v3 frames (built from this prototype, Nov 2026) are the current wireframes; v2 is kept as the original reference. Ignore v1.**
+  - v3 section "v3 · Built from the live prototype (Nov 2026)" `72:3749`: desktop D01–D05 (`72:3750`, `74:3955`, `75:4199`, `75:4455`, `78:4913`), scroll views D01b/D03b/D04b, options O1–O4 (`83:5876`, `83:6181`, `87:6544`, `83:6422`), mobile M01–M04b, and notes `88:6752`. Kit "Wireframe kit v3 (from live prototype)" `70:3703` holds the new WF3 components; unchanged v2 components are reused. Frames use Inter because Beausite isn't in Figma.
+  - v2 kit: "Wireframe kit v2 (HP design system lookalikes)" `45:1926`.
   - Desktop: `51:2011` (D01 map on load), `52:2193` (D02 filters), `52:2729` / `52:3189` (D03 rich profile and scroll), `52:3543` / `52:3912` (D04 simple profile and scroll), `52:4089` (D01b panel scroll).
   - Mobile: `53:3005`, `53:3177`, `53:3438`, `53:3859`, `53:4226`, `53:4510`.
   - Notes: `53:4707` (what changed in v0.2).
