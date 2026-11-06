@@ -10,6 +10,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 ## Working rules
 
+- **Commit titles say what changed,** e.g. "Remove the All communities link from profiles". Don't start every title with the same prefix: they become impossible to tell apart in the history.
 - **Commit and push straight to `main`.** No feature branches or PRs unless asked. Every push to `main` updates the live site: https://hugo-j-vml.github.io/hp-rc-map/ (GitHub Pages, `main`, root folder. The root `index.html` forwards to `prototype/`).
 - **UK English and Australian dollars** in all copy and docs.
 - **Keep it simple:** no frameworks, build step, package manager or external JavaScript libraries. It must still work when `prototype/index.html` is opened straight from disk (`file://`), so data is loaded as `<script>` files, not `fetch`.
@@ -71,7 +72,8 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Sidebar story cards are whole-card links, with no "Read more":** "Read more" links aren't accessible (they all read the same out of context). Each card's title is its one link, named after the community, stretched over the card with `::after`. Hover underlines the title; keyboard focus outlines the whole card. Use the same pattern for any new cards.
 - **Profiles have no tabs (client edit, Nov 2026):** the content scrolls down the panel in one column. The "Community story" tag scrolls the panel to the story (`data-jump`), without changing the route hash.
 - **Hear the name:** a speaker button after the community name in both profiles (`nameRow()` in `app.js`), labelled "Hear how to say [name]". It will play a recording of a community member saying the name, with permission. Never use text-to-speech, which gets Aboriginal names wrong. There are no recordings yet, so it shows a placeholder message.
-- **Closing a profile:** the cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view, on every screen size (`closeProfile()` → `fitState(true)`). "All communities" goes back to the list but keeps the current zoom, so people can keep exploring nearby.
+- **Closing a profile:** the cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view, on every screen size (`closeProfile()` → `fitState(true)`). There is no "All communities" back link (client edit): it did nothing the cross doesn't, so the profile bar holds only Share and Close.
+- **About box:** a profile's key facts sit in a grey box like the service provider one, headed "About [name]", with a dashed placeholder for the community's work and progress (`aboutBlock()` in `app.js`). What goes in it is still to be worked out with the client. On simple profiles with no works data, it replaces the "works will show here" note.
 - **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
@@ -84,6 +86,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Community details:** population, languages, Traditional Owners, and RSP contacts per community.
 - **Works data:** activities by community, program, type and status, to replace the sample works.
 - **Story content:** final stories for the five flagships, including whether Four Mile or Embulgun is the fifth.
+- **Work and progress in the About box:** what to show for each community (for example its milestone, what's done and what's next).
 - **Name recordings:** audio of a community member saying each community's name (with permission), for the "Hear how to say" button.
 - **Filter and speaker icons:** the HP RC icon set has neither; ask the designer for official ones.
 - **Which layout options to keep:** floating vs pinned story cards, and progress bars vs tiles.
@@ -110,7 +113,7 @@ Test scripts live in the session scratchpad and don't survive between sessions, 
 - **Options panel:** Shift + O opens it, toggles apply straight away and are remembered after a reload, and `?option=0/1` links override that.
 - **Side panel:** the story cards have no "Read more", clicking anywhere on a card opens its community, and Tab + Enter works.
 - **Filters:** region counts are 78 / 17 / 8 / 14.
-- **Close:** the profile's cross and Escape zoom back out to exactly the opening view (with and without `?cards=1`); "All communities" keeps the zoom.
+- **Close:** the profile's cross and Escape zoom back out to exactly the opening view (with and without `?cards=1`).
 - **Mobile:** the key and zoom buttons sit bottom right, just above the sheet, and move up when a profile opens.
 
 ## Environment gotchas (cloud sessions)

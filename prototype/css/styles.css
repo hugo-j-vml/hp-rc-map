@@ -255,11 +255,9 @@ a { color: inherit; }
 /* ---------- Profile panel ---------- */
 .profile-bar {
   position: sticky; top: 0; z-index: 2;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-end;
   height: 48px; padding: 0 32px; background: var(--white);
 }
-.profile-bar .back { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
-.profile-bar .back .icon { width: 20px; height: 20px; }
 .profile-bar .actions { display: flex; gap: 16px; }
 .profile-bar .actions .icon { width: 24px; height: 24px; }
 .hero { border-radius: 0; }
@@ -277,7 +275,7 @@ a { color: inherit; }
 .say-name.playing { background: var(--grey-900); color: var(--white); }
 .profile-name .aka { color: var(--grey-700); margin-top: 4px; font-size: 15px; }
 .profile-name .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 32px; }
 .fact span { display: block; font-size: 14px; color: var(--grey-700); }
 .fact strong { display: block; font-size: 18px; font-weight: 600; }
 .section h3 { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
@@ -312,6 +310,12 @@ a { color: inherit; }
 .explainer p { font-size: 14px; color: var(--grey-700); }
 .explainer .link-arrow { font-size: 14px; margin-top: 12px; }
 .explainer .link-arrow .icon { width: 18px; height: 18px; }
+.about { background: var(--grey-100); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.about small { font-size: 14px; color: var(--grey-700); }
+.progress-placeholder {
+  padding: 16px; border: 1px dashed var(--grey-500); border-radius: var(--radius);
+  background: var(--white); color: var(--grey-700); font-size: 14px;
+}
 .contact { background: var(--grey-100); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 12px; }
 .contact small { font-size: 14px; color: var(--grey-700); }
 .contact h3 { font-size: 24px; font-weight: 600; line-height: 1.25; margin: 0; }
@@ -503,6 +507,7 @@ a { color: inherit; }
   .profile-main { padding: 24px 20px; gap: 28px; }
   .profile-name .tags { flex-direction: column; align-items: flex-start; }
   .facts { gap: 16px; }
+  .about { padding: 20px; }
   .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }
   .filters-foot { padding: 16px 20px; }
 }

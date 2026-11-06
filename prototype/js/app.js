@@ -622,8 +622,7 @@
   }
 
   function profileBar(c) {
-    return '<div class="profile-bar"><button type="button" class="back" data-action="home">' + icon("chevron-left") + "All communities</button>" +
-      '<div class="actions"><button type="button" data-action="share" aria-label="Share ' + esc(c.name) + '">' + icon("share") + "</button>" +
+    return '<div class="profile-bar"><div class="actions"><button type="button" data-action="share" aria-label="Share ' + esc(c.name) + '">' + icon("share") + "</button>" +
       '<button type="button" data-action="close" aria-label="Close">' + icon("close") + "</button></div></div>";
   }
 
@@ -657,9 +656,8 @@
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka +
       '<div class="tags">' + visited + '<a class="tag tag-outline" href="#story" data-jump="story">Community story</a></div></div>' +
-      '<div class="facts">' +
-      fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
-      fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]") + "</div>" +
+      aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
+        fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) +
       storyHtml +
       '<section class="section" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" +
       contactBlock() + nearbyList(c, 3) +
@@ -681,8 +679,9 @@
       '<div class="placeholder hero small">Illustration (no photos yet)</div>' +
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
-      '<div class="facts">' + fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]") + "</div>" +
-      '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" +
+      aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
+      // With no works data yet, the progress placeholder in the About box stands in for the works list.
+      (c.works.length ? '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") +
       explainers + contactBlock() + nearbyList(c, 2) +
       '<p class="updated">Last updated [date] · Something not right? <a href="#yarn">Yarn with us</a></p>' +
       "</div>";
@@ -696,8 +695,16 @@
       icon("sound") + "</button></div>";
   }
 
+  // The community's key details in a box like the service provider one, with room for its work and progress.
+  function aboutBlock(c, facts) {
+    return '<section class="about" aria-label="About ' + esc(c.name) + '"><small>About ' + esc(c.name) + "</small>" +
+      '<div class="facts">' + facts + "</div>" +
+      '<div class="progress-placeholder">[Work and progress in ' + esc(c.name) + ": to be worked out. " +
+      "For example, which milestone the community has reached, what's done and what's next.]</div></section>";
+  }
+
   function fact(label, value) {
-    return '<div class="fact"><span>' + esc(label) + "</span><strong>" + esc(value) + "</strong></div>";
+    return '<div class="fact"><span>' + esc(label) + "</span><strong>" + esc(value).replace(/\//g, "/<wbr>") + "</strong></div>"; // e.g. Esperance/Goldfields can wrap on mobile
   }
 
   // ---------- Panel rendering ----------
@@ -740,7 +747,6 @@
   }
 
   // The cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view.
-  // "All communities" keeps the current zoom, so people can carry on exploring nearby.
   function closeProfile() {
     goHome();
     fitState(true);
