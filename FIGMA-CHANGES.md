@@ -26,7 +26,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 ## Side panel: home (D01, D01b, M01)
 
-- **Order:** the stats come before the search row, as before. On mobile the search row comes first, as before.
+- **No stats (client edit, Nov 2026):** the four stat tiles are gone. The intro leads straight into the search row, then the story list. **Not yet in the v3 Figma frames.**
 - **Search row:**
   - **Split:** the search box and Filters button now split the panel width **50/50**, 8px apart.
   - **Search box:** 48px high, with a **2px grey 900 border** and 4px corners (the same as the Filters button). Text and placeholder are **16px Semibold, grey 900** (the same as Filters).
@@ -95,24 +95,14 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 ## New layout options (prototype-only experiments, behind Shift + O)
 
-These aren't in Figma at all. They're being compared, and the client is to choose. If one is picked, it needs new frames.
+This one is being compared, and the client is to choose.
 
-1. **Floating story cards** (`?cards=1`):
-   - **Where:** the five featured stories sit as small cards in the empty space around WA (the sea and NT/SA), as close to their community as they fit. They keep 24px clear of the coast, border and map edges.
-   - **Leader lines:** a thin grey 500 line runs from each card to its dot.
-   - **Card:** 248 × 80, white, 1px grey 300 border, 64px image placeholder. Name 14px Semibold, summary 12px grey 700, up to 2 lines.
-   - **Behaviour:** the cards stay put on screen, show on the opening view and the first zoom step, and are gone by the second.
-   - **Order:** they're placed northernmost-first, so Four Mile sits above Cockatoo Springs.
-2. **Pin story cards to the map** (`?pinned=1`): the same cards, fixed to the map and scaling with the zoom.
-3. **Goldfields takes in the NG lands** (`?ngLands=1`): an alternative region drawing where Esperance/Goldfields extends north along the border to cover the 11 Ngaanyatjarra lands communities. There's an open question for the client: which drawing is right?
-4. **Progress bars instead of tiles** (`?progress=1`):
-   - **What changes:** the four stat tiles are replaced with **"Community transition progress"**, the four milestones from HP's Community progress page: Build strong community connections; Complete initial safety inspections and upgrades; Future energy system planning and endorsement; Future energy system delivery.
-   - **Each row:** the HP milestone icon (28px), the step number (13px Semibold, grey 700), the title (14px Semibold) and a count on the right (e.g. "117/117", or "[86]/117" for illustrative numbers). Under that, a slim **6px bar** (grey 200 track, grey 900 fill, 3px corners).
-   - **Stage 1:** complete, with a tick next to its count.
-   - **Layout:** 12px between rows, and a small "Communities" caption right-aligned on the heading row. **No $65.8M line.** The block is about the same height as the tiles.
+- **Goldfields takes in the NG lands** (`?ngLands=1`): an alternative region drawing where Esperance/Goldfields extends north along the border to cover the 11 Ngaanyatjarra lands communities. There's an open question for the client: which drawing is right?
+
+Floating story cards, pinned story cards and progress bars were tried here and **removed after client review (Nov 2026)**. The v3 option frames O1 (floating cards), O2 (pinned cards) and O4 (progress bars) are now out of date.
 
 The options panel itself (black, bottom right) is a prototype tool, not part of the design.
 
 ## Unchanged from v2
 
-Stats tile content and style, filter tile styles (program tiles with descriptions, selected = solid fill), facts, story sections (video, quote, photos, before and after), the "What is a smart meter?" explainer, the "Yarn with us" contact block, the work items with status tags, and the map's grey background (`#f5f5f5`).
+Filter tile styles (program tiles with descriptions, selected = solid fill), facts, story sections (video, quote, photos, before and after), the "What is a smart meter?" explainer, the "Yarn with us" contact block, the work items with status tags, and the map's grey background (`#f5f5f5`).

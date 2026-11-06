@@ -129,14 +129,6 @@
     var pad = isMobile() ? 24 : 40;
     baseK = Math.min((a.w - pad * 2) / OUTLINE.width, (a.h - pad * 2) / OUTLINE.height);
     var target = { k: baseK, x: a.x + (a.w - OUTLINE.width * baseK) / 2, y: a.y + (a.h - OUTLINE.height * baseK) / 2 };
-    // With floating story cards on, shift WA left if needed so a column of cards fits beside the NT/SA border.
-    if (options.cards && !isMobile()) {
-      var rightGap = a.w - (target.x + OUTLINE.width * baseK);
-      var need = CARD_W + CARD_LAND_CLEAR + CARD_EDGE;
-      if (rightGap < need) target.x -= Math.min(need - rightGap, target.x - pad);
-    }
-    homeView = { k: target.k, x: target.x, y: target.y };
-    cardLayout = null;
     moveTo(target, animate);
   }
   function zoomLevel() { return view.k / baseK; }
@@ -283,9 +275,7 @@
     // Stories and the selected community always show on their own; everything else groups when crowded.
     var solo = [], inFilter = [], outFilter = [];
     communities.forEach(function (c) {
-      // Floating story cards point at their community, so stories stay as their own dots while cards show.
-      var cardsShowing = options.cards && !isMobile() && zoom < CARD_MAX_ZOOM;
-      if (c.id === state.selected || (c.story && (zoom >= STORY_SOLO_ZOOM || cardsShowing))) solo.push(c);
+      if (c.id === state.selected || (c.story && zoom >= STORY_SOLO_ZOOM)) solo.push(c);
       else if (matches(c)) inFilter.push(c);
       else outFilter.push(c);
     });
@@ -339,7 +329,6 @@
         '<span class="tooltip">' + esc(displayName(c)) + "</span></button>";
     }).join("");
     el.markers.innerHTML = html;
-    renderStoryCards();
   }
 
   // Puts a community's name in the first free spot around its dot: right, then left, above, below and the
@@ -484,9 +473,6 @@
   function renderHome() {
     var count = activeFilterCount();
     var results = search(state.query);
-    var stats = options.progress ? renderProgress() : '<div class="stats">' + C.stats.map(function (s) {
-      return '<div class="stat"><strong>' + esc(s.value.replace("{count}", communities.length)) + "</strong><span>" + esc(s.label) + "</span></div>";
-    }).join("") + "</div>";
     var resultsHtml = "";
     if (state.query.trim()) {
       resultsHtml = '<ul class="results" id="results" aria-label="Search results">' + (results.length
@@ -506,7 +492,6 @@
     return '<div class="home">' +
       "<h1>Power for remote communities</h1>" +
       '<p class="intro">See the work we\'re doing with ' + communities.length + " remote Aboriginal communities across WA to keep the power on, safely and reliably.</p>" +
-      stats +
       '<form class="search" role="search" id="search-form">' +
       '<label class="visually-hidden" for="search-input">Search communities</label>' +
       '<div class="search-field"><input id="search-input" type="search" autocomplete="off" placeholder="Search" value="' + esc(state.query) + '" aria-controls="results">' +
@@ -516,28 +501,6 @@
       '<section class="stories" id="stories" aria-label="Community stories">' + stories + "</section>" +
       "</div>";
   }
-
-  // Option: the stat tiles as progress through the four milestones of each community's transition.
-  function renderProgress() {
-    var total = communities.length;
-    return '<section class="progress" aria-labelledby="progress-h">' +
-      '<div class="progress-head"><h2 id="progress-h">Community transition progress</h2><span>Communities</span></div>' +
-      '<ol class="milestones">' + C.milestones.map(function (m) {
-        var n = m.count === "{count}" ? total : m.count;
-        var shown = m.placeholder ? "[" + n + "]" : String(n);
-        var done = n >= total;
-        var label = m.title + ": " + n + " of " + total + " communities" + (done && m.note ? ". " + m.note : "");
-        return '<li class="milestone' + (done ? " done" : "") + '" title="' + esc(done && m.note ? m.note : "") + '">' +
-          icon(m.icon) +
-          '<div class="milestone-body"><div class="milestone-head"><span class="step">' + esc(m.step) + "</span>" +
-          '<span class="title">' + esc(m.title) + "</span>" +
-          '<span class="count">' + (done ? icon("check") : "") + "<span><strong>" + esc(shown) + "</strong>/" + total + "</span></span></div>" +
-          '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + n + '" aria-label="' + esc(label) + '">' +
-          '<span style="width:' + (n / total * 100).toFixed(1) + '%"></span></div></div></li>';
-      }).join("") + "</ol>" +
-      "</section>";
-  }
-
 
   // ---------- Panel: filters ----------
   function tile(group, item, opts) {
@@ -897,22 +860,15 @@
       var c = state.selected && byId[state.selected];
       fitState();
       if (c) centreOn(c.x, c.y, 5, false);
-      cardLayout = null;
-      renderStoryCards();
     }, 150);
   });
 
   // ---------- Prototype options (Shift + O) ----------
   // Layout experiments that can be switched on and off. Settings are remembered in this browser, and
-  // URL parameters (e.g. ?cards=1) override them so a particular set-up can be shared as a link.
+  // URL parameters (e.g. ?ngLands=1) override them so a particular set-up can be shared as a link.
   var OPTIONS = [
-    { id: "cards", label: "Floating story cards", description: "Featured stories in the empty space around WA, on the opening zoom levels.", initial: false },
-    { id: "pinned", label: "Pin story cards to the map", requires: "cards",
-      description: "Cards sit at fixed map positions in the empty space and grow and shrink with the zoom, instead of staying put on screen.", initial: false },
     { id: "ngLands", label: "Goldfields takes in the NG lands",
       description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
-    { id: "progress", label: "Progress bars instead of tiles",
-      description: "Swaps the four stat tiles for progress through the four milestones of each community's transition.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
@@ -940,7 +896,7 @@
       '<div class="options-head"><h2 id="options-title">Prototype options</h2>' +
       '<button type="button" data-options="close" aria-label="Close options">' + icon("close") + "</button></div>" +
       '<ul class="options-list">' + OPTIONS.map(function (o) {
-        // An option that builds on another (e.g. pinning needs the cards) is greyed out until that one is on.
+        // An option that builds on another (set with requires) is greyed out until that one is on.
         var off = o.requires && !options[o.requires];
         return '<li><label class="option-row' + (off ? " disabled" : "") + '"><span class="option-text"><strong>' + esc(o.label) + "</strong><small>" + esc(o.description) + "</small></span>" +
           '<input type="checkbox" role="switch" data-option="' + o.id + '"' + (options[o.id] ? " checked" : "") + (off ? " disabled" : "") + '><span class="switch" aria-hidden="true"></span></label></li>';
@@ -980,146 +936,6 @@
 
   function applyOptions() {
     showRegionVariant();
-    if (state.view === "home") render({ keepScroll: true });
-    cardLayout = null;
-    if (!state.selected) fitState();
-    renderStoryCards();
-  }
-
-  // ---------- Option: floating story cards ----------
-  // Featured stories sit in the empty space around WA (sea, and NT/SA), as close to their community as they fit,
-  // with a leader line to the dot. They are placed once, against the opening view, and stay put on screen;
-  // only the leader lines follow the dots. They fade out once you zoom in past the first couple of steps.
-  var CARD_W = 248, CARD_H = 80;
-  var CARD_MAX_ZOOM = 2.2; // gone by the second zoom step (each step is x1.6)
-  var CARD_LAND_CLEAR = 24;  // breathing room between a card and the coast or border
-  var CARD_EDGE = 24;        // and between a card and the edge of the map area
-  var CARD_GAP = 12;         // between cards, and around the key and zoom buttons
-  var CARD_MAX_REACH = 280;  // a card further than this from its community is left out rather than drawn across the state
-  var cardLayer = document.getElementById("story-cards");
-  var cardLayout = null;     // { communityId: { x, y, ux, uy } } card positions on the opening view (screen px) and on the map (outline units)
-  var cardEls = null;
-  var homeView = null;       // the opening, whole-of-WA view the cards are laid out against
-
-  function buildStoryCards() {
-    cardLayer.innerHTML = '<svg class="story-lines" aria-hidden="true"></svg>' + C.stories.map(function (s) {
-      var c = byId[s.community];
-      return '<button type="button" class="story-float" data-open="' + c.id + '" aria-label="Read the story: ' + esc(displayName(c)) + '">' +
-        '<span class="placeholder">Image</span><span class="text"><strong>' + esc(s.label || displayName(c)) + "</strong>" +
-        "<small>" + esc(s.summary) + "</small></span></button>";
-    }).join("");
-    cardEls = {};
-    cardLayer.querySelectorAll(".story-float").forEach(function (b) { cardEls[b.dataset.open] = b; });
-  }
-
-  cardLayer.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-open]");
-    if (t && !moved) openProfile(t.dataset.open);
-  });
-
-  function renderStoryCards() {
-    if (!options.cards || isMobile() || !homeView) {
-      cardLayer.classList.add("is-hidden");
-      cardLayer.innerHTML = "";
-      cardEls = null;
-      return;
-    }
-    if (!cardEls) buildStoryCards();
-    if (!cardLayout) cardLayout = layoutStoryCards();
-    // Pinned cards live in the empty space on the map itself, so they never need to get out of the way.
-    cardLayer.classList.toggle("is-hidden", !options.pinned && zoomLevel() >= CARD_MAX_ZOOM);
-    cardLayer.classList.toggle("pinned", !!options.pinned);
-    positionStoryCards();
-  }
-
-  function positionStoryCards() {
-    var filtering = activeFilterCount() > 0;
-    var lines = "";
-    C.stories.forEach(function (s) {
-      var c = byId[s.community], card = cardEls[c.id], pos = cardLayout[c.id];
-      if (!pos) { card.hidden = true; return; }
-      // Fixed cards keep their opening-view spot on screen; pinned cards follow their map position and scale with the zoom.
-      var x = pos.x, y = pos.y, scale = 1;
-      if (options.pinned) {
-        var at = toScreen(pos.ux, pos.uy);
-        x = at.x; y = at.y; scale = view.k / homeView.k;
-      }
-      card.hidden = false;
-      card.style.left = x + "px";
-      card.style.top = y + "px";
-      card.style.transform = scale === 1 ? "" : "scale(" + scale + ")";
-      card.classList.toggle("faded", filtering && !matches(c));
-      // Leader line from the dot (wherever the map has moved it) to the nearest point on the card's edge.
-      var dot = toScreen(c.x, c.y), cw = CARD_W * scale, ch = CARD_H * scale;
-      var nx = Math.max(x, Math.min(dot.x, x + cw)), ny = Math.max(y, Math.min(dot.y, y + ch));
-      lines += '<line x1="' + dot.x + '" y1="' + dot.y + '" x2="' + nx + '" y2="' + ny + '"/>';
-    });
-    cardLayer.querySelector(".story-lines").innerHTML = lines;
-  }
-
-  function layoutStoryCards() {
-    var size = mapSize(), w = size.w, h = size.h, v = homeView;
-    function home(c) { return { x: v.x + c.x * v.k, y: v.y + c.y * v.k }; }
-    // Paint the state onto a hidden canvas so we can test whether a card would cover land.
-    var canvas = document.createElement("canvas");
-    canvas.width = w; canvas.height = h;
-    var ctx = canvas.getContext("2d");
-    ctx.setTransform(v.k, 0, 0, v.k, v.x, v.y);
-    ctx.fill(new Path2D(OUTLINE.state));
-    var land = ctx.getImageData(0, 0, w, h).data;
-    function isLand(px, py) { return land[((py | 0) * w + (px | 0)) * 4 + 3] > 0; }
-
-    var mapRect = el.map.getBoundingClientRect();
-    var blocked = [];
-    [document.getElementById("legend"), document.querySelector(".zoom")].forEach(function (node) {
-      var r = node.getBoundingClientRect();
-      blocked.push({ x1: r.left - mapRect.left - CARD_GAP, y1: r.top - mapRect.top - CARD_GAP, x2: r.right - mapRect.left + CARD_GAP, y2: r.bottom - mapRect.top + CARD_GAP });
-    });
-    communities.forEach(function (c) {
-      var p = home(c);
-      blocked.push({ x1: p.x - 12, y1: p.y - 12, x2: p.x + 12, y2: p.y + 12 });
-    });
-
-    function fits(x, y) {
-      var x2 = x + CARD_W, y2 = y + CARD_H;
-      for (var i = 0; i < blocked.length; i++) {
-        var b = blocked[i];
-        if (x < b.x2 && x2 > b.x1 && y < b.y2 && y2 > b.y1) return false;
-      }
-      for (var sy = y - CARD_LAND_CLEAR; sy <= y2 + CARD_LAND_CLEAR; sy += 6) {
-        for (var sx = x - CARD_LAND_CLEAR; sx <= x2 + CARD_LAND_CLEAR; sx += 6) {
-          if (sx >= 0 && sy >= 0 && sx < w && sy < h && isLand(sx, sy)) return false;
-        }
-      }
-      return true;
-    }
-
-    var layout = {};
-    // Place cards for the northernmost communities first, so stacked cards run in the same order as their
-    // dots and the leader lines don't cross (e.g. Four Mile sits just north of Cockatoo Springs).
-    var northFirst = C.stories.slice().sort(function (a, b) { return byId[b.community].lat - byId[a.community].lat; });
-    northFirst.forEach(function (s) {
-      var c = byId[s.community], dot = home(c);
-      var candidates = [];
-      for (var y = CARD_EDGE; y + CARD_H <= h - CARD_EDGE; y += 8) {
-        for (var x = CARD_EDGE; x + CARD_W <= w - CARD_EDGE; x += 8) {
-          var dx = Math.max(x - dot.x, 0, dot.x - (x + CARD_W));
-          var dy = Math.max(y - dot.y, 0, dot.y - (y + CARD_H));
-          var d = dx * dx + dy * dy;
-          if (d <= CARD_MAX_REACH * CARD_MAX_REACH) candidates.push({ x: x, y: y, d: d });
-        }
-      }
-      candidates.sort(function (a, b) { return a.d - b.d; });
-      for (var i = 0; i < candidates.length; i++) {
-        var cand = candidates[i];
-        if (fits(cand.x, cand.y)) {
-          layout[c.id] = { x: cand.x, y: cand.y, ux: (cand.x - v.x) / v.k, uy: (cand.y - v.y) / v.k };
-          blocked.push({ x1: cand.x - CARD_GAP, y1: cand.y - CARD_GAP, x2: cand.x + CARD_W + CARD_GAP, y2: cand.y + CARD_H + CARD_GAP });
-          break;
-        }
-      }
-    });
-    return layout;
   }
 
   // ---------- Start ----------

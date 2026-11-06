@@ -27,8 +27,8 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | `index.html` (repo root) | Forwards to `prototype/`, so GitHub Pages serves the prototype from the repo root |
 | `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, the four milestone icons from HP's Community progress page, and filter and speaker icons drawn to match (the kit has neither) |
 | `prototype/css/styles.css` | All styles. Tokens at the top. Mobile rules under `@media (max-width: 900px)` |
-| `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel, floating story cards |
-| `prototype/js/content.js` | Stats, regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
+| `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel |
+| `prototype/js/content.js` | Milestones (kept for the work and progress box), regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
 | `prototype/js/outline.js` | The WA outline (exported from Figma), the four service-area shapes and label spots, and `projectWA(lat, lng)` |
 | `prototype/js/data.js` | **Generated.** The 117 communities. Don't hand-edit; run `tools/build_data.py` |
 | `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
@@ -74,8 +74,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Hear the name:** a speaker button after the community name in both profiles (`nameRow()` in `app.js`), labelled "Hear how to say [name]". It will play a recording of a community member saying the name, with permission. Never use text-to-speech, which gets Aboriginal names wrong. There are no recordings yet, so it shows a placeholder message.
 - **Closing a profile:** the cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view, on every screen size (`closeProfile()` → `fitState(true)`). There is no "All communities" back link (client edit): it did nothing the cross doesn't, so the profile bar holds only Share and Close.
 - **About box:** a profile's key facts sit in a grey box like the service provider one, headed "About [name]", with a dashed placeholder for the community's work and progress (`aboutBlock()` in `app.js`). What goes in it is still to be worked out with the client. On simple profiles with no works data, it replaces the "works will show here" note.
-- **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
-- **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
+- **Landing panel has no stats (client edit, Nov 2026):** the four stat tiles ($65.8M and so on) and the progress bars option are gone; the intro leads straight into the search row and the story list. The floating and pinned story cards options are gone too. The milestones data in `content.js` and their icons are kept for the profile's work and progress box.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
 - **Placeholder data:** population, languages, Traditional Owners, service providers (RSPs) and works are placeholders for the life of this prototype. Program, type of work and status filters run on the sample works in `content.js` (from the Figma profiles).
 
@@ -89,11 +88,10 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Work and progress in the About box:** what to show for each community (for example its milestone, what's done and what's next).
 - **Name recordings:** audio of a community member saying each community's name (with permission), for the "Hear how to say" button.
 - **Filter and speaker icons:** the HP RC icon set has neither; ask the designer for official ones.
-- **Which layout options to keep:** floating vs pinned story cards, and progress bars vs tiles.
 
 ## Prototype options panel (Shift + O)
 
-Layout experiments the user can switch on and off to compare. They are stored in `localStorage` (`rcm-prototype-options`) and can be overridden by URL parameters (`?cards=1&pinned=1&ngLands=1&progress=1`).
+Layout experiments the user can switch on and off to compare. They are stored in `localStorage` (`rcm-prototype-options`) and can be overridden by URL parameters (e.g. `?ngLands=1`).
 
 To add an option:
 1. Add an entry to the `OPTIONS` array in `app.js`: `{ id, label, description, initial, requires? }`. `requires` greys it out until another option is on.
@@ -101,7 +99,7 @@ To add an option:
 3. React to changes in `applyOptions()`.
 4. Document it in the README.
 
-Current options: `cards` (floating story cards), `pinned` (cards fixed to map coordinates, scaling with zoom), `ngLands` (NG lands region drawing), `progress` (milestone progress bars instead of stat tiles; milestones in `content.js`, icons from HP's Community progress page).
+Current options: `ngLands` (NG lands region drawing). Floating story cards, pinned cards and progress bars were removed after client review (Nov 2026); they're in the git history if needed again.
 
 ## Regression checklist (before each push)
 
@@ -109,11 +107,10 @@ Test scripts live in the session scratchpad and don't survive between sessions, 
 
 - **Console:** no errors at 1920×1080, 1440×900 and 390×844, apart from the four expected font "file not found" errors when `prototype/fonts/` is empty.
 - **Labels:** zoomed all the way in (e.g. open `#community=embulgun`, then press + until it stops), all 117 communities show a name. Hovering a name highlights it in place without moving it, and clicking a name opens that community.
-- **Story cards** (`?cards=1`): all 5 placed at 1920 and 1440 wide, with Four Mile above Cockatoo Springs. Positions don't change on zoom or drag, and the cards fade by the second zoom step. With `&pinned=1` they scale with the map.
 - **Options panel:** Shift + O opens it, toggles apply straight away and are remembered after a reload, and `?option=0/1` links override that.
 - **Side panel:** the story cards have no "Read more", clicking anywhere on a card opens its community, and Tab + Enter works.
 - **Filters:** region counts are 78 / 17 / 8 / 14.
-- **Close:** the profile's cross and Escape zoom back out to exactly the opening view (with and without `?cards=1`).
+- **Close:** the profile's cross and Escape zoom back out to exactly the opening view.
 - **Mobile:** the key and zoom buttons sit bottom right, just above the sheet, and move up when a profile opens.
 
 ## Environment gotchas (cloud sessions)

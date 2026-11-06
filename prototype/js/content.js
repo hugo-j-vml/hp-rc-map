@@ -1,14 +1,8 @@
 // Prototype content taken from the brief and the v2 Figma wireframes.
 // Text in [square brackets] is placeholder copy, as in Figma. Nothing here is approved for publishing yet.
 window.RC_CONTENT = {
-  stats: [
-    { value: "$65.8M", label: "invested across 3 programs" },
-    { value: "{count}", label: "remote communities, all visited by Horizon Power" },
-    { value: "13", label: "new local power systems funded" },
-    { value: "18", label: "communities with smart meters" },
-  ],
-
-  // The four milestones of each community's transition, from HP's Community progress page.
+  // The four milestones of each community's transition, from HP's Community progress page. Not shown at the
+  // moment (the progress bars were removed); kept, with their icons in index.html, for the profile's work and progress box.
   // Stage 1 is done: HP has visited all communities in person. Counts in [brackets] are illustrative only.
   milestones: [
     { step: "01", title: "Build strong community connections", icon: "connections", count: "{count}",
