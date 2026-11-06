@@ -3,6 +3,7 @@
 window.RC_CONTENT = {
   // The five transition milestones each community moves through (client mock-up, Nov 2026), shown in the profile's
   // About box. Every community gets the same illustrative statuses until HP supplies real ones; dates are placeholders.
+  // Not-started milestones are kept here but never shown (see milestoneList() in app.js).
   milestones: [
     { title: "Initial community engagement", status: "completed" },
     { title: "Initial safety upgrades", status: "completed" },

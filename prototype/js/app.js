@@ -664,12 +664,15 @@
   }
 
   // The community's transition milestones. Placeholder statuses and dates until HP supplies real ones per community.
+  // Only completed and in-progress milestones show: HP doesn't want to draw attention to work that hasn't started.
   function milestoneList() {
-    var words = { "completed": "Completed [dd mmm yy]", "in-progress": "In progress · Due [completion date]", "not-started": "Not started" };
-    return '<div class="milestones"><h3>Transition milestones</h3><ol>' + C.milestones.map(function (m) {
+    var words = { "completed": "Completed [dd mmm yy]", "in-progress": "In progress · Due [completion date]" };
+    var shown = C.milestones.filter(function (m) { return words[m.status]; });
+    if (!shown.length) return "";
+    return '<ol class="milestones" aria-label="Transition milestones">' + shown.map(function (m) {
       return '<li class="milestone ' + m.status + '">' + icon(m.status === "completed" ? "done" : "image-placeholder") +
         "<span><strong>" + esc(m.title) + "</strong><small>" + esc(words[m.status]) + "</small></span></li>";
-    }).join("") + "</ol></div>";
+    }).join("") + "</ol>";
   }
 
   function fact(label, value) {
