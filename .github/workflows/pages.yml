@@ -1,0 +1,36 @@
+# Publishes the prototype to GitHub Pages on every push to main.
+# It replaces GitHub's built-in "pages build and deployment" run, so each run in the Actions tab
+# is titled with the commit message rather than the same generic name.
+# Needs Settings → Pages → Build and deployment → Source set to "GitHub Actions".
+name: Deploy prototype
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push replaces a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # Publishes the repo as is (the root index.html forwards to prototype/). Font files are git-ignored, so they're never included.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

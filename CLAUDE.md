@@ -11,7 +11,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 ## Working rules
 
 - **Commit titles say what changed,** e.g. "Remove the All communities link from profiles". Don't start every title with the same prefix: they become impossible to tell apart in the history.
-- **Commit and push straight to `main`.** No feature branches or PRs unless asked. Every push to `main` updates the live site: https://hugo-j-vml.github.io/hp-rc-map/ (GitHub Pages, `main`, root folder. The root `index.html` forwards to `prototype/`).
+- **Commit and push straight to `main`.** No feature branches or PRs unless asked. Every push to `main` updates the live site: https://hugo-j-vml.github.io/hp-rc-map/ (GitHub Pages, deployed by `.github/workflows/pages.yml`, so each run in the Actions tab is titled with its commit message. The root `index.html` forwards to `prototype/`).
 - **UK English and Australian dollars** in all copy and docs.
 - **Keep it simple:** no frameworks, build step, package manager or external JavaScript libraries. It must still work when `prototype/index.html` is opened straight from disk (`file://`), so data is loaded as `<script>` files, not `fetch`.
 - **Brand font, never committed:** Horizon Power's font is Beausite Classic (Fatype), licensed for internal HP use only. The `.woff2` files go in `prototype/fonts/`, which git ignores, so they never reach the public repo or Pages site; there everything falls back to Inter. Without the files the browser logs four "file not found" errors for them; that's expected. Never commit font files, and never link to HP's own font files on their website.
