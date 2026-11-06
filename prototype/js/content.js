@@ -104,7 +104,6 @@ window.RC_CONTENT = {
     {
       community: "papulankutja",
       summary: "A new power station for more reliable, cleaner power.",
-      visited: "[Month 2026]",
       heroCaption: "Hero photo of the community and new power station (with consent)",
       title: "A new power station for Papulankutja",
       body: [
@@ -117,7 +116,7 @@ window.RC_CONTENT = {
       photos: 12,
       beforeAfter: ["Before · old power station", "After · new power station"],
     },
-    { community: "kiwirrkurra", summary: "Smart meters for 57 homes, the clinic, school and store.", visited: "[Month 2026]" },
+    { community: "kiwirrkurra", summary: "Smart meters for 57 homes, the clinic, school and store." },
     { community: "cockatoo-springs", summary: "[One line on the work here and what changed for the community.]" },
     { community: "chile-creek", summary: "[One line on the work here and what changed for the community.]" },
     { community: "four-mile", label: "Four Mile or Embulgun (TBC)", summary: "[Story still to be chosen by HP.]" },

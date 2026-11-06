@@ -82,6 +82,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 - **Closing (client edit, Nov 2026):** the cross closes the profile and zooms the map back out to the opening view. (Behaviour only; worth a prototype note.)
 - **No "All communities" link (client edit, Nov 2026):** the profile bar holds only Share and Close, right-aligned. **Not yet in the v3 Figma frames.**
 - **About box (client edit, Nov 2026):** the facts (Population, Languages spoken, Traditional Owners, Service provider; or Region and Service provider on simple profiles) move into a grey 100 box like the service provider one: 24px padding (20px on mobile), 4px corners, a 14px grey 700 "About [name]" label, then the facts grid, then a white box with a 1px dashed grey 500 border and the placeholder "[Work and progress in [name]: to be worked out…]". On simple profiles with no works data it replaces the "works will show here" note. **Not yet in the v3 Figma frames.**
+- **No tags under the name (client edit, Nov 2026):** the "Our team visited · [Month 2026]" and "Community story" tags are gone from the story profile. The name (and "Also known as") now sits straight above the About box. **Not yet in the v3 Figma frames.**
 - **Layout:** otherwise unchanged from v2.
 - **Simple profile (D04):** for communities with no works data, it shows the note "[Works for this community will show here once the works data is loaded.]".
 - **Nearby communities:** the list uses real distances, e.g. "Munget · 1 km away".

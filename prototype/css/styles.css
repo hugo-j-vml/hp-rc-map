@@ -162,7 +162,6 @@ a { color: inherit; }
   font-size: 12px; font-weight: 600; line-height: 18px; white-space: nowrap;
 }
 .tag .icon { width: 16px; height: 16px; stroke-width: 2.5; }
-.tag-grey { background: var(--grey-100); }
 .tag-outline { border: 1px solid var(--grey-900); background: var(--white); text-decoration: none; }
 .tag-solid { background: var(--grey-900); color: var(--white); }
 .tag-mid { background: var(--grey-300); }
@@ -274,7 +273,6 @@ a { color: inherit; }
 .say-name .icon { width: 28px; height: 28px; stroke-width: 1.5; }
 .say-name.playing { background: var(--grey-900); color: var(--white); }
 .profile-name .aka { color: var(--grey-700); margin-top: 4px; font-size: 15px; }
-.profile-name .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 32px; }
 .fact span { display: block; font-size: 14px; color: var(--grey-700); }
 .fact strong { display: block; font-size: 18px; font-weight: 600; }
@@ -505,7 +503,6 @@ a { color: inherit; }
   .hero { height: 195px !important; }
   .hero.small { height: 120px !important; }
   .profile-main { padding: 24px 20px; gap: 28px; }
-  .profile-name .tags { flex-direction: column; align-items: flex-start; }
   .facts { gap: 16px; }
   .about { padding: 20px; }
   .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }

@@ -633,7 +633,6 @@
   function renderStoryProfile(c) {
     var s = c.story;
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
-    var visited = s.visited ? '<span class="tag tag-grey">' + icon("check") + "Our team visited · " + esc(s.visited) + "</span>" : "";
     var storyHtml;
     if (s.body) {
       storyHtml = '<section class="section" id="story"><h3>' + esc(s.title) + "</h3>" +
@@ -654,14 +653,13 @@
     return profileBar(c) +
       '<div class="placeholder hero">' + esc(s.heroCaption || "Hero photo (with consent)") + "</div>" +
       '<div class="profile-main">' +
-      '<div class="profile-name">' + nameRow(c) + aka +
-      '<div class="tags">' + visited + '<a class="tag tag-outline" href="#story" data-jump="story">Community story</a></div></div>' +
+      '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
         fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) +
       storyHtml +
       '<section class="section" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" +
       contactBlock() + nearbyList(c, 3) +
-      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn">Yarn with us</a></p>' +
+      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p>' +
       "</div>";
   }
 
@@ -683,7 +681,7 @@
       // With no works data yet, the progress placeholder in the About box stands in for the works list.
       (c.works.length ? '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") +
       explainers + contactBlock() + nearbyList(c, 2) +
-      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn">Yarn with us</a></p>' +
+      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p>' +
       "</div>";
   }
 
@@ -783,7 +781,7 @@
       if (set.has(t.dataset.value)) set.delete(t.dataset.value); else set.add(t.dataset.value);
       render({ keepScroll: true });
     } else if (t.dataset.jump) {
-      // In-panel link (e.g. "Community story"): scroll the panel rather than change the route hash.
+      // In-panel link (e.g. "Yarn with us"): scroll the panel rather than change the route hash.
       e.preventDefault();
       var target = document.getElementById(t.dataset.jump);
       if (target) {
