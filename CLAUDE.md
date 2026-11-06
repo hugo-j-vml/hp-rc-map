@@ -69,6 +69,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Key:** shows on load, then collapses to a "Key" pill on first map interaction. On mobile it starts as the pill.
 - **Mobile map controls:** the key pill and zoom buttons sit bottom right, just above the bottom sheet, and move up with the sheet when a profile opens (the sheet heights, 40% and 71%, are shared between `styles.css` and `visibleArea()` in `app.js`).
 - **Sidebar story cards are whole-card links, with no "Read more":** "Read more" links aren't accessible (they all read the same out of context). Each card's title is its one link, named after the community, stretched over the card with `::after`. Hover underlines the title; keyboard focus outlines the whole card. Use the same pattern for any new cards.
+- **Profiles have no tabs (client edit, Nov 2026):** the content scrolls down the panel in one column. The "Community story" tag scrolls the panel to the story (`data-jump`), without changing the route hash.
 - **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).

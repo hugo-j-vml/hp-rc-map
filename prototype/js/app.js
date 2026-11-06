@@ -653,11 +653,8 @@
       '<div class="placeholder hero">' + esc(s.heroCaption || "Hero photo (with consent)") + "</div>" +
       '<div class="profile-main">' +
       '<div class="profile-name"><h2 id="profile-title">' + esc(c.name) + "</h2>" + aka +
-      '<div class="tags">' + visited + '<a class="tag tag-outline" href="#story" data-tab="story">Community story</a></div></div>' +
-      '<nav class="tabs" aria-label="Sections">' +
-      '<a href="#overview" data-tab="overview" aria-current="true">Overview</a><a href="#story" data-tab="story">Story</a>' +
-      '<a href="#work" data-tab="work">Work</a><a href="#yarn" data-tab="yarn">Yarn with us</a></nav>' +
-      '<div class="facts" id="overview">' +
+      '<div class="tags">' + visited + '<a class="tag tag-outline" href="#story" data-jump="story">Community story</a></div></div>' +
+      '<div class="facts">' +
       fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
       fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]") + "</div>" +
       storyHtml +
@@ -752,7 +749,7 @@
 
   // ---------- Panel events ----------
   el.body.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-open],[data-action],[data-filter],[data-tab]");
+    var t = e.target.closest("[data-open],[data-action],[data-filter],[data-jump]");
     if (!t) return;
     if (t.dataset.open) {
       e.preventDefault();
@@ -761,10 +758,10 @@
       var set = state.filters[t.dataset.filter];
       if (set.has(t.dataset.value)) set.delete(t.dataset.value); else set.add(t.dataset.value);
       render({ keepScroll: true });
-    } else if (t.dataset.tab) {
+    } else if (t.dataset.jump) {
+      // In-panel link (e.g. "Community story"): scroll the panel rather than change the route hash.
       e.preventDefault();
-      el.body.querySelectorAll(".tabs a").forEach(function (a) { a.setAttribute("aria-current", String(a.dataset.tab === t.dataset.tab)); });
-      var target = document.getElementById(t.dataset.tab);
+      var target = document.getElementById(t.dataset.jump);
       if (target) {
         if (isMobile()) { state.expanded = true; el.panel.classList.add("expanded"); }
         el.body.scrollTo({ top: target.offsetTop - 64, behavior: "smooth" });

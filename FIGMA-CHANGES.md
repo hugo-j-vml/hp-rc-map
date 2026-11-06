@@ -77,6 +77,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 ## Profiles (D03/D03b, D04/D04b, M03/M04)
 
 - **Width:** both profile types are now 560px wide on desktop (D04 was 400px).
+- **No tabs (client edit, Nov 2026):** the rich profile's Overview / Story / Work / Yarn with us tabs are gone. The content just scrolls down the panel: facts, story, work, Yarn with us, nearby communities. The "Community story" tag still scrolls the panel to the story. **Not yet in the v3 Figma frames** (D03, D03b, M03, M03b still show the tabs).
 - **Layout:** otherwise unchanged from v2.
 - **Simple profile (D04):** for communities with no works data, it shows the note "[Works for this community will show here once the works data is loaded.]".
 - **Nearby communities:** the list uses real distances, e.g. "Munget · 1 km away".
@@ -109,4 +110,4 @@ The options panel itself (black, bottom right) is a prototype tool, not part of 
 
 ## Unchanged from v2
 
-Stats tile content and style, filter tile styles (program tiles with descriptions, selected = solid fill), profile tabs, facts, story sections (video, quote, photos, before and after), the "What is a smart meter?" explainer, the "Yarn with us" contact block, the work items with status tags, and the map's grey background (`#f5f5f5`).
+Stats tile content and style, filter tile styles (program tiles with descriptions, selected = solid fill), facts, story sections (video, quote, photos, before and after), the "What is a smart meter?" explainer, the "Yarn with us" contact block, the work items with status tags, and the map's grey background (`#f5f5f5`).
