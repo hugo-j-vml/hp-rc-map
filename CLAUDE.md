@@ -71,6 +71,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Sidebar story cards are whole-card links, with no "Read more":** "Read more" links aren't accessible (they all read the same out of context). Each card's title is its one link, named after the community, stretched over the card with `::after`. Hover underlines the title; keyboard focus outlines the whole card. Use the same pattern for any new cards.
 - **Profiles have no tabs (client edit, Nov 2026):** the content scrolls down the panel in one column. The "Community story" tag scrolls the panel to the story (`data-jump`), without changing the route hash.
 - **Hear the name:** a speaker button after the community name in both profiles (`nameRow()` in `app.js`), labelled "Hear how to say [name]". It will play a recording of a community member saying the name, with permission. Never use text-to-speech, which gets Aboriginal names wrong. There are no recordings yet, so it shows a placeholder message.
+- **Closing a profile:** the cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view, on every screen size (`closeProfile()` → `fitState(true)`). "All communities" goes back to the list but keeps the current zoom, so people can keep exploring nearby.
 - **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
@@ -109,6 +110,7 @@ Test scripts live in the session scratchpad and don't survive between sessions, 
 - **Options panel:** Shift + O opens it, toggles apply straight away and are remembered after a reload, and `?option=0/1` links override that.
 - **Side panel:** the story cards have no "Read more", clicking anywhere on a card opens its community, and Tab + Enter works.
 - **Filters:** region counts are 78 / 17 / 8 / 14.
+- **Close:** the profile's cross and Escape zoom back out to exactly the opening view (with and without `?cards=1`); "All communities" keeps the zoom.
 - **Mobile:** the key and zoom buttons sit bottom right, just above the sheet, and move up when a profile opens.
 
 ## Environment gotchas (cloud sessions)

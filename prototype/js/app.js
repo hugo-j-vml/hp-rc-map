@@ -123,22 +123,21 @@
     var sheet = state.view === "profile" ? 0.71 : 0.4;
     return { x: 0, y: 0, w: s.w, h: Math.max(160, s.h * (1 - sheet)) };
   }
-  function fitState() {
+  // The opening, whole-of-WA view. Pass animate to glide there (e.g. when a profile is closed).
+  function fitState(animate) {
     var a = visibleArea();
     var pad = isMobile() ? 24 : 40;
     baseK = Math.min((a.w - pad * 2) / OUTLINE.width, (a.h - pad * 2) / OUTLINE.height);
-    view.k = baseK;
-    view.x = a.x + (a.w - OUTLINE.width * baseK) / 2;
-    view.y = a.y + (a.h - OUTLINE.height * baseK) / 2;
+    var target = { k: baseK, x: a.x + (a.w - OUTLINE.width * baseK) / 2, y: a.y + (a.h - OUTLINE.height * baseK) / 2 };
     // With floating story cards on, shift WA left if needed so a column of cards fits beside the NT/SA border.
     if (options.cards && !isMobile()) {
-      var rightGap = a.w - (view.x + OUTLINE.width * baseK);
+      var rightGap = a.w - (target.x + OUTLINE.width * baseK);
       var need = CARD_W + CARD_LAND_CLEAR + CARD_EDGE;
-      if (rightGap < need) view.x -= Math.min(need - rightGap, view.x - pad);
+      if (rightGap < need) target.x -= Math.min(need - rightGap, target.x - pad);
     }
-    homeView = { k: view.k, x: view.x, y: view.y };
+    homeView = { k: target.k, x: target.x, y: target.y };
     cardLayout = null;
-    applyView();
+    moveTo(target, animate);
   }
   function zoomLevel() { return view.k / baseK; }
   function clampView() {
@@ -165,6 +164,9 @@
     };
     target.x = a.x + a.w / 2 - ux * target.k;
     target.y = a.y + a.h / 2 - uy * target.k;
+    moveTo(target, animate);
+  }
+  function moveTo(target, animate) {
     if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       Object.assign(view, target);
       applyView();
@@ -178,6 +180,7 @@
       view.k = from.k + (target.k - from.k) * e;
       view.x = from.x + (target.x - from.x) * e;
       view.y = from.y + (target.y - from.y) * e;
+      if (p === 1) Object.assign(view, target); // land exactly, free of rounding
       applyView(p < 1);
       if (p < 1) requestAnimationFrame(step);
     }
@@ -621,7 +624,7 @@
   function profileBar(c) {
     return '<div class="profile-bar"><button type="button" class="back" data-action="home">' + icon("chevron-left") + "All communities</button>" +
       '<div class="actions"><button type="button" data-action="share" aria-label="Share ' + esc(c.name) + '">' + icon("share") + "</button>" +
-      '<button type="button" data-action="home" aria-label="Close">' + icon("close") + "</button></div></div>";
+      '<button type="button" data-action="close" aria-label="Close">' + icon("close") + "</button></div></div>";
   }
 
   function renderProfile(c) {
@@ -736,6 +739,13 @@
     render();
   }
 
+  // The cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view.
+  // "All communities" keeps the current zoom, so people can carry on exploring nearby.
+  function closeProfile() {
+    goHome();
+    fitState(true);
+  }
+
   function setHash(value) {
     var next = value ? "#" + value : location.pathname + location.search;
     if (("#" + value) === location.hash || (!value && !location.hash)) return;
@@ -789,6 +799,9 @@
     switch (action) {
       case "home":
         goHome();
+        break;
+      case "close":
+        closeProfile();
         break;
       case "filters":
         state.view = "filters";
@@ -861,7 +874,8 @@
       toggleOptions(false);
       return;
     }
-    if (e.key === "Escape" && state.view !== "home") goHome();
+    if (e.key === "Escape" && state.view === "profile") closeProfile();
+    else if (e.key === "Escape" && state.view !== "home") goHome();
   });
 
 
