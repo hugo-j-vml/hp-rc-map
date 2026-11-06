@@ -131,7 +131,8 @@ a { color: inherit; }
 .link-arrow .icon { width: 24px; height: 24px; }
 
 /* Search and Filters split the panel width 50/50. */
-.search { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* The search box takes the room; Filters is only as wide as its content (about a quarter of the panel). */
+.search { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
 .search-field { display: flex; height: 48px; min-width: 0; }
 .search-field input {
   flex: 1; min-width: 0;
@@ -149,7 +150,7 @@ a { color: inherit; }
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 .search-field button .icon { width: 28px; height: 28px; }
-.search .btn-secondary { height: 48px; min-width: 0; }
+.search .btn-secondary { height: 48px; min-width: 0; padding: 10px 16px; gap: 8px; }
 .search .btn-secondary .count {
   display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
   border-radius: 11px; background: var(--grey-900); color: var(--white); font-size: 12px;

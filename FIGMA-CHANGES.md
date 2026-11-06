@@ -28,10 +28,10 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 - **No stats (client edit, Nov 2026):** the four stat tiles are gone. The intro leads straight into the search row, then the story list. **Not yet in the v3 Figma frames.**
 - **Search row:**
-  - **Split:** the search box and Filters button now split the panel width **50/50**, 8px apart.
+  - **Split (client edit, Nov 2026):** the search box takes the room and the Filters button is only as wide as its content (16px side padding), 8px apart. On desktop that's about **3/4 and 1/4** (371px and 116px). **Not yet in the v3 Figma frames,** which show 50/50.
   - **Search box:** 48px high, with a **2px grey 900 border** and 4px corners (the same as the Filters button). Text and placeholder are **16px Semibold, grey 900** (the same as Filters).
   - **Search button:** now a **48 × 48 square**, flush on the right, grey 900, with a 28px search icon.
-  - **Placeholder:** just **"Search"**, at every size, because "Search communities" doesn't fit the half-width box in Semibold.
+  - **Placeholder:** **"Search communities"** on desktop; just **"Search"** on mobile, where the longer one doesn't fit.
   - **Filters button:** has a **sliders (filter) icon** before the label. The kit has no filter icon; this one was drawn to match, so ask the designer for an official one. With filters active it also shows a small count badge.
   - **Search results:** typing shows a results list under the row (name, also known as, region). This isn't in Figma; add it to the frames.
 - **Story cards (the listing under the search row):**
