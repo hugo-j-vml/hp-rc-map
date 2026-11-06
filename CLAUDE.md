@@ -25,10 +25,10 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | File | What it holds |
 |---|---|
 | `index.html` (repo root) | Forwards to `prototype/`, so GitHub Pages serves the prototype from the repo root |
-| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, the four milestone icons from HP's Community progress page, and filter and speaker icons drawn to match (the kit has neither) |
+| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, filter and speaker icons drawn to match (the kit has neither), and placeholder milestone status icons (tick, crossed box) |
 | `prototype/css/styles.css` | All styles. Tokens at the top. Mobile rules under `@media (max-width: 900px)` |
 | `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel |
-| `prototype/js/content.js` | Milestones (kept for the work and progress box), regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
+| `prototype/js/content.js` | The five transition milestones, regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
 | `prototype/js/outline.js` | The WA outline (exported from Figma), the four service-area shapes and label spots, and `projectWA(lat, lng)` |
 | `prototype/js/data.js` | **Generated.** The 117 communities. Don't hand-edit; run `tools/build_data.py` |
 | `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
@@ -73,19 +73,18 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Profiles have no tabs (client edit, Nov 2026):** the content scrolls down the panel in one column. There are no "Community story" or "Our team visited" tags under the name (client edit). In-panel links like the footer's "Yarn with us" use `data-jump` to scroll the panel without changing the route hash.
 - **Hear the name:** a speaker button after the community name in both profiles (`nameRow()` in `app.js`), labelled "Hear how to say [name]". It will play a recording of a community member saying the name, with permission. Never use text-to-speech, which gets Aboriginal names wrong. There are no recordings yet, so it shows a placeholder message.
 - **Closing a profile:** the cross (and Escape) close the profile and glide the map back to the opening whole-of-WA view, on every screen size (`closeProfile()` → `fitState(true)`). There is no "All communities" back link (client edit): it did nothing the cross doesn't, so the profile bar holds only Share and Close.
-- **About box:** a profile's key facts sit in a grey box like the service provider one, headed "About [name]", with a dashed placeholder for the community's work and progress (`aboutBlock()` in `app.js`). What goes in it is still to be worked out with the client. On simple profiles with no works data, it replaces the "works will show here" note.
-- **Landing panel has no stats (client edit, Nov 2026):** the four stat tiles ($65.8M and so on) and the progress bars option are gone; the intro leads straight into the search row and the story list. The floating and pinned story cards options are gone too. The milestones data in `content.js` and their icons are kept for the profile's work and progress box.
+- **About box:** a profile's key facts sit in a grey box like the service provider one, headed "About [name]", followed by the community's five **transition milestones** from the client's mock-up (`aboutBlock()` and `milestoneList()` in `app.js`, list in `content.js`): Initial community engagement, Initial safety upgrades, Future energy system planning, Community endorsement, New energy system delivered. Each is a white row with an icon, the title and its status: "Completed [dd mmm yy]" (tick in a dark circle), "In progress · Due [completion date]" or "Not started" (crossed-box placeholder icon, as in the mock-up). It's a vertical list rather than the mock-up's five cards across, because five across doesn't fit the 560px panel or mobile. Every community shows the same illustrative statuses for now. On simple profiles with no works data, the box replaces the "works will show here" note.
+- **Landing panel has no stats (client edit, Nov 2026):** the four stat tiles ($65.8M and so on) and the progress bars option are gone; the intro leads straight into the search row and the story list. The floating and pinned story cards options are gone too.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
 - **Placeholder data:** population, languages, Traditional Owners, service providers (RSPs) and works are placeholders for the life of this prototype. Program, type of work and status filters run on the sample works in `content.js` (from the Figma profiles).
 
 ## Open questions for the client
 
 - **NG lands region:** should the 11 Ngaanyatjarra lands communities be drawn in Esperance/Goldfields (their HP district) or Gascoyne/Mid West (the poster)? Compare with the "Goldfields takes in the NG lands" option.
-- **Transition milestones:** real counts for stages 2 to 4 (safety inspections and upgrades; future energy system planning and endorsement; delivery). The prototype uses illustrative [86], [41] and [12].
+- **Transition milestones:** each community's real status and dates for the five milestones, and final milestone icons from the designer.
 - **Community details:** population, languages, Traditional Owners, and RSP contacts per community.
 - **Works data:** activities by community, program, type and status, to replace the sample works.
 - **Story content:** final stories for the five flagships, including whether Four Mile or Embulgun is the fifth.
-- **Work and progress in the About box:** what to show for each community (for example its milestone, what's done and what's next).
 - **Name recordings:** audio of a community member saying each community's name (with permission), for the "Hear how to say" button.
 - **Filter and speaker icons:** the HP RC icon set has neither; ask the designer for official ones.
 

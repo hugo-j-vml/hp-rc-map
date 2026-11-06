@@ -641,7 +641,7 @@
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
-      // With no works data yet, the progress placeholder in the About box stands in for the works list.
+      // With no works data yet, the milestones in the About box stand in for the works list.
       (c.works.length ? '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") +
       explainers + contactBlock() + nearbyList(c, 2) +
       '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p>' +
@@ -656,12 +656,20 @@
       icon("sound") + "</button></div>";
   }
 
-  // The community's key details in a box like the service provider one, with room for its work and progress.
+  // The community's key details in a box like the service provider one, with its transition milestones.
   function aboutBlock(c, facts) {
     return '<section class="about" aria-label="About ' + esc(c.name) + '"><small>About ' + esc(c.name) + "</small>" +
       '<div class="facts">' + facts + "</div>" +
-      '<div class="progress-placeholder">[Work and progress in ' + esc(c.name) + ": to be worked out. " +
-      "For example, which milestone the community has reached, what's done and what's next.]</div></section>";
+      milestoneList() + "</section>";
+  }
+
+  // The community's transition milestones. Placeholder statuses and dates until HP supplies real ones per community.
+  function milestoneList() {
+    var words = { "completed": "Completed [dd mmm yy]", "in-progress": "In progress · Due [completion date]", "not-started": "Not started" };
+    return '<div class="milestones"><h3>Transition milestones</h3><ol>' + C.milestones.map(function (m) {
+      return '<li class="milestone ' + m.status + '">' + icon(m.status === "completed" ? "done" : "image-placeholder") +
+        "<span><strong>" + esc(m.title) + "</strong><small>" + esc(words[m.status]) + "</small></span></li>";
+    }).join("") + "</ol></div>";
   }
 
   function fact(label, value) {

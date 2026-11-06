@@ -27,7 +27,7 @@ It is built only from three inputs:
   - A simpler profile for everyone else (Figma D04).
   - Every profile lists the nearest communities, worked out from the real coordinates.
   - Closing a profile with the cross (or Escape) zooms the map back out to the whole state.
-  - Each profile's key facts sit in an "About" box, with a placeholder for the community's work and progress (still to be worked out).
+  - Each profile's key facts sit in an "About" box, with its five transition milestones and their status (illustrative for now).
   - Every profile has a "Hear how to say" button next to the name. It shows a placeholder until community recordings are supplied.
 - Deep links (`index.html#community=kiwirrkurra`) and Share (copies the link).
 - Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet, with the key and zoom buttons bottom right just above it.
@@ -64,7 +64,7 @@ The program, type of work and status filters run on the handful of sample works 
 | `prototype/js/app.js` | Map, clustering, zoom and pan, panels, search, filters, routing, options panel |
 | `prototype/js/outline.js` | WA outline exported from Figma, the four service-area shapes, and the latitude/longitude projection onto it |
 | `prototype/js/data.js` | The 117 communities, generated from the spreadsheet |
-| `prototype/js/content.js` | Milestones (not shown yet), regions, programs, work types, stories and sample works from the brief, Figma and HP's site |
+| `prototype/js/content.js` | Transition milestones, regions, programs, work types, stories and sample works from the brief, Figma and HP's site |
 | `prototype/fonts/` | Beausite Classic font files, on your own machine only (not committed) |
 | `tools/build_data.py` | Rebuilds `data.js` from the spreadsheet |
 | `FIGMA-CHANGES.md` | What has changed since the Figma v2 wireframes, for updating Figma |

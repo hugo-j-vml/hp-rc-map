@@ -1,15 +1,14 @@
 // Prototype content taken from the brief and the v2 Figma wireframes.
 // Text in [square brackets] is placeholder copy, as in Figma. Nothing here is approved for publishing yet.
 window.RC_CONTENT = {
-  // The four milestones of each community's transition, from HP's Community progress page. Not shown at the
-  // moment (the progress bars were removed); kept, with their icons in index.html, for the profile's work and progress box.
-  // Stage 1 is done: HP has visited all communities in person. Counts in [brackets] are illustrative only.
+  // The five transition milestones each community moves through (client mock-up, Nov 2026), shown in the profile's
+  // About box. Every community gets the same illustrative statuses until HP supplies real ones; dates are placeholders.
   milestones: [
-    { step: "01", title: "Build strong community connections", icon: "connections", count: "{count}",
-      note: "All communities visited in person" },
-    { step: "02", title: "Complete initial safety inspections and upgrades", icon: "safety", count: 86, placeholder: true },
-    { step: "03", title: "Future energy system planning and endorsement", icon: "planning", count: 41, placeholder: true },
-    { step: "04", title: "Future energy system delivery", icon: "delivery", count: 12, placeholder: true },
+    { title: "Initial community engagement", status: "completed" },
+    { title: "Initial safety upgrades", status: "completed" },
+    { title: "Future energy system planning", status: "in-progress" },
+    { title: "Community endorsement", status: "not-started" },
+    { title: "New energy system delivered", status: "not-started" },
   ],
 
   regions: [
