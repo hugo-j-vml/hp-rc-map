@@ -26,6 +26,7 @@ It is built only from three inputs:
   - A full "story" profile for the five flagship communities (Figma D03).
   - A simpler profile for everyone else (Figma D04).
   - Every profile lists the nearest communities, worked out from the real coordinates.
+  - Every profile has a "Hear how to say" button next to the name. It shows a placeholder until community recordings are supplied.
 - Deep links (`index.html#community=kiwirrkurra`) and Share (copies the link).
 - Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet, with the key and zoom buttons bottom right just above it.
 - A greyscale wireframe of the live Horizon Power Remote Communities site header.

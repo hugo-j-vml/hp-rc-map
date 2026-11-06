@@ -78,6 +78,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 - **Width:** both profile types are now 560px wide on desktop (D04 was 400px).
 - **No tabs (client edit, Nov 2026):** the rich profile's Overview / Story / Work / Yarn with us tabs are gone. The content just scrolls down the panel: facts, story, work, Yarn with us, nearby communities. The "Community story" tag still scrolls the panel to the story. **Not yet in the v3 Figma frames** (D03, D03b, M03, M03b still show the tabs).
+- **Hear the name (client edit, Nov 2026):** a round 40px speaker button sits 8px after the community name in both profile types (28px icon, 1.5 stroke, drawn to match the set). Hover fills it grey 100; while the clip plays it is solid grey 900 with a white icon. It is labelled "Hear how to say [name]". There are no recordings yet, so it shows a placeholder message. **Not yet in the v3 Figma frames.**
 - **Layout:** otherwise unchanged from v2.
 - **Simple profile (D04):** for communities with no works data, it shows the note "[Works for this community will show here once the works data is loaded.]".
 - **Nearby communities:** the list uses real distances, e.g. "Munget · 1 km away".

@@ -652,7 +652,7 @@
     return profileBar(c) +
       '<div class="placeholder hero">' + esc(s.heroCaption || "Hero photo (with consent)") + "</div>" +
       '<div class="profile-main">' +
-      '<div class="profile-name"><h2 id="profile-title">' + esc(c.name) + "</h2>" + aka +
+      '<div class="profile-name">' + nameRow(c) + aka +
       '<div class="tags">' + visited + '<a class="tag tag-outline" href="#story" data-jump="story">Community story</a></div></div>' +
       '<div class="facts">' +
       fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
@@ -677,12 +677,20 @@
     return profileBar(c) +
       '<div class="placeholder hero small">Illustration (no photos yet)</div>' +
       '<div class="profile-main">' +
-      '<div class="profile-name"><h2 id="profile-title">' + esc(c.name) + "</h2>" + aka + "</div>" +
+      '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       '<div class="facts">' + fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]") + "</div>" +
       '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" +
       explainers + contactBlock() + nearbyList(c, 2) +
       '<p class="updated">Last updated [date] · Something not right? <a href="#yarn">Yarn with us</a></p>' +
       "</div>";
+  }
+
+  // Name with a "hear it said" button. The clip will be a community member saying the name (with permission),
+  // not text-to-speech, which gets Aboriginal names wrong.
+  function nameRow(c) {
+    return '<div class="name-row"><h2 id="profile-title">' + esc(c.name) + "</h2>" +
+      '<button type="button" class="say-name" data-action="say-name" aria-label="Hear how to say ' + esc(c.name) + '">' +
+      icon("sound") + "</button></div>";
   }
 
   function fact(label, value) {
@@ -797,6 +805,12 @@
         break;
       case "share":
         share();
+        break;
+      case "say-name":
+        // Placeholder: no recordings yet. Show the playing state for about as long as a clip would last.
+        var btn = e && e.target.closest(".say-name");
+        if (btn) { btn.classList.add("playing"); setTimeout(function () { btn.classList.remove("playing"); }, 1600); }
+        toast("[A recording of a community member saying " + byId[state.selected].name + " plays here]");
         break;
       case "soon":
         toast("This page is not part of the prototype");

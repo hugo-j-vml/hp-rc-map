@@ -24,7 +24,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | File | What it holds |
 |---|---|
 | `index.html` (repo root) | Forwards to `prototype/`, so GitHub Pages serves the prototype from the repo root |
-| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, the four milestone icons from HP's Community progress page, and a filter icon drawn to match (the kit has none) |
+| `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, the four milestone icons from HP's Community progress page, and filter and speaker icons drawn to match (the kit has neither) |
 | `prototype/css/styles.css` | All styles. Tokens at the top. Mobile rules under `@media (max-width: 900px)` |
 | `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel, floating story cards |
 | `prototype/js/content.js` | Stats, regions, programs, work types, statuses, sample works, stories and contact copy, all from the brief and Figma |
@@ -70,6 +70,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Mobile map controls:** the key pill and zoom buttons sit bottom right, just above the bottom sheet, and move up with the sheet when a profile opens (the sheet heights, 40% and 71%, are shared between `styles.css` and `visibleArea()` in `app.js`).
 - **Sidebar story cards are whole-card links, with no "Read more":** "Read more" links aren't accessible (they all read the same out of context). Each card's title is its one link, named after the community, stretched over the card with `::after`. Hover underlines the title; keyboard focus outlines the whole card. Use the same pattern for any new cards.
 - **Profiles have no tabs (client edit, Nov 2026):** the content scrolls down the panel in one column. The "Community story" tag scrolls the panel to the story (`data-jump`), without changing the route hash.
+- **Hear the name:** a speaker button after the community name in both profiles (`nameRow()` in `app.js`), labelled "Hear how to say [name]". It will play a recording of a community member saying the name, with permission. Never use text-to-speech, which gets Aboriginal names wrong. There are no recordings yet, so it shows a placeholder message.
 - **Progress bars view:** replaces the four stat tiles with the four transition milestones (title row with count, slim bar, small icon). It deliberately has no $65.8M investment line; the tiles view keeps the $65.8M tile.
 - **Story cards:** placed northernmost-first, so stacked cards follow their dots' order and leader lines don't cross.
 - **RSPs (for later):** HP's Community progress page names the three Regional Service Providers: Kimberley Regional Service Provider (KRSP), Pilbara Meta Maya (PMM) and Ngaanyatjarra Services (NgS).
@@ -82,7 +83,8 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 - **Community details:** population, languages, Traditional Owners, and RSP contacts per community.
 - **Works data:** activities by community, program, type and status, to replace the sample works.
 - **Story content:** final stories for the five flagships, including whether Four Mile or Embulgun is the fifth.
-- **Filter icon:** the HP RC icon set has no filter icon; ask the designer for an official one.
+- **Name recordings:** audio of a community member saying each community's name (with permission), for the "Hear how to say" button.
+- **Filter and speaker icons:** the HP RC icon set has neither; ask the designer for official ones.
 - **Which layout options to keep:** floating vs pinned story cards, and progress bars vs tiles.
 
 ## Prototype options panel (Shift + O)
