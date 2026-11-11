@@ -94,15 +94,17 @@ window.RC_CONTENT = {
   ],
 
   // The five flagship stories from the brief. Order matches the story list in Figma.
+  // The five flagship stories. Headlines, text and photos from HP's "RC highlight communities" document
+  // (Nov 2026, cleared for public use). Fields in [brackets] are still placeholders.
   stories: [
     {
       community: "papulankutja",
-      summary: "A new power station for more reliable, cleaner power.",
-      heroCaption: "Hero photo of the community and new power station (with consent)",
-      title: "A new power station for Papulankutja",
+      summary: "A new energy future for Papulankutja",
+      image: "images/papulankutja.jpg",
+      imageAlt: "A large group of community members, Horizon Power staff and partners gathered on red dirt at Papulankutja",
+      title: "A new energy future for Papulankutja",
       body: [
-        "[Draft] Papulankutja now has a new power station that uses the sun and a big battery, with diesel only as back-up. That means the lights and fridges stay on more reliably, and less diesel needs to be trucked in.",
-        "[Short paragraph about what the community wanted, and how the work was planned together with Traditional Owners and the service provider.]",
+        "A new hybrid renewable energy system is being delivered for Papulankutja, also known as Blackstone. Jointly funded by the Western Australian and Australian governments, the project will provide safer, more reliable and cleaner power while supporting the community’s long-term energy needs. The project forms part of Horizon Power’s work to improve power services and reduce reliance on diesel across remote Aboriginal communities.",
       ],
       video: "Video · Community visit · 2:30",
       quote: "“[Quote from a community member about what the change means for them, used with their permission.]”",
@@ -110,10 +112,47 @@ window.RC_CONTENT = {
       photos: 12,
       beforeAfter: ["Before · old power station", "After · new power station"],
     },
-    { community: "kiwirrkurra", summary: "Smart meters for 57 homes, the clinic, school and store." },
-    { community: "cockatoo-springs", summary: "[One line on the work here and what changed for the community.]" },
-    { community: "chile-creek", summary: "[One line on the work here and what changed for the community.]" },
-    { community: "four-mile", label: "Four Mile or Embulgun (TBC)", summary: "[Story still to be chosen by HP.]" },
+    {
+      community: "kiwirrkurra",
+      summary: "Smarter meters, easier access to power",
+      image: "images/kiwirrkurra.jpg",
+      imageAlt: "Horizon Power and service provider staff in hi-vis standing together on red dirt beside a termite mound at Kiwirrkurra",
+      title: "Smarter meters, easier access to power",
+      body: [
+        "Kiwirrkurra is one of the most remote communities in Horizon Power’s service area. New smart meters now connect 57 households and key facilities, including the medical clinic and school, to safer and more reliable power. Residents have more ways to pay and manage their electricity, including purchasing prepaid power locally at the community store. The work was delivered with Aboriginal-owned Regional Service Provider Pilbara Meta Maya Services.",
+      ],
+    },
+    {
+      community: "cockatoo-springs",
+      otherNames: ["Ngunulum"],
+      summary: "Cleaner energy with less reliance on diesel",
+      image: "images/cockatoo-springs.jpg",
+      imageAlt: "Four women talking outside a shed at Cockatoo Springs",
+      title: "Cleaner energy with less reliance on diesel",
+      body: [
+        "Cockatoo Springs, also known as Ngunulum, is approximately 30 kilometres from Kununurra. Renewable energy upgrades completed in July now allow the community to operate on 63 per cent renewable energy. The new system is expected to reduce diesel dependency by up to 92 per cent, save approximately 35,000 litres of diesel and avoid 91 tonnes of carbon emissions each year. It has also removed safety risks associated with manually refuelling generators.",
+      ],
+    },
+    {
+      community: "chile-creek",
+      summary: "Reducing diesel use through renewable energy",
+      image: "images/chile-creek.jpg",
+      imageAlt: "A community member and a Horizon Power staff member looking at an illustrated booklet together at Chile Creek",
+      title: "Reducing diesel use through renewable energy",
+      body: [
+        "Renewable energy upgrades at Chile Creek are helping reduce reliance on diesel and improve the safety and sustainability of the community’s power supply. The project is part of Horizon Power’s broader transition from early discovery and engagement into on-the-ground delivery across remote communities. Chile Creek is one of the renewable energy case studies used to demonstrate how cleaner generation can improve services in isolated locations.",
+      ],
+    },
+    {
+      community: "four-mile",
+      summary: "Locally manufactured power for Four Mile",
+      image: "images/four-mile.jpg",
+      imageAlt: "Aerial view at sunrise of a road train and shipping containers beside a building at Four Mile",
+      title: "Locally manufactured power for Four Mile",
+      body: [
+        "A new standalone power system was commissioned at Four Mile in May 2026 as part of Horizon Power’s ReGen program. The containerised system demonstrates how standardised, locally manufactured energy solutions can support safer and more reliable power in remote locations. The project also contributes to a coordinated delivery model that brings together generation, network improvements and community engagement.",
+      ],
+    },
   ],
 
   contact: {

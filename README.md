@@ -64,6 +64,7 @@ The program, type of work and status filters run on the handful of sample works 
 | `prototype/js/app.js` | Map, clustering, zoom and pan, panels, search, filters, routing, options panel |
 | `prototype/js/outline.js` | WA outline exported from Figma, the four service-area shapes, and the latitude/longitude projection onto it |
 | `prototype/js/data.js` | The 117 communities, generated from the spreadsheet |
+| `prototype/images/` | Photos for the five flagship stories, cleared by Horizon Power for public use |
 | `prototype/js/content.js` | Transition milestones, regions, programs, work types, stories and sample works from the brief, Figma and HP's site |
 | `prototype/fonts/` | Beausite Classic font files, on your own machine only (not committed) |
 | `tools/build_data.py` | Rebuilds `data.js` from the spreadsheet |

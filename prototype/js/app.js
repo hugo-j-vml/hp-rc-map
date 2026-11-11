@@ -16,6 +16,8 @@
       x: p.x,
       y: p.y,
       story: storiesById[c.id] || null,
+      // A story can add names the spreadsheet doesn't have (e.g. Cockatoo Springs is also Ngunulum).
+      otherNames: c.otherNames.concat((storiesById[c.id] && storiesById[c.id].otherNames) || []),
       works: C.works.filter(function (w) { return w.community === c.id; }),
     });
   });
@@ -486,7 +488,7 @@
       var c = byId[s.community];
       // The whole card is clickable: the title is its one link, stretched over the card (no "Read more").
       return '<article class="story-card"><h3><a href="#community=' + c.id + '" data-open="' + c.id + '">' + esc(s.label || displayName(c)) + "</a></h3>" +
-        "<p>" + esc(s.summary) + '</p><div class="placeholder" aria-hidden="true">Image</div></article>';
+        "<p>" + esc(s.summary) + "</p>" + storyImage(s, "thumb") + "</article>";
     }).join("");
 
     return '<div class="home">' +
@@ -596,25 +598,27 @@
   function renderStoryProfile(c) {
     var s = c.story;
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
-    var storyHtml;
-    if (s.body) {
-      storyHtml = '<section class="section" id="story"><h3>' + esc(s.title) + "</h3>" +
-        s.body.map(function (p, i) { return "<p" + (i ? ' class="muted"' : "") + ">" + esc(p) + "</p>"; }).join("") +
-        '<div class="placeholder video"><span class="play">' + icon("play") + "</span>" + esc(s.video) + "</div>" +
-        '<p class="caption">Captions and transcript available</p>' +
-        '<blockquote class="quote"><p>' + esc(s.quote) + "</p><footer>" + esc(s.quoteBy) + "</footer></blockquote></section>" +
-        '<section class="section"><div class="section-head"><h3>Photos</h3><a href="#">View all ' + s.photos + "</a></div>" +
-        '<div class="photos"><div class="placeholder">Photo</div><div class="placeholder">Photo</div><div class="placeholder">+' + (s.photos - 3) + " more</div></div></section>" +
-        '<section class="section"><div class="section-head"><h3>Before and after</h3></div><div class="before-after">' +
+    var storyHtml = '<section class="section" id="story"><h3>' + esc(s.title) + "</h3>" +
+      s.body.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
+    // Video, quote, photos and before-and-after only show where a story has them (Papulankutja, as placeholders).
+    if (s.video) {
+      storyHtml += '<div class="placeholder video"><span class="play">' + icon("play") + "</span>" + esc(s.video) + "</div>" +
+        '<p class="caption">Captions and transcript available</p>';
+    }
+    if (s.quote) storyHtml += '<blockquote class="quote"><p>' + esc(s.quote) + "</p><footer>" + esc(s.quoteBy) + "</footer></blockquote>";
+    storyHtml += "</section>";
+    if (s.photos) {
+      storyHtml += '<section class="section"><div class="section-head"><h3>Photos</h3><a href="#">View all ' + s.photos + "</a></div>" +
+        '<div class="photos"><div class="placeholder">Photo</div><div class="placeholder">Photo</div><div class="placeholder">+' + (s.photos - 3) + " more</div></div></section>";
+    }
+    if (s.beforeAfter) {
+      storyHtml += '<section class="section"><div class="section-head"><h3>Before and after</h3></div><div class="before-after">' +
         '<div><div class="placeholder">Photo</div><p class="caption">' + esc(s.beforeAfter[0]) + "</p></div>" +
         '<div><div class="placeholder">Photo</div><p class="caption">' + esc(s.beforeAfter[1]) + "</p></div></div></section>";
-    } else {
-      storyHtml = '<section class="section" id="story"><h3>[Story headline for ' + esc(c.name) + "]</h3><p>" + esc(s.summary) +
-        '</p><p class="muted">[Full story, photos and video to come.]</p></section>';
     }
 
     return profileBar(c) +
-      '<div class="placeholder hero">' + esc(s.heroCaption || "Hero photo (with consent)") + "</div>" +
+      storyImage(s, "hero") +
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
@@ -673,6 +677,13 @@
       return '<li class="milestone ' + m.status + '">' + icon(m.status === "completed" ? "done" : "image-placeholder") +
         "<span><strong>" + esc(m.title) + "</strong><small>" + esc(words[m.status]) + "</small></span></li>";
     }).join("") + "</ol>";
+  }
+
+  // A story's photo, or a grey placeholder if it hasn't got one. The card thumbnail is decorative (the card is
+  // already named by its title), so it has empty alt text; the profile's hero photo is described.
+  function storyImage(s, kind) {
+    if (!s.image) return '<div class="placeholder ' + kind + '"' + (kind === "thumb" ? ' aria-hidden="true">Image' : ">Hero photo (with consent)") + "</div>";
+    return '<img class="photo ' + kind + '" src="' + esc(s.image) + '" alt="' + (kind === "thumb" ? "" : esc(s.imageAlt)) + '">';
   }
 
   function fact(label, value) {
