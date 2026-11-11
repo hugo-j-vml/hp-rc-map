@@ -250,11 +250,12 @@ img.hero { width: 100%; }
 .note { font-size: 13px; color: var(--grey-700); }
 .filters-foot {
   position: sticky; bottom: 0;
-  display: flex; align-items: center; gap: 12px;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px;
   height: 80px; padding: 16px 32px;
   border-top: 1px solid var(--grey-200); background: var(--white);
 }
-.filters-foot .btn-primary { flex: 1; justify-content: flex-start; }
+/* Split in half: Clear all centred in the left half, the full-width button (text centred) in the right half. */
+.filters-foot .btn { width: 100%; justify-content: center; }
 
 /* ---------- Profile panel ---------- */
 .profile-bar {
@@ -512,7 +513,10 @@ img.hero { width: 100%; }
   .facts { gap: 16px; }
   .about { padding: 20px; }
   .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }
-  .filters-foot { padding: 16px 20px; }
+  .filters-foot { padding: 16px 20px; gap: 8px; }
+  /* Half a phone screen is tight for "Show 117 communities": 14px text with less side padding fits on one line at 360px and up,
+     and on narrower phones it wraps to two lines rather than spilling out of the button. */
+  .filters-foot .btn-primary { padding-left: 6px; padding-right: 6px; font-size: 14px; white-space: normal; text-align: center; line-height: 18px; }
 }
 
 /* ---------- Prototype options panel (Shift + O) ---------- */

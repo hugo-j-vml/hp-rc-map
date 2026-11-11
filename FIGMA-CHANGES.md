@@ -44,7 +44,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 - **Region tiles** are now HP's **four service areas** with counts: **Kimberley 78, Pilbara 17, Gascoyne/Mid West 8, Esperance/Goldfields 14**. Figma v2 had three regions: Kimberley 78, Pilbara & Mid West/Gascoyne 25, Goldfields-Esperance 14.
 - **Service provider dropdown:** disabled, with the note "Service provider details are still to come from Horizon Power."
-- **Footer:** Clear all, plus "Show N communities", where N is the live count.
+- **Footer:** Clear all, plus "Show N communities", where N is the live count. The footer splits into two equal halves, 12px apart, on every screen size (client edit, Nov 2026): Clear all (underlined text link) centred in the left half, and the primary button filling the right half with its text centred. On mobile the footer gap is 8px and the button text is 14px with 6px side padding, so it fits on one line at 360px wide and up (it wraps to two lines below that). **Not yet in Figma.**
 
 ## Map (all frames)
 
