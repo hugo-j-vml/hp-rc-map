@@ -106,6 +106,11 @@ window.RC_CONTENT = {
       body: [
         "A new hybrid renewable energy system is being delivered for Papulankutja, also known as Blackstone. Jointly funded by the Western Australian and Australian governments, the project will provide safer, more reliable and cleaner power while supporting the community’s long-term energy needs. The project forms part of Horizon Power’s work to improve power services and reduce reliance on diesel across remote Aboriginal communities.",
       ],
+      // HP news article that follows the story text. The link text is the article's own title, so it makes sense out of context.
+      article: {
+        title: "Renewable power secures energy future for Blackstone community",
+        url: "https://remotecommunities.horizonpower.com.au/latest-news/preparing-for-summer2/",
+      },
       video: "Video · Community visit · 2:30",
       quote: "“[Quote from a community member about what the change means for them, used with their permission.]”",
       quoteBy: "[Name], [role or relationship to community]",

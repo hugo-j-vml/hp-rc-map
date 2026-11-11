@@ -600,6 +600,11 @@
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
     var storyHtml = '<section class="section" id="story"><h3>' + esc(s.title) + "</h3>" +
       s.body.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
+    // Article link straight after the story text. Its text is the article title, never "Read more" (WCAG 2.4.4 link purpose).
+    if (s.article) {
+      storyHtml += '<p class="story-article"><span class="label">Latest news</span>' +
+        '<a class="link-arrow" href="' + esc(s.article.url) + '">' + esc(s.article.title) + icon("arrow-right") + "</a></p>";
+    }
     // Video, quote, photos and before-and-after only show where a story has them (Papulankutja, as placeholders).
     if (s.video) {
       storyHtml += '<div class="placeholder video"><span class="play">' + icon("play") + "</span>" + esc(s.video) + "</div>" +

@@ -281,6 +281,12 @@ img.hero { width: 100%; }
 .section .muted { color: var(--grey-700); }
 .video { height: 230px; flex-direction: column; gap: 10px; margin-top: 20px; }
 .video .play { width: 56px; height: 56px; display: grid; place-items: center; background: var(--white); border-radius: 50%; color: var(--grey-900); }
+/* Link to an HP news article after a story's text: a small label, then the article title as an underlined text link. */
+.section .story-article { margin-top: 16px; }
+.story-article .label { display: block; font-size: 12px; font-weight: 600; color: var(--grey-700); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.story-article .link-arrow { display: inline; text-decoration: underline; text-underline-offset: 3px; }
+.story-article .link-arrow:hover { text-decoration-thickness: 2px; }
+.story-article .link-arrow .icon { display: inline-block; vertical-align: -6px; margin-left: 6px; }
 .caption { font-size: 12px; color: var(--grey-700); margin-top: 8px; }
 .quote { border-left: 4px solid var(--grey-900); padding: 4px 0 4px 16px; margin: 24px 0 0; }
 .quote p { font-size: 17px; font-style: italic; }
