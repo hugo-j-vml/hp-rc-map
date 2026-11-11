@@ -28,6 +28,7 @@
     view: "home",          // home | filters | profile
     selected: null,
     query: "",
+    resultsOpen: false, // whether the search results dropdown is showing
     filters: { region: new Set(), program: new Set(), type: new Set(), status: new Set() },
     showAllTypes: false,
     expanded: false,       // mobile sheet
@@ -477,7 +478,8 @@
     var results = search(state.query);
     var resultsHtml = "";
     if (state.query.trim()) {
-      resultsHtml = '<ul class="results" id="results" aria-label="Search results">' + (results.length
+      // Results drop down over the content below, like a native select, so the story list doesn't jump as you type.
+      resultsHtml = '<ul class="results" id="results" aria-label="Search results"' + (state.resultsOpen ? "" : " hidden") + ">" + (results.length
         ? results.map(function (c) {
           return '<li><button type="button" data-open="' + c.id + '"><span>' + esc(displayName(c)) +
             "</span><small>" + esc(regionsById[c.region].name) + "</small></button></li>";
@@ -497,9 +499,9 @@
       '<form class="search" role="search" id="search-form">' +
       '<label class="visually-hidden" for="search-input">Search communities</label>' +
       '<div class="search-field"><input id="search-input" type="search" autocomplete="off" placeholder="' + (isMobile() ? "Search" : "Search communities") + '" value="' + esc(state.query) + '" aria-controls="results">' +
-      '<button type="submit" aria-label="Search">' + icon("search") + "</button></div>" +
+      '<button type="submit" aria-label="Search">' + icon("search") + "</button>" + resultsHtml + "</div>" +
       '<button type="button" class="btn btn-secondary" data-action="filters">' + icon("filter") + "Filters" + (count ? ' <span class="count">' + count + "</span>" : "") + "</button>" +
-      "</form>" + resultsHtml +
+      "</form>" +
       '<section class="stories" id="stories" aria-label="Community stories">' + stories + "</section>" +
       "</div>";
   }
@@ -840,12 +842,33 @@
   el.body.addEventListener("input", function (e) {
     if (e.target.id !== "search-input") return;
     state.query = e.target.value;
+    state.resultsOpen = true;
+    // On mobile, open the sheet to full height so the results aren't cut off at the bottom of the screen.
+    if (isMobile() && !state.expanded) {
+      state.expanded = true;
+      el.panel.classList.add("expanded");
+    }
     var pos = e.target.selectionStart;
     render({ keepScroll: true });
     var input = document.getElementById("search-input");
     input.focus();
     input.setSelectionRange(pos, pos);
   });
+  // The results close when you click, tap or tab anywhere outside the search field, or press Escape, and reopen when you return to it.
+  function setResultsOpen(open) {
+    state.resultsOpen = open;
+    var list = document.getElementById("results");
+    if (list) list.hidden = !open;
+  }
+  document.addEventListener("focusin", function (e) {
+    if (e.target.id === "search-input") setResultsOpen(true);
+    else if (!e.target.closest(".search-field")) setResultsOpen(false);
+  });
+  document.addEventListener("click", function (e) {
+    if (e.target.id === "search-input") setResultsOpen(true);
+    else if (state.resultsOpen && !e.target.closest(".search-field")) setResultsOpen(false);
+  });
+
   el.body.addEventListener("submit", function (e) {
     e.preventDefault();
     var first = search(state.query)[0];
@@ -866,6 +889,10 @@
     }
     if (e.key === "Escape" && !el.options.hidden) {
       toggleOptions(false);
+      return;
+    }
+    if (e.key === "Escape" && state.resultsOpen && document.getElementById("results")) {
+      setResultsOpen(false);
       return;
     }
     if (e.key === "Escape" && state.view === "profile") closeProfile();

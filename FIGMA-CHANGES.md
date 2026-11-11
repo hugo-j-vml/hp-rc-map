@@ -33,7 +33,7 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
   - **Search button:** now a **48 × 48 square**, flush on the right, grey 900, with a 28px search icon.
   - **Placeholder:** **"Search communities"** on desktop; just **"Search"** on mobile, where the longer one doesn't fit.
   - **Filters button:** has a **sliders (filter) icon** before the label. The kit has no filter icon; this one was drawn to match, so ask the designer for an official one. With filters active it also shows a small count badge.
-  - **Search results:** typing shows a results list under the row (name, also known as, region). This isn't in Figma; add it to the frames.
+  - **Search results:** typing shows a dropdown of matches (name, also known as, region) that overlays the content below, like a native select, so the story list doesn't jump (client edit, Nov 2026). It's as wide as the search field (input plus search button), 4px below it: white, 1px grey 300 border, 4px corners, shadow 0 4 12 at 12% black, rows 12 × 16px padding split by 1px grey 200 lines, at most 320px tall then it scrolls. It closes on Escape, or a click or tab outside the field, and reopens when you type or click back in. On mobile, typing opens the sheet to full height so the list isn't cut off. **Not yet in Figma.**
 - **Story cards (the listing under the search row):**
   - The **"Read more →" link is gone**; the whole card is the link.
   - Title 18px Semibold, with the summary directly under it.
