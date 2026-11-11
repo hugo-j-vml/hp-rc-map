@@ -81,8 +81,8 @@ window.RC_CONTENT = {
 
   // Sample works from the Figma profile screens. Real works data still to come from Horizon Power.
   works: [
-    { community: "papulankutja", program: "regen", type: "power-stations", status: "completed", icon: "battery",
-      title: "New hybrid power station: sun, battery and diesel back-up", when: "Completed [2025]" },
+    { community: "papulankutja", program: "regen", type: "power-stations", status: "in-progress", icon: "battery",
+      title: "New hybrid power station: sun, battery and diesel back-up", when: "Underway [2026]" },
     { community: "papulankutja", program: "regen", type: "fuel-tanks", status: "completed", icon: "fuel",
       title: "Fuel tank replacement", when: "Completed [2024]" },
     { community: "papulankutja", program: "cdnp", type: "pole-testing", status: "in-progress", icon: "power-lines",
