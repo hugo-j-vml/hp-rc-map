@@ -29,8 +29,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       # Publishes the repo as is (the root index.html forwards to prototype/). Font files are git-ignored, so they're never included.
+      # The artifact name includes the attempt number: a re-run otherwise finds two artifacts called
+      # "github-pages" (one per attempt) and the deploy fails with "Multiple artifacts ... were unexpectedly found".
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+          name: github-pages-${{ github.run_attempt }}
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
