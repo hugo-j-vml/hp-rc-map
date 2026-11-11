@@ -1,6 +1,6 @@
 # Changes since Figma v2
 
-Everything the live prototype now does differently from the **v2 frames** in Figma ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`). **The v3 frames have been built from this list** (section "v3 · Built from the live prototype (Nov 2026)", node `72:3749`, with kit `70:3703`). For changes made after that, add them here and update the v3 frames. The prototype's code (`prototype/css/styles.css` in particular) is the exact spec. Values below are taken from it.
+Everything the live prototype now does differently from the **v2 frames** in Figma ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`). **The v3 frames have been built from this list** (section "v3 · Built from the live prototype (Nov 2026)", node `72:3749`, with kit `70:3703`). The client edits made after v3 are in the section **"Export for Jaz - 11 November"** (node `95:6750`, new components in kit `98:9083`), built on 11 November 2026 from a copy of v3. For changes after that, add them here and update that section. The prototype's code (`prototype/css/styles.css` in particular) is the exact spec. Values below are taken from it.
 
 Colours are the v2 kit greys: grey 050 `#f7f7f7`, 100 `#eeeeee`, 200 `#dedede`, 300 `#c4c4c4`, 500 `#8a8a8a`, 700 `#4d4d4d`, 900 `#1f1f1f`. Corners are 4px unless stated.
 
@@ -26,9 +26,9 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 ## Side panel: home (D01, D01b, M01)
 
-- **No stats (client edit, Nov 2026):** the four stat tiles are gone. The intro leads straight into the search row, then the story list. **Not yet in the v3 Figma frames.**
+- **No stats (client edit, Nov 2026):** the four stat tiles are gone. The intro leads straight into the search row, then the story list. **In the 11 November export.**
 - **Search row:**
-  - **Split (client edit, Nov 2026):** the search box takes the room and the Filters button is only as wide as its content (16px side padding), 8px apart. On desktop that's about **3/4 and 1/4** (371px and 116px). **Not yet in the v3 Figma frames,** which show 50/50.
+  - **Split (client edit, Nov 2026):** the search box takes the room and the Filters button is only as wide as its content (16px side padding), 8px apart. On desktop that's about **3/4 and 1/4** (371px and 116px). **In the 11 November export.**
   - **Search box:** 48px high, with a **2px grey 900 border** and 4px corners (the same as the Filters button). Text and placeholder are **16px Semibold, grey 900** (the same as Filters).
   - **Search button:** now a **48 × 48 square**, flush on the right, grey 900, with a 28px search icon.
   - **Placeholder:** **"Search communities"** on desktop; just **"Search"** on mobile, where the longer one doesn't fit.
@@ -77,12 +77,12 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 ## Profiles (D03/D03b, D04/D04b, M03/M04)
 
 - **Width:** both profile types are now 560px wide on desktop (D04 was 400px).
-- **No tabs (client edit, Nov 2026):** the rich profile's Overview / Story / Work / Yarn with us tabs are gone. The content just scrolls down the panel: facts, story, work, Yarn with us, nearby communities. The "Community story" tag still scrolls the panel to the story. **Not yet in the v3 Figma frames** (D03, D03b, M03, M03b still show the tabs).
-- **Hear the name (client edit, Nov 2026):** a round 40px speaker button sits 8px after the community name in both profile types (28px icon, 1.5 stroke, drawn to match the set). Hover fills it grey 100; while the clip plays it is solid grey 900 with a white icon. It is labelled "Hear how to say [name]". There are no recordings yet, so it shows a placeholder message. **Not yet in the v3 Figma frames.**
+- **No tabs (client edit, Nov 2026):** the rich profile's Overview / Story / Work / Yarn with us tabs are gone. The content just scrolls down the panel: facts, story, work, Yarn with us, nearby communities. The "Community story" tag still scrolls the panel to the story. **In the 11 November export.**
+- **Hear the name (client edit, Nov 2026):** a round 40px speaker button sits 8px after the community name in both profile types (28px icon, 1.5 stroke, drawn to match the set). Hover fills it grey 100; while the clip plays it is solid grey 900 with a white icon. It is labelled "Hear how to say [name]". There are no recordings yet, so it shows a placeholder message. **In the 11 November export.**
 - **Closing (client edit, Nov 2026):** the cross closes the profile and zooms the map back out to the opening view. (Behaviour only; worth a prototype note.)
-- **No "All communities" link (client edit, Nov 2026):** the profile bar holds only Share and Close, right-aligned. **Not yet in the v3 Figma frames.**
-- **About box (client edit, Nov 2026):** the facts (Population, Languages spoken, Traditional Owners, Service provider; or Region and Service provider on simple profiles) move into a grey 100 box like the service provider one: 24px padding (20px on mobile), 4px corners, a 14px grey 700 "About [name]" label, then the facts grid, then the transition milestones with no heading (the list is labelled "Transition milestones" for screen readers): white rows, 4px apart, 12 × 16px padding: a 32px status icon (completed = grey 900 circle with a white tick; in progress or not started = crossed-box placeholder), the milestone title (16px Semibold) and its status (14px grey 700: "Completed [dd mmm yy]" or "In progress · Due [completion date]"). **Only completed and in-progress milestones show**; not-started ones are hidden, as HP is sensitive about work that hasn't started. The five milestones come from the client's mock-up; it shows five cards across, but here they stack, as five across doesn't fit the panel. On simple profiles with no works data it replaces the "works will show here" note. **Not yet in the v3 Figma frames.**
-- **No tags under the name (client edit, Nov 2026):** the "Our team visited · [Month 2026]" and "Community story" tags are gone from the story profile. The name (and "Also known as") now sits straight above the About box. **Not yet in the v3 Figma frames.**
+- **No "All communities" link (client edit, Nov 2026):** the profile bar holds only Share and Close, right-aligned. **In the 11 November export.**
+- **About box (client edit, Nov 2026):** the facts (Population, Languages spoken, Traditional Owners, Service provider; or Region and Service provider on simple profiles) move into a grey 100 box like the service provider one: 24px padding (20px on mobile), 4px corners, a 14px grey 700 "About [name]" label, then the facts grid, then the transition milestones with no heading (the list is labelled "Transition milestones" for screen readers): white rows, 4px apart, 12 × 16px padding: a 32px status icon (completed = grey 900 circle with a white tick; in progress or not started = crossed-box placeholder), the milestone title (16px Semibold) and its status (14px grey 700: "Completed [dd mmm yy]" or "In progress · Due [completion date]"). **Only completed and in-progress milestones show**; not-started ones are hidden, as HP is sensitive about work that hasn't started. The five milestones come from the client's mock-up; it shows five cards across, but here they stack, as five across doesn't fit the panel. On simple profiles with no works data it replaces the "works will show here" note. **In the 11 November export.**
+- **No tags under the name (client edit, Nov 2026):** the "Our team visited · [Month 2026]" and "Community story" tags are gone from the story profile. The name (and "Also known as") now sits straight above the About box. **In the 11 November export.**
 - **Layout:** otherwise unchanged from v2.
 - **Simple profile (D04):** for communities with no works data, it shows the note "[Works for this community will show here once the works data is loaded.]".
 - **Nearby communities:** the list uses real distances, e.g. "Munget · 1 km away".
@@ -99,7 +99,7 @@ This one is being compared, and the client is to choose.
 
 - **Goldfields takes in the NG lands** (`?ngLands=1`): an alternative region drawing where Esperance/Goldfields extends north along the border to cover the 11 Ngaanyatjarra lands communities. There's an open question for the client: which drawing is right?
 
-Floating story cards, pinned story cards and progress bars were tried here and **removed after client review (Nov 2026)**. The v3 option frames O1 (floating cards), O2 (pinned cards) and O4 (progress bars) are now out of date.
+Floating story cards, pinned story cards and progress bars were tried here and **removed after client review (Nov 2026)**. The v3 option frames O1 (floating cards), O2 (pinned cards) and O4 (progress bars) are out of date, and aren't in the 11 November export.
 
 The options panel itself (black, bottom right) is a prototype tool, not part of the design.
 

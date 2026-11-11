@@ -34,11 +34,12 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 | `prototype/fonts/` | Beausite Classic `.woff2` files on your own machine only. Git ignores everything here except its README |
 | `tools/build_data.py` | Spreadsheet → `data.js`. Writes public fields only |
 | `.gitignore` | Keeps font files and any stray `shots/` screenshots out of the repo |
-| `FIGMA-CHANGES.md` | Everything the prototype does differently from the Figma v2 frames, with exact values. The v3 frames were built from it. Keep it up to date with each visible change, and update the v3 frames to match |
+| `FIGMA-CHANGES.md` | Everything the prototype does differently from the Figma v2 frames, with exact values. The v3 frames were built from it. Keep it up to date with each visible change, and update the latest Figma export to match |
 
 ## Inputs and where they live
 
-- **Figma:** [Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`. **v3 frames (built from this prototype, Nov 2026) are the current wireframes; v2 is kept as the original reference. Ignore v1.**
+- **Figma:** [Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map), file key `PKAKHLevjAgWsfwa4gI0tF`. **The current wireframes are the section "Export for Jaz - 11 November" (`95:6750`)**: a copy of v3 brought up to date with the November client edits. v3 and v2 are kept as earlier references. Ignore v1.
+  - "Export for Jaz - 11 November" `95:6750`: desktop D01 `95:6751`, D02 `95:6819`, D03 `95:6906`, D04 `95:7016`, D05 `95:7253`; scroll views D01b `95:7126`, D03b `95:7145`, D04b `95:7221`; option O3 `95:7937`; mobile M01 `95:7338`, M02 `95:7383`, M03 `95:7419`, M03b `95:7610`, M04 `95:7535`, M04b `95:7686`; notes `95:8005`. Kit "Wireframe kit v4 (Export for Jaz - 11 November)" `98:9083`: search row, Hear the name button, speaker/done/image-placeholder icons, milestone row (Completed, In progress). v3 options O1, O2 and O4 were left out because those options were removed.
   - v3 section "v3 · Built from the live prototype (Nov 2026)" `72:3749`: desktop D01–D05 (`72:3750`, `74:3955`, `75:4199`, `75:4455`, `78:4913`), scroll views D01b/D03b/D04b, options O1–O4 (`83:5876`, `83:6181`, `87:6544`, `83:6422`), mobile M01–M04b, and notes `88:6752`. Kit "Wireframe kit v3 (from live prototype)" `70:3703` holds the new WF3 components; unchanged v2 components are reused. Frames use Inter because Beausite isn't in Figma.
   - v2 kit: "Wireframe kit v2 (HP design system lookalikes)" `45:1926`.
   - Desktop: `51:2011` (D01 map on load), `52:2193` (D02 filters), `52:2729` / `52:3189` (D03 rich profile and scroll), `52:3543` / `52:3912` (D04 simple profile and scroll), `52:4089` (D01b panel scroll).
