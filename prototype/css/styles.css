@@ -281,9 +281,8 @@ img.hero { width: 100%; }
 .section .muted { color: var(--grey-700); }
 .video { height: 230px; flex-direction: column; gap: 10px; margin-top: 20px; }
 .video .play { width: 56px; height: 56px; display: grid; place-items: center; background: var(--white); border-radius: 50%; color: var(--grey-900); }
-/* Link to an HP news article after a story's text: a small label, then the article title as an underlined text link. */
+/* Link to an HP news article after a story's text: the article title as an underlined text link. */
 .section .story-article { margin-top: 16px; }
-.story-article .label { display: block; font-size: 12px; font-weight: 600; color: var(--grey-700); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
 .story-article .link-arrow { display: inline; text-decoration: underline; text-underline-offset: 3px; }
 .story-article .link-arrow:hover { text-decoration-thickness: 2px; }
 .story-article .link-arrow .icon { display: inline-block; vertical-align: -6px; margin-left: 6px; }
@@ -313,7 +312,6 @@ img.hero { width: 100%; }
 .explainer .link-arrow { font-size: 14px; margin-top: 12px; }
 .explainer .link-arrow .icon { width: 18px; height: 18px; }
 .about { background: var(--grey-100); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.about small { font-size: 14px; color: var(--grey-700); }
 .milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .milestone { display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--white); border-radius: var(--radius); }
 .milestone .icon { width: 32px; height: 32px; color: var(--grey-900); }

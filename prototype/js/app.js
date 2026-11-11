@@ -602,7 +602,7 @@
       s.body.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
     // Article link straight after the story text. Its text is the article title, never "Read more" (WCAG 2.4.4 link purpose).
     if (s.article) {
-      storyHtml += '<p class="story-article"><span class="label">News</span>' +
+      storyHtml += '<p class="story-article">' +
         '<a class="link-arrow" href="' + esc(s.article.url) + '">' + esc(s.article.title) + icon("arrow-right") + "</a></p>";
     }
     // Video, quote, photos and before-and-after only show where a story has them (Papulankutja, as placeholders).
@@ -667,7 +667,7 @@
 
   // The community's key details in a box like the service provider one, with its transition milestones.
   function aboutBlock(c, facts) {
-    return '<section class="about" aria-label="About ' + esc(c.name) + '"><small>About</small>' +
+    return '<section class="about" aria-label="About ' + esc(c.name) + '">' +
       '<div class="facts">' + facts + "</div>" +
       milestoneList() + "</section>";
   }
