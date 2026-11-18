@@ -295,7 +295,7 @@ img.hero { width: 100%; }
 .profile-name .aka { margin-top: 6px; font-size: 15px; line-height: 1.45; color: var(--navy); }
 .profile-main.simple .profile-name .aka { line-height: normal; }
 
-/* Bands: full-width sand blocks with the creative's torn top and bottom edges (her "Intersect" shapes, exported as
+/* Bands: full-width sand blocks with the creative's torn top and bottom edges (the design's "Intersect" shapes, exported as
    SVG). The edges keep their shape and scale with the panel width; the plain block between them grows with the content. */
 .band {
   position: relative; margin: calc(100% * 32 / 559) 0; background: var(--sand-dark);

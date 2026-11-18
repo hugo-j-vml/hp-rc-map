@@ -550,7 +550,7 @@
   function workItem(w) {
     var status = C.statuses.find(function (s) { return s.id === w.status; });
     var tagClass = w.status === "completed" ? "tag-solid" : w.status === "in-progress" ? "tag-mid" : "tag-outline";
-    // Works icons use the creative's hand-drawn versions where she has drawn them (images/design/), else the sprite.
+    // Works icons use the creative's hand-drawn versions where the design has them (images/design/), else the sprite.
     var art = DESIGN_WORK_ICONS.indexOf(w.icon) > -1 ? '<img class="work-icon" src="images/design/work-' + w.icon + '.svg" alt="">' : icon(w.icon);
     return '<div class="work-item">' + art +
       "<div><strong>" + esc(w.title) + "</strong><small>" + esc(programsById[w.program].shortName + " · " + w.when) + "</small></div>" +
