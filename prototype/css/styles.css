@@ -585,25 +585,25 @@ img.hero { width: 100%; }
   .panel.filters-open .sheet-handle { display: none; }
   .panel.profile .sheet-handle { position: absolute; left: 0; right: 0; top: 0; z-index: 3; }
 
-  .home { --pad: 20px; padding: 4px var(--pad) 0; gap: 16px; }
+  .home { --pad: 16px; padding: 4px var(--pad) 0; gap: 16px; }
   .home .stories.band { padding-bottom: 24px; }
   .home h1 { font-size: 22px; }
 
   .search { order: 2; }
   .stories { order: 4; }
 
-  .profile-bar { padding: 0 20px; border-radius: 16px 16px 0 0; }
+  .profile-bar { padding: 0 16px; border-radius: 16px 16px 0 0; }
   .panel.profile.expanded .profile-bar { border-radius: 0; }
   .hero { height: 195px; }
-  /* Mobile keeps the desktop treatment with the panel's usual 20px sides; bands keep their extra 20px inset. */
-  .profile-name, .section { padding-left: 20px; padding-right: 20px; }
-  .about, .contact { padding-left: 40px; padding-right: 40px; }
+  /* Mobile keeps the desktop treatment with the panel's usual 16px sides; bands keep their extra 20px inset. */
+  .profile-name, .section { padding-left: 16px; padding-right: 16px; }
+  .about, .contact { padding-left: 36px; padding-right: 36px; }
   /* Slimmer side padding so Call and Email fit on one line at phone widths. */
   .contact .btn-primary { padding-left: 14px; padding-right: 14px; }
   .contact .btn-secondary { padding-left: 13px; padding-right: 13px; }
-  .quote { padding-left: 50px; padding-right: 26px; }
-  .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }
-  .filters-foot { padding: 16px 20px; gap: 8px; }
+  .quote { padding-left: 46px; padding-right: 22px; }
+  .filters-head, .filters-body { padding-left: 16px; padding-right: 16px; }
+  .filters-foot { padding: 16px 16px; gap: 8px; }
   /* Half a phone screen is tight for "Show 117 communities": 14px text with less side padding fits on one line at 360px and up,
      and on narrower phones it wraps to two lines rather than spilling out of the button. */
   .filters-foot .btn-primary { padding-left: 6px; padding-right: 6px; font-size: 14px; white-space: normal; text-align: center; line-height: 18px; }
