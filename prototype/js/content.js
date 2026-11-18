@@ -163,7 +163,7 @@ window.RC_CONTENT = {
   contact: {
     heading: "[Regional Service Provider name]",
     body: "Yarn with them about power faults, outages or the work happening in your community.",
-    phone: "[00 0000 0000]",
+    phone: "0000 0000",
     emergency: "In an emergency, call 000.",
   },
 };

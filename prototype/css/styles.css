@@ -599,6 +599,9 @@ img.hero { width: 100%; }
   /* Mobile keeps the desktop treatment with the panel's usual 20px sides; bands keep their extra 20px inset. */
   .profile-name, .section { padding-left: 20px; padding-right: 20px; }
   .about, .contact { padding-left: 40px; padding-right: 40px; }
+  /* Slimmer side padding so Call and Email fit on one line at phone widths. */
+  .contact .btn-primary { padding-left: 14px; padding-right: 14px; }
+  .contact .btn-secondary { padding-left: 13px; padding-right: 13px; }
   .quote { padding-left: 50px; padding-right: 26px; }
   .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }
   .filters-foot { padding: 16px 20px; gap: 8px; }
