@@ -843,6 +843,14 @@
       case "home":
         goHome();
         break;
+      case "reset":
+        // The logo returns to the page-load state: no profile, search or filters, and the whole-of-WA view.
+        state.query = "";
+        state.showAllTypes = false;
+        Object.keys(state.filters).forEach(function (k) { state.filters[k].clear(); });
+        goHome();
+        fitState(true);
+        break;
       case "close":
         closeProfile();
         break;
