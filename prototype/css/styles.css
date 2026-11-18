@@ -227,8 +227,9 @@ a { color: inherit; }
 .story-card {
   position: relative; cursor: pointer;
   display: grid; grid-template-columns: 1fr 120px; grid-template-rows: auto 1fr; gap: 4px 16px;
-  padding: 20px 0; border-bottom: 1px solid var(--grey-200);
+  padding: 20px 0; border-bottom: 2px solid var(--white);
 }
+.story-card:last-child { border-bottom: 0; }
 .story-card h3 { font-size: 18px; font-weight: 600; }
 .story-card h3 a { text-decoration: none; }
 /* Stretch the title link over the whole card, so the card is one big, clearly named target. */
@@ -617,6 +618,8 @@ img.hero { width: 100%; }
 
 /* The creative's base plate (Figma 166:10023) over a solid desert/dark bar with "Back to top", at the panel's width only. */
 .base-plate { margin-top: 64px; }
+/* On the landing panel the story band's sand carries on through the 64px gap, down to the plate. */
+.base-plate.on-band { margin-top: 0; padding-top: 64px; background: var(--sand-dark); }
 .base-plate > img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 67; }
 .back-top {
   display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: -1px;

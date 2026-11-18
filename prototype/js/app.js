@@ -745,15 +745,15 @@
 
   // ---------- Panel rendering ----------
   // The creative's base plate closes the home and profile panes: a torn, patterned edge, then a solid bar with "Back to top".
-  function backToTop() {
-    return '<div class="base-plate"><img src="images/design/base-plate.svg" alt="">' +
+  function backToTop(onBand) {
+    return '<div class="base-plate' + (onBand ? " on-band" : "") + '"><img src="images/design/base-plate.svg" alt="">' +
       '<button type="button" class="back-top" data-action="top"><img src="images/design/back-to-top-icon.svg" alt="">Back to top</button></div>';
   }
 
   function render(opts) {
     opts = opts || {};
     var c = state.selected ? byId[state.selected] : null;
-    var html = state.view === "filters" ? renderFilters() : state.view === "profile" && c ? renderProfile(c) : renderHome() + backToTop();
+    var html = state.view === "filters" ? renderFilters() : state.view === "profile" && c ? renderProfile(c) : renderHome() + backToTop(true);
     if (state.view === "profile" && c) html += backToTop();
     var scroll = el.body.scrollTop;
     el.body.innerHTML = html;
