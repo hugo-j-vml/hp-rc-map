@@ -116,3 +116,7 @@ The options panel itself (black, bottom right) is a prototype tool, not part of 
 ## Unchanged from v2
 
 Filter tile styles (program tiles with descriptions, selected = solid fill), facts, story sections (video, quote, photos, before and after), the "What is a smart meter?" explainer, the "Yarn with us" contact block, the work items with status tags, and the map's grey background (`#f5f5f5`).
+
+## Base plate and Back to top (Nov 2026, not yet in Figma wireframes)
+
+- The home and profile panes now end with the creative's base plate (`166:10023` in the creative's file) and a "Back to top" bar that scrolls the pane to the top. Panel width only. Not in the 11 November export.

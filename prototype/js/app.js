@@ -744,10 +744,17 @@
   }
 
   // ---------- Panel rendering ----------
+  // The creative's base plate closes the home and profile panes: a torn, patterned edge, then a solid bar with "Back to top".
+  function backToTop() {
+    return '<div class="base-plate"><img src="images/design/base-plate.svg" alt="">' +
+      '<button type="button" class="back-top" data-action="top"><img src="images/design/back-to-top-icon.svg" alt="">Back to top</button></div>';
+  }
+
   function render(opts) {
     opts = opts || {};
     var c = state.selected ? byId[state.selected] : null;
-    var html = state.view === "filters" ? renderFilters() : state.view === "profile" && c ? renderProfile(c) : renderHome();
+    var html = state.view === "filters" ? renderFilters() : state.view === "profile" && c ? renderProfile(c) : renderHome() + backToTop();
+    if (state.view === "profile" && c) html += backToTop();
     var scroll = el.body.scrollTop;
     el.body.innerHTML = html;
     el.body.scrollTop = opts.keepScroll ? scroll : 0;
@@ -841,6 +848,12 @@
     switch (action) {
       case "home":
         goHome();
+        break;
+      case "top":
+        // Scroll the pane (not the page) back to the start, and move focus there so keyboard users don't stay at the bottom.
+        el.body.scrollTo({ top: 0, behavior: "smooth" });
+        var top = document.getElementById("profile-title") || document.querySelector(".home h1");
+        if (top) { top.setAttribute("tabindex", "-1"); top.focus({ preventScroll: true }); }
         break;
       case "reset":
         // The logo returns to the page-load state: no profile, search or filters, and the whole-of-WA view.
