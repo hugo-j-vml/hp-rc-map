@@ -306,7 +306,7 @@ img.hero { width: 100%; border-radius: 0; }
 .panel.profile .placeholder { background: var(--sand-dark); color: var(--navy); }
 .profile-main { display: flex; flex-direction: column; color: var(--navy); }
 
-.profile-name { padding: 24px 32px; }
+.profile-name { padding: 0 32px 24px; }
 .profile-name h2 { font-size: 32px; font-weight: 700; line-height: 1.45; color: var(--red); }
 .name-row { display: flex; align-items: center; gap: 8px; }
 .say-name {
