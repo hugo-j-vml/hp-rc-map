@@ -608,8 +608,8 @@
     var k = C.contact;
     return '<section class="band contact" id="yarn" aria-label="Your local service provider"><small>Your local service provider</small>' +
       "<h3>" + esc(k.heading) + "</h3><p>" + esc(k.body) + "</p>" +
-      '<div class="buttons"><a class="btn btn-primary" href="tel:">Call ' + esc(k.phone) + " for a yarn" + icon("call") + "</a>" +
-      '<a class="btn btn-secondary" href="mailto:">Email' + icon("email") + "</a></div>" +
+      '<div class="buttons"><a class="btn btn-primary" href="tel:">' + icon("call") + "Call " + esc(k.phone) + "</a>" +
+      '<a class="btn btn-secondary" href="mailto:">' + icon("email") + "Email</a></div>" +
       '<p class="alert">' + icon("info") + esc(k.emergency) + "</p></section>";
   }
 
