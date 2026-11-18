@@ -8,9 +8,11 @@ A plain HTML, CSS and vanilla JavaScript prototype in [`prototype/`](prototype/)
 
 Live on GitHub Pages at https://hugo-j-vml.github.io/hp-rc-map/ (served from `main`, root folder). The root `index.html` forwards to `prototype/`, so any push to `main` updates the site.
 
-It is built only from three inputs:
+It is built from these inputs:
 
 - **Figma wireframes v2** ([Remote Communities Map](https://www.figma.com/design/PKAKHLevjAgWsfwa4gI0tF/Remote-Communities-Map)): layout, copy, icons, markers and the WA outline.
+- **The creative's visual treatment** ([Figma](https://www.figma.com/design/P9Y58ygtCG3Ap8DGGMThu2/Remote-Communities-Map)): colours, type, bands, icons, logo and the map's look, rolled in piece by piece (profiles, header logo, map, landing panel so far).
+- **Horizon Power's Design System** ([Figma](https://www.figma.com/design/YO73hE2jQ5KwtoR9eYrnzj/Design-System)): buttons and the search input.
 - **The communities spreadsheet** (`RESP_communities v3.4`): names, other names, coordinates and Horizon Power district for all 117 communities.
 - **Horizon Power's "Service area" poster:** the four service areas (Kimberley, Pilbara, Gascoyne/Mid West, Esperance/Goldfields). Boundaries are traced in `prototype/js/outline.js`. The south west, served by the South West Interconnected System, is left blank.
 
@@ -20,7 +22,7 @@ It is built only from three inputs:
 - The key shows on load, then tucks into a "Key" button the first time someone uses the map. On mobile it starts as the button.
 - Communities are grouped into numbered clusters when crowded, and the groups shrink as you zoom in. Click a cluster to zoom in. Names appear once you are zoomed in.
 - Search by community name, other name (for example "Balgo" or "Blackstone") or region.
-- Filters for region, program, type of work and status. Communities outside the filter fade, as in Figma.
+- Filters for region, program, type of work and status. Communities outside the filter turn into small blue dots.
 - Story cards in the side panel are clickable as a whole, with no "Read more" links (better for accessibility).
 - Community profiles:
   - A full "story" profile for the five flagship communities (Figma D03).

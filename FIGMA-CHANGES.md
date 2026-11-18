@@ -20,17 +20,18 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
   - **Top row (82px tall, 1px grey 300 line underneath):** utility links Contact us, Login and Search. 32px icon and 16px Medium text, grey 500, 32px apart.
   - **Bottom row:** main nav Program purpose, Community progress, Latest news and Community members. 16px Semibold, grey 900, 32px apart.
 - **Mobile:** 81px tall.
-  - **Logo:** placeholder 130 × 32.
+  - **Logo:** the creative's logo lock-up, scaled to 24px tall (Nov 2026; desktop uses the creative's sizes). See "Header logo and map".
   - **Icons:** call, login (person) and search icons, then a menu icon. The "Menu" text label is gone.
 - **Lost from the header:** the Figma header's Stories, Share and Find your service provider. Stories are in the side panel, Share is on each profile, and service providers are in Filters.
 
 ## Side panel: home (D01, D01b, M01)
 
+- **Visual treatment (Nov 2026):** the heading is dark red `#780D02`; the search field, search button, Filters and the filters panel's "Show N communities" button follow HP's Design System (file `YO73hE2jQ5KwtoR9eYrnzj`: Buttons `7453:3951`, Input `7453:15863`); the story list sits in a sand band with the creative's torn top edge, running to the bottom of the panel. `CLAUDE.md` has the values. Where the lines below give older greys or sizes, those are superseded. **Not yet in Figma.**
+
 - **No stats (client edit, Nov 2026):** the four stat tiles are gone. The intro leads straight into the search row, then the story list. **In the 11 November export.**
 - **Search row:**
-  - **Split (client edit, Nov 2026):** the search box takes the room and the Filters button is only as wide as its content (16px side padding), 8px apart. On desktop that's about **3/4 and 1/4** (371px and 116px). **In the 11 November export.**
-  - **Search box:** 48px high, with a **2px grey 900 border** and 4px corners (the same as the Filters button). Text and placeholder are **16px Semibold, grey 900** (the same as Filters).
-  - **Search button:** now a **48 × 48 square**, flush on the right, grey 900, with a 28px search icon.
+  - **Split (client edit, Nov 2026):** the search box takes the room and Filters is 120px wide (the story thumbnails' width, so they line up), growing when the count badge shows; 8px apart. (The 11 November export has the earlier 371px and 116px split.)
+  - **Search box and button:** one 48px-high control: the Design System text input (white, 1px navy border, 4px corners, 2px border when active, navy 16px Regular text) wrapping the orange search button (24px icon) on the right.
   - **Placeholder:** **"Search communities"** on desktop; just **"Search"** on mobile, where the longer one doesn't fit.
   - **Filters button:** has a **sliders (filter) icon** before the label. The kit has no filter icon; this one was drawn to match, so ask the designer for an official one. With filters active it also shows a small count badge.
   - **Search results:** typing shows a dropdown of matches (name, also known as, region) that overlays the content below, like a native select, so the story list doesn't jump (client edit, Nov 2026). It's as wide as the search field (input plus search button), 4px below it: white, 1px grey 300 border, 4px corners, shadow 0 4 12 at 12% black, rows 12 × 16px padding split by 1px grey 200 lines, at most 320px tall then it scrolls. It closes on Escape, or a click or tab outside the field, and reopens when you type or click back in. On mobile, typing opens the sheet to full height so the list isn't cut off. **Not yet in Figma.**
