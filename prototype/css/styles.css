@@ -338,15 +338,6 @@ img.hero { width: 100%; }
 .fact { display: flex; flex-direction: column; gap: 2px; }
 .fact span { font-size: 14px; line-height: 20px; color: var(--navy); }
 .fact strong { font-size: 18px; font-weight: 600; line-height: 24px; color: var(--red); }
-.milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.milestone { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-radius: var(--radius); background: var(--red); color: var(--white); }
-.milestone.in-progress { background: var(--red-tint); color: var(--red); padding: 11px 15px; border: 1px solid var(--red); }
-.milestone-icon { position: relative; flex-shrink: 0; width: 32px; height: 32px; }
-.milestone-icon img { position: absolute; left: 0; top: 0; width: 32px; height: 32px; }
-/* The in-progress icon's artwork is 34 × 35, offset in its 32px slot as it is in Figma. */
-.milestone.in-progress .milestone-icon img { left: -0.46px; top: -0.58px; width: 34px; height: 35px; }
-.milestone strong { display: block; font-size: 16px; font-weight: 600; line-height: normal; }
-.milestone small { display: block; font-size: 14px; line-height: normal; }
 
 .section { padding: 24px 32px; display: flex; flex-direction: column; gap: 28px; }
 .section h3 { margin: 0; color: var(--red); line-height: 1.45; }
@@ -379,7 +370,7 @@ img.hero { width: 100%; }
 .before-after .caption { margin-top: 6px; }
 
 .works { display: flex; flex-direction: column; gap: 14px; }
-.works > h3 { font-size: 22px; font-weight: 700; }
+.works > h3 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.45; color: var(--red); }
 .work-group { display: flex; flex-direction: column; gap: 8px; }
 .work-group h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .work-item {
@@ -393,7 +384,6 @@ img.hero { width: 100%; }
 .panel.profile .status.tag-solid { background: var(--navy); color: var(--white); }
 .panel.profile .status.tag-mid { background: var(--red); color: var(--white); }
 .panel.profile .status.tag-outline { padding: 3px 7px; background: var(--red-tint); color: var(--red); border-color: var(--red); }
-.work-empty { font-size: 16px; line-height: 1.45; }
 .explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
 .explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }

@@ -1,17 +1,6 @@
 // Prototype content taken from the brief and the v2 Figma wireframes.
 // Text in [square brackets] is placeholder copy, as in Figma. Nothing here is approved for publishing yet.
 window.RC_CONTENT = {
-  // The five transition milestones each community moves through (client mock-up, Nov 2026), shown in the profile's
-  // About box. Every community gets the same illustrative statuses until HP supplies real ones; dates are placeholders.
-  // Not-started milestones are kept here but never shown (see milestoneList() in app.js).
-  milestones: [
-    { title: "Initial community engagement", status: "completed" },
-    { title: "Initial safety upgrades", status: "completed" },
-    { title: "Future energy system planning", status: "in-progress" },
-    { title: "Community endorsement", status: "not-started" },
-    { title: "New energy system delivered", status: "not-started" },
-  ],
-
   regions: [
     // Horizon Power's four service areas, as on its "Service area" poster.
     { id: "kimberley", name: "Kimberley" },
@@ -91,6 +80,23 @@ window.RC_CONTENT = {
       title: "New power meters that send live updates", when: "Planned [FY27–28]" },
     { community: "kiwirrkurra", program: "ami", type: "smart-meters", status: "completed", icon: "meter",
       title: "Smart meters for 57 homes, the clinic, school and store", when: "Completed [year]" },
+  ],
+
+  // Placeholder works for communities with no sample works above: every profile shows something completed or planned.
+  // Picked per community in worksFor() (app.js). Replace with real works data from Horizon Power.
+  placeholderWorks: [
+    { program: "regen", type: "fuel-tanks", status: "completed", icon: "fuel",
+      title: "Fuel tank replacement", when: "Completed [2024]" },
+    { program: "ami", type: "smart-meters", status: "completed", icon: "meter",
+      title: "Smart meters for homes and community buildings", when: "Completed [year]" },
+    { program: "cdnp", type: "pole-testing", status: "completed", icon: "power-lines",
+      title: "Pole testing and safety checks", when: "Completed [2025]" },
+    { program: "regen", type: "power-stations", status: "in-progress", icon: "battery",
+      title: "Power station upgrade", when: "Underway [2026]" },
+    { program: "cdnp", type: "pole-testing", status: "planned", icon: "power-lines",
+      title: "Pole replacement and network upgrades", when: "Planned [FY27–28]" },
+    { program: "ami", type: "smart-meters", status: "planned", icon: "meter",
+      title: "New power meters that send live updates", when: "Planned [FY27–28]" },
   ],
 
   // The five flagship stories from the brief. Order matches the story list in Figma.

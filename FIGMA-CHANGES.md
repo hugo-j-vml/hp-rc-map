@@ -120,3 +120,7 @@ Filter tile styles (program tiles with descriptions, selected = solid fill), fac
 ## Base plate and Back to top (Nov 2026, not yet in Figma wireframes)
 
 - The home and profile panes now end with the creative's base plate (`166:10023` in the creative's file) and a "Back to top" bar that scrolls the pane to the top. Panel width only. Not in the 11 November export.
+
+## Works list replaces the milestones in the About box (client edit, Nov 2026)
+
+The transition milestone rows are gone. "What we've done and what's planned" (heading 22px Bold, then works grouped by program with icon, title, program and date, and a Completed, In progress or Planned tag) now sits inside the About band, under the facts, on both profiles. It is no longer a separate section further down. Every community has works: Papulankutja and Kiwirrkurra the sample ones, the rest two or three placeholders. This supersedes the About box paragraph above. Not yet in the Figma wireframes.

@@ -10,6 +10,18 @@
   var storiesById = {};
   C.stories.forEach(function (s) { storiesById[s.community] = s; });
 
+  // Real works where the sample data has them; otherwise two or three placeholder works picked from the id, so every
+  // community shows something completed or planned (client edit). Placeholders until HP supplies the real works.
+  function worksFor(id) {
+    var own = C.works.filter(function (w) { return w.community === id; });
+    if (own.length) return own;
+    var sum = 0;
+    for (var i = 0; i < id.length; i++) sum += id.charCodeAt(i);
+    var pool = C.placeholderWorks, n = 2 + (sum % 2), out = [];
+    for (var j = 0; j < n; j++) out.push(Object.assign({ community: id }, pool[(sum + j * 2) % pool.length]));
+    return out;
+  }
+
   var communities = window.RC_COMMUNITIES.map(function (c) {
     var p = window.projectWA(c.lat, c.lng);
     return Object.assign({}, c, {
@@ -18,7 +30,7 @@
       story: storiesById[c.id] || null,
       // A story can add names the spreadsheet doesn't have (e.g. Cockatoo Springs is also Ngunulum).
       otherNames: c.otherNames.concat((storiesById[c.id] && storiesById[c.id].otherNames) || []),
-      works: C.works.filter(function (w) { return w.community === c.id; }),
+      works: worksFor(c.id),
     });
   });
   var byId = indexBy(communities);
@@ -595,8 +607,6 @@
   var DESIGN_WORK_ICONS = ["battery", "fuel", "power-lines", "meter"];
 
   function worksByProgram(c) {
-    // With no works for a community, the list says planning is under way (client edit) rather than leaving a gap.
-    if (!c.works.length) return '<p class="work-empty">Planning in progress</p>';
     return C.programs.map(function (p) {
       var list = c.works.filter(function (w) { return w.program === p.id; });
       if (!list.length) return "";
@@ -677,7 +687,7 @@
       aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
         fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) +
       storyHtml +
-      '<div class="section">' + media + '<section class="works" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section></div>" +
+      (media ? '<div class="section">' + media + "</div>" : "") +
       contactBlock() + profileFoot(c, 3) +
       "</div>";
   }
@@ -692,14 +702,11 @@
     }).join("");
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
 
-    // Every simple profile has the works section, so the About and service provider bands never sit edge to edge.
-    var middle = '<section class="works" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" + explainers;
-
     return profileBar(c) +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
-      '<div class="section">' + middle + "</div>" +
+      (explainers ? '<div class="section">' + explainers + "</div>" : "") +
       contactBlock() + profileFoot(c, 2) +
       "</div>";
   }
@@ -712,24 +719,12 @@
       icon("sound") + "</button></div>";
   }
 
-  // The community's key details in a box like the service provider one, with its transition milestones.
+  // The community's key details in a box like the service provider one, then what's been done and what's planned
+  // (it replaced the transition milestones here, client edit).
   function aboutBlock(c, facts) {
-    return '<section class="band about" aria-label="About ' + esc(c.name) + '">' +
+    return '<section class="band about" id="work" aria-label="About ' + esc(c.name) + '">' +
       '<div class="facts">' + facts + "</div>" +
-      milestoneList() + "</section>";
-  }
-
-  // The community's transition milestones. Placeholder statuses and dates until HP supplies real ones per community.
-  // Only completed and in-progress milestones show: HP doesn't want to draw attention to work that hasn't started.
-  function milestoneList() {
-    var words = { "completed": "Completed [dd mmm yy]", "in-progress": "In progress · Due [completion date]" };
-    var shown = C.milestones.filter(function (m) { return words[m.status]; });
-    if (!shown.length) return "";
-    return '<ol class="milestones" aria-label="Transition milestones">' + shown.map(function (m) {
-      // Status icons exported from the creative's Figma (images/design/), drawn in a hand-made style the sprite can't recolour.
-      return '<li class="milestone ' + m.status + '"><span class="milestone-icon"><img src="images/design/milestone-' + m.status + '.svg" alt=""></span>' +
-        "<span><strong>" + esc(m.title) + "</strong><small>" + esc(words[m.status]) + "</small></span></li>";
-    }).join("") + "</ol>";
+      '<div class="works"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</div></section>";
   }
 
   // A story's photo, or a grey placeholder if it hasn't got one. The card thumbnail is decorative (the card is
