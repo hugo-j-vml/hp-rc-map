@@ -407,8 +407,11 @@ img.hero { width: 100%; }
 .contact .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 .contact .btn { height: 46px; min-height: 46px; }
 .contact .btn .icon { stroke-width: 2; }
-.contact .btn-primary { background: var(--red); color: var(--white); }
-.contact .btn-secondary { padding: 11px 19px; border: 1px solid var(--red); background: none; color: var(--red); }
+/* The design system's buttons, as on the landing panel: primary is core/orange, secondary a 2px orange outline; both go desert/dark on hover. */
+.contact .btn-primary { background: var(--orange); color: var(--white); }
+.contact .btn-primary:hover { background: var(--red); }
+.contact .btn-secondary { border-color: var(--orange); color: var(--orange); }
+.contact .btn-secondary:hover { border-color: var(--red); color: var(--red); }
 .contact .alert { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; font-weight: 600; line-height: 20px; }
 .contact .alert .icon { width: 24px; height: 24px; stroke-width: 2; }
 
@@ -603,7 +606,7 @@ img.hero { width: 100%; }
   .about, .contact { padding-left: 16px; padding-right: 16px; }
   /* Slimmer side padding so Call and Email fit on one line at phone widths. */
   .contact .btn-primary { padding-left: 14px; padding-right: 14px; }
-  .contact .btn-secondary { padding-left: 13px; padding-right: 13px; }
+  .contact .btn-secondary { padding-left: 12px; padding-right: 12px; }
   .quote { padding-left: 16px; padding-right: 16px; }
   .filters-head, .filters-body { padding-left: 16px; padding-right: 16px; }
   .filters-foot { padding: 16px 16px; gap: 8px; }
