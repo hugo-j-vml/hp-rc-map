@@ -284,7 +284,6 @@ img.hero { width: 100%; }
 
 .profile-name { padding: 24px 32px; }
 .profile-name h2 { font-size: 32px; font-weight: 700; line-height: 1.45; color: var(--red); }
-.profile-main.simple .profile-name h2 { font-size: 30px; }
 .name-row { display: flex; align-items: center; gap: 8px; }
 .say-name {
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -335,7 +334,7 @@ img.hero { width: 100%; }
 .story-article .link-arrow .icon { display: inline-block; vertical-align: -6px; margin-left: 6px; }
 .video { aspect-ratio: 496 / 278; flex-direction: column; gap: 10px; }
 .video .play { width: 64px; height: 64px; display: grid; place-items: center; background: var(--sand); border-radius: 32px; color: var(--red); }
-.video .play .icon { width: 40px; height: 40px; stroke-width: 2; }
+.video .play img { width: 40px; height: 40px; }
 .caption { font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--navy); }
 .story .caption { margin-top: 0; }
 
@@ -362,14 +361,14 @@ img.hero { width: 100%; }
   display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start;
   padding: 16px 0; border-bottom: 1px solid var(--red-mid);
 }
-.work-item > .icon { width: 48px; height: 48px; color: var(--red); stroke-width: 1.667; }
+.work-item > .icon, .work-icon { width: 48px; height: 48px; color: var(--red); stroke-width: 1.667; }
 .work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
 .work-item small { display: block; margin-top: 4px; font-size: 14px; line-height: 20px; }
 .panel.profile .status { padding: 4px 8px; font-size: 14px; font-weight: 600; line-height: 20px; }
 .panel.profile .status.tag-solid { background: var(--navy); color: var(--white); }
 .panel.profile .status.tag-mid { background: var(--red); color: var(--white); }
 .panel.profile .status.tag-outline { padding: 3px 7px; background: var(--red-tint); color: var(--red); border-color: var(--red); }
-.work-empty { padding: 16px; font-size: 14px; border-radius: var(--radius); background: var(--sand-dark); }
+.work-empty { font-size: 16px; line-height: 1.45; }
 .explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
 .explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }

@@ -550,15 +550,18 @@
   function workItem(w) {
     var status = C.statuses.find(function (s) { return s.id === w.status; });
     var tagClass = w.status === "completed" ? "tag-solid" : w.status === "in-progress" ? "tag-mid" : "tag-outline";
-    return '<div class="work-item">' + icon(w.icon) +
+    // Works icons use the creative's hand-drawn versions where she has drawn them (images/design/), else the sprite.
+    var art = DESIGN_WORK_ICONS.indexOf(w.icon) > -1 ? '<img class="work-icon" src="images/design/work-' + w.icon + '.svg" alt="">' : icon(w.icon);
+    return '<div class="work-item">' + art +
       "<div><strong>" + esc(w.title) + "</strong><small>" + esc(programsById[w.program].shortName + " · " + w.when) + "</small></div>" +
       '<span class="tag status ' + tagClass + '">' + esc(status.name) + "</span></div>";
   }
 
+  var DESIGN_WORK_ICONS = ["battery", "fuel", "power-lines", "meter"];
+
   function worksByProgram(c) {
-    if (!c.works.length) {
-      return '<p class="work-empty">[Works for this community will show here once the works data is loaded.]</p>';
-    }
+    // With no works for a community, the list says planning is under way (client edit) rather than leaving a gap.
+    if (!c.works.length) return '<p class="work-empty">Planning in progress</p>';
     return C.programs.map(function (p) {
       var list = c.works.filter(function (w) { return w.program === p.id; });
       if (!list.length) return "";
@@ -617,7 +620,7 @@
     }
     // Video, quote, photos and before-and-after only show where a story has them (Papulankutja, as placeholders).
     if (s.video) {
-      storyHtml += '<div class="placeholder video"><span class="play">' + icon("play") + "</span>" + esc(s.video) + "</div>" +
+      storyHtml += '<div class="placeholder video"><span class="play"><img src="images/design/play.svg" alt=""></span>' + esc(s.video) + "</div>" +
         '<p class="caption">Captions and transcript available</p>';
     }
     storyHtml += "</section>";
@@ -655,15 +658,15 @@
     }).join("");
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
 
-    var middle = (c.works.length ? '<section class="works" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") + explainers;
+    // Every simple profile has the works section, so the About and service provider bands never sit edge to edge.
+    var middle = '<section class="works" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" + explainers;
 
     return profileBar(c) +
       '<div class="placeholder hero">Photos still to come</div>' +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
-      // With no works data yet, the milestones in the About box stand in for the works list.
-      (middle ? '<div class="section">' + middle + "</div>" : "") +
+      '<div class="section">' + middle + "</div>" +
       contactBlock() + profileFoot(c, 2) +
       "</div>";
   }
