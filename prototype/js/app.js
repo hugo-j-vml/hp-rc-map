@@ -537,7 +537,7 @@
       '<button type="submit" aria-label="Search">' + icon("search") + "</button>" + resultsHtml + "</div>" +
       '<button type="button" class="btn btn-secondary" data-action="filters">' + icon("filter") + "Filters" + (count ? ' <span class="count">' + count + "</span>" : "") + "</button>" +
       "</form>" +
-      '<section class="stories" id="stories" aria-label="Community stories">' + stories + "</section>" +
+      '<section class="stories band" id="stories" aria-label="Community stories">' + stories + "</section>" +
       "</div>";
   }
 
