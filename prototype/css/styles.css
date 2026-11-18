@@ -584,17 +584,22 @@ img.hero { width: 100%; }
   .panel.filters-open .sheet-handle { display: none; }
   .panel.profile .sheet-handle { position: absolute; left: 0; right: 0; top: 0; z-index: 3; }
 
-  .home { --pad: 16px; padding: 4px var(--pad) 0; gap: 16px; }
+  .home { --pad: 32px; padding: 4px var(--pad) 0; gap: 16px; }
   .home .stories.band { padding-bottom: 24px; }
   .home h1 { font-size: 22px; }
 
   .search { order: 2; }
   .stories { order: 4; }
 
-  .profile-bar { padding: 0 16px; border-radius: 16px 16px 0 0; }
+  .profile-bar { border-radius: 16px 16px 0 0; }
   .panel.profile.expanded .profile-bar { border-radius: 0; }
   .hero { height: 195px; }
-  /* Mobile keeps the desktop treatment with the panel's usual 16px sides. */
+}
+
+/* Phones only: 16px from the screen edge. Tablets (601-900px) keep the desktop 32px sides. */
+@media (max-width: 600px) {
+  .home { --pad: 16px; }
+  .profile-bar { padding: 0 16px; }
   .profile-name, .section { padding-left: 16px; padding-right: 16px; }
   .about, .contact { padding-left: 16px; padding-right: 16px; }
   /* Slimmer side padding so Call and Email fit on one line at phone widths. */
