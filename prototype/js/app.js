@@ -746,7 +746,7 @@
   // ---------- Panel rendering ----------
   // The creative's base plate closes the home and profile panes: a torn, patterned edge, then a solid bar with "Back to top".
   function backToTop(onBand) {
-    return '<div class="base-plate' + (onBand ? " on-band" : "") + '"><img src="images/design/base-plate.svg" alt="">' +
+    return '<div class="base-plate' + (onBand ? " on-band" : "") + '"><img src="images/design/base-plate' + (onBand ? "-no-backing" : "") + '.svg" alt="">' +
       '<button type="button" class="back-top" data-action="top"><img src="images/design/back-to-top-icon.svg" alt="">Back to top</button></div>';
   }
 
