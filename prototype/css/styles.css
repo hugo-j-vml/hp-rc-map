@@ -370,7 +370,8 @@ img.hero { width: 100%; }
 .before-after .caption { margin-top: 6px; }
 
 .works { display: flex; flex-direction: column; gap: 14px; }
-.works > h3 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.45; color: var(--red); }
+/* The "Works" heading is an eyebrow like the facts' labels (Region, Service provider). */
+.works > h3 { margin: 0; font-size: 14px; font-weight: 400; line-height: 20px; color: var(--navy); }
 .work-group { display: flex; flex-direction: column; gap: 8px; }
 .work-group h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .work-item {

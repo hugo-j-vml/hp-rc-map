@@ -29,7 +29,7 @@ It is built from these inputs:
   - A simpler profile for everyone else (Figma D04).
   - Every profile lists the nearest communities, worked out from the real coordinates.
   - Closing a profile with the cross (or Escape) zooms the map back out to the whole state.
-  - Each profile's key facts sit in an "About" box, followed by "What we've done and what's planned" (sample and placeholder works for now).
+  - Each profile's key facts sit in an "About" box, followed by the works under a "Works" label (sample and placeholder works for now).
   - Every profile has a "Hear how to say" button next to the name. It shows a placeholder until community recordings are supplied.
 - Deep links (`index.html#community=kiwirrkurra`) and Share (copies the link).
 - Desktop and mobile layouts. On mobile, the panel becomes a bottom sheet, with the key and zoom buttons bottom right just above it.

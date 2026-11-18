@@ -724,7 +724,7 @@
   function aboutBlock(c, facts) {
     return '<section class="band about" id="work" aria-label="About ' + esc(c.name) + '">' +
       '<div class="facts">' + facts + "</div>" +
-      '<div class="works"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</div></section>";
+      '<div class="works"><h3>Works</h3>' + worksByProgram(c) + "</div></section>";
   }
 
   // A story's photo, or a grey placeholder if it hasn't got one. The card thumbnail is decorative (the card is
