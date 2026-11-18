@@ -662,7 +662,6 @@
     var middle = '<section class="works" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" + explainers;
 
     return profileBar(c) +
-      '<div class="placeholder hero">Photos still to come</div>' +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
