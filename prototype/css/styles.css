@@ -329,7 +329,8 @@ img.hero { width: 100%; }
 }
 /* The top edge's artwork stops 0.89 units short of its 32-unit-tall SVG, so it's pulled down that much to meet the block without a seam. */
 .band::before { bottom: 100%; transform: translateY(calc(100% * 0.89 / 32)); background-image: url("../images/design/edge-top.svg"); }
-.band::after { top: 100%; background-image: url("../images/design/edge-bottom.svg"); }
+/* Flipped left to right so the bottom tear is not just the top one turned upside down. */
+.band::after { top: 100%; transform: scaleX(-1); background-image: url("../images/design/edge-bottom.svg"); }
 
 .about { padding: 35px 57px 37px; display: flex; flex-direction: column; gap: 16px; }
 .facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
