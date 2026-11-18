@@ -82,6 +82,11 @@ window.RC_CONTENT = {
       title: "Smart meters for 57 homes, the clinic, school and store", when: "Completed [year]" },
   ],
 
+  // Added to every community's works (client edit, Nov 2026). It has no program or type of work, so only the status
+  // filter matches it. Its icon is the creative's ticked circle, as there's no works icon for a visit.
+  firstVisit: { status: "completed", art: "images/design/milestone-completed.svg",
+    title: "Initial visit and safety inspection", when: "Completed 2025" },
+
   // Placeholder works for communities with no sample works above: every profile shows something completed or planned.
   // Picked per community in worksFor() (app.js). Replace with real works data from Horizon Power.
   placeholderWorks: [

@@ -14,12 +14,14 @@
   // community shows something completed or planned (client edit). Placeholders until HP supplies the real works.
   function worksFor(id) {
     var own = C.works.filter(function (w) { return w.community === id; });
-    if (own.length) return own;
-    var sum = 0;
-    for (var i = 0; i < id.length; i++) sum += id.charCodeAt(i);
-    var pool = C.placeholderWorks, n = 2 + (sum % 2), out = [];
-    for (var j = 0; j < n; j++) out.push(Object.assign({ community: id }, pool[(sum + j * 2) % pool.length]));
-    return out;
+    if (!own.length) {
+      var sum = 0;
+      for (var i = 0; i < id.length; i++) sum += id.charCodeAt(i);
+      var pool = C.placeholderWorks, n = 2 + (sum % 2);
+      for (var j = 0; j < n; j++) own.push(Object.assign({ community: id }, pool[(sum + j * 2) % pool.length]));
+    }
+    // Every community starts with the same completed first visit (client edit).
+    return [Object.assign({ community: id }, C.firstVisit)].concat(own);
   }
 
   var communities = window.RC_COMMUNITIES.map(function (c) {
@@ -598,9 +600,9 @@
   // when in progress, outlined only when planned. The status shows in colour and in the small line's text.
   function workItem(w) {
     // Works icons use the creative's hand-drawn versions where the design has them (images/design/), else the sprite.
-    var art = DESIGN_WORK_ICONS.indexOf(w.icon) > -1 ? '<img class="work-icon" src="images/design/work-' + w.icon + '.svg" alt="">' : icon(w.icon);
+    var art = w.art ? '<img class="work-icon" src="' + w.art + '" alt="">' : DESIGN_WORK_ICONS.indexOf(w.icon) > -1 ? '<img class="work-icon" src="images/design/work-' + w.icon + '.svg" alt="">' : icon(w.icon);
     return '<li class="work-item ' + w.status + '"><span class="work-art">' + art + "</span>" +
-      "<span><strong>" + esc(w.title) + "</strong><small>" + esc(programsById[w.program].shortName + " · " + w.when) + "</small></span></li>";
+      "<span><strong>" + esc(w.title) + "</strong><small>" + esc((w.program ? programsById[w.program].shortName + " · " : "") + w.when) + "</small></span></li>";
   }
 
   var DESIGN_WORK_ICONS = ["battery", "fuel", "power-lines", "meter"];
@@ -693,7 +695,7 @@
 
   function renderSimpleProfile(c) {
     var programs = [];
-    c.works.forEach(function (w) { if (programs.indexOf(w.program) === -1) programs.push(w.program); });
+    c.works.forEach(function (w) { if (w.program && programs.indexOf(w.program) === -1) programs.push(w.program); });
     var explainers = programs.map(function (id) {
       var e = programsById[id].explainer;
       return '<div class="explainer"><h4>' + icon("info") + esc(e.title) + "</h4><p>" + esc(e.body) + "</p>" +

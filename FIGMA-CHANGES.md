@@ -128,3 +128,5 @@ The transition milestone rows are gone. "What we've done and what's planned" (no
 ## Works as red blocks (client edit, Nov 2026)
 
 The works list uses the milestone rows' tight style: 12 × 16px padding, 4px apart, 4px corners, a 40px hand-drawn works icon, the title (16px Semibold) and a 14px "program · date" line. Completed is Desert/Dark `#780D02` with white text and a white icon; in progress is `#FEF1E7` with a 1px `#780D02` border and red text; planned is transparent with a 1px `#D44A31` border and red text. Order is completed, in progress, planned, with no program headings or status tags. Not yet in the Figma wireframes.
+
+Every community's works also start with a completed "Initial visit and safety inspection" ("Completed 2025", no program), using the ticked-circle icon in the dark red block. Not yet in the Figma wireframes.
