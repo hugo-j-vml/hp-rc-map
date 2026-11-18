@@ -341,7 +341,7 @@
       g.sy -= g.large ? 11.49 : 8;
     });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 21 : g.large ? 12 : 8;
+      var r = g.items.length > 1 ? 19 : g.large ? 12 : 8;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {

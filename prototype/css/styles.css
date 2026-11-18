@@ -502,14 +502,14 @@ img.hero { width: 100%; }
   pointer-events: none; z-index: 4;
 }
 .marker.pin-large .tooltip { bottom: calc(50% + 16px); }
-/* Groups: 34px red disc in a 3px white border; a group with a story gets a 2px red outer ring (44px in all). */
+/* Groups: a 36px red disc with a 2px white border (client edit, was 40px with 3px); a group with a story gets a 2px red outer ring (40px in all). */
 .cluster {
   display: grid; place-items: center;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--red); color: var(--white); border: 3px solid var(--white);
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--red); color: var(--white); border: 2px solid var(--white);
   font-family: "Inter", sans-serif; font-size: 14px; font-weight: 700;
 }
-.marker.is-cluster { width: 40px; height: 40px; }
+.marker.is-cluster { width: 36px; height: 36px; }
 .marker.is-cluster.faded .cluster { background: #6e87b4; }
 .marker.is-cluster.has-story .cluster { box-shadow: 0 0 0 2px var(--red); }
 .marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px #6e87b4; }
