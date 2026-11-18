@@ -182,8 +182,8 @@
     requestAnimationFrame(step);
   }
 
-  // The creative's map rounds every service-area corner by 4px at the whole-of-WA view (her Figma's corner radius).
-  // That's 4.8 units in the outline's space, as her map draws the state at 0.83 of its size.
+  // The creative's map rounds every service-area corner by 4px at the whole-of-WA view (the corner radius in the creative's Figma).
+  // That's 4.8 units in the outline's space, as the creative's map draws the state at 0.83 of its size.
   var REGION_CORNER = 4.8;
   function roundedPath(pts, radius) {
     var n = pts.length, d = "";

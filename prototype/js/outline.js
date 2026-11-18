@@ -34,7 +34,7 @@ window.RC_OUTLINE = {
     },
   };
   // Label spots: the centres of the region names in the creative's map (D01, Figma 129:10153), converted to longitude
-  // and latitude. Her map is this outline at 0.832 scale.
+  // and latitude. The creative's map is this outline at 0.832 scale.
   window.RC_REGION_LABELS = {
     kimberley: [123.7, -19.34],
     pilbara: [123.69, -21.39],
