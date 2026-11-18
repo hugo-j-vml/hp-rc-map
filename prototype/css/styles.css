@@ -140,7 +140,9 @@ a { color: inherit; }
 
 /* Search and Filters split the panel width 50/50. */
 /* The search box takes the room; Filters is only as wide as its content (about a quarter of the panel). */
-.search { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+/* Filters is at least as wide as the story thumbnails below it (120px), so their right-hand columns line up;
+   it grows when the active-filter count appears. */
+.search { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, auto); gap: 8px; }
 /* The search field follows HP's Design System text input (Figma YO73hE2jQ5KwtoR9eYrnzj, Input 7453:15863): white, a 1px
    Core/Navy border with 4px corners, 12 x 16px padding and navy Beausite Regular 16/22 text, with the border going to
    2px when active. Its one border wraps the search button too (user's choice), so field and button read as one control. */
