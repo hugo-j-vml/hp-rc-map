@@ -296,7 +296,7 @@ img.hero { width: 100%; }
 .profile-bar {
   position: sticky; top: 0; z-index: 2;
   display: flex; align-items: center; justify-content: flex-end;
-  height: 48px; padding: 14px 32px; background: var(--sand);
+  height: 48px; padding: 14px 16px 14px 32px; background: var(--sand);
 }
 .profile-bar .actions { display: flex; gap: 16px; }
 .profile-bar .actions button { display: flex; color: #1f1f1f; }
