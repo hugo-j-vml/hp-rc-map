@@ -568,7 +568,7 @@
 
   function contactBlock() {
     var k = C.contact;
-    return '<section class="contact" id="yarn" aria-label="Your local service provider"><small>Your local service provider</small>' +
+    return '<section class="band contact" id="yarn" aria-label="Your local service provider"><small>Your local service provider</small>' +
       "<h3>" + esc(k.heading) + "</h3><p>" + esc(k.body) + "</p>" +
       '<div class="buttons"><a class="btn btn-primary" href="tel:">Call ' + esc(k.phone) + " for a yarn" + icon("call") + "</a>" +
       '<a class="btn btn-secondary" href="mailto:">Email' + icon("email") + "</a></div>" +
@@ -580,12 +580,18 @@
       .map(function (o) { return { c: o, km: distanceKm(c, o) }; })
       .sort(function (a, b) { return a.km - b.km; })
       .slice(0, howMany);
-    return '<section class="section" aria-labelledby="nearby-h"><h3 id="nearby-h">Nearby communities</h3><ul class="nearby">' +
+    return '<section aria-labelledby="nearby-h"><h3 id="nearby-h">Nearby communities</h3><ul class="nearby">' +
       near.map(function (n) {
         return '<li><button type="button" data-open="' + n.c.id + '">' + icon("pin") +
           '<span class="text"><strong>' + esc(n.c.name) + "</strong><small>" + Math.round(n.km) + " km away" +
           (n.c.story ? " · Community story" : "") + "</small></span>" + icon("chevron-right") + "</button></li>";
       }).join("") + "</ul></section>";
+  }
+
+  // Nearby communities and the "Last updated" line, which close every profile.
+  function profileFoot(c, howMany) {
+    return '<div class="section">' + nearbyList(c, howMany) +
+      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p></div>';
   }
 
   function profileBar(c) {
@@ -600,7 +606,9 @@
   function renderStoryProfile(c) {
     var s = c.story;
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
-    var storyHtml = '<section class="section" id="story"><h3>' + esc(s.title) + "</h3>" +
+    // Sections and "bands" follow the creative's treatment (Nov 2026): plain sections on the sand background,
+    // and full-width bands with torn top and bottom edges for the About box, the quote and the service provider.
+    var storyHtml = '<section class="section story" id="story"><h3>' + esc(s.title) + "</h3>" +
       s.body.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
     // Article link straight after the story text. Its text is the article title, never "Read more" (WCAG 2.4.4 link purpose).
     if (s.article) {
@@ -612,14 +620,15 @@
       storyHtml += '<div class="placeholder video"><span class="play">' + icon("play") + "</span>" + esc(s.video) + "</div>" +
         '<p class="caption">Captions and transcript available</p>';
     }
-    if (s.quote) storyHtml += '<blockquote class="quote"><p>' + esc(s.quote) + "</p><footer>" + esc(s.quoteBy) + "</footer></blockquote>";
     storyHtml += "</section>";
+    if (s.quote) storyHtml += '<blockquote class="band quote"><p>' + esc(s.quote) + "</p><footer>" + esc(s.quoteBy) + "</footer></blockquote>";
+    var media = "";
     if (s.photos) {
-      storyHtml += '<section class="section"><div class="section-head"><h3>Photos</h3><a href="#">View all ' + s.photos + "</a></div>" +
-        '<div class="photos"><div class="placeholder">Photo</div><div class="placeholder">Photo</div><div class="placeholder">+' + (s.photos - 3) + " more</div></div></section>";
+      media += '<section class="media"><div class="section-head"><h3>Photos</h3><a href="#">View all ' + s.photos + "</a></div>" +
+        '<div class="photos"><div class="placeholder">Photo</div><div class="placeholder">Photo</div><div class="placeholder more">+' + (s.photos - 3) + " more</div></div></section>";
     }
     if (s.beforeAfter) {
-      storyHtml += '<section class="section"><div class="section-head"><h3>Before and after</h3></div><div class="before-after">' +
+      media += '<section class="media"><div class="section-head"><h3>Before and after</h3></div><div class="before-after">' +
         '<div><div class="placeholder">Photo</div><p class="caption">' + esc(s.beforeAfter[0]) + "</p></div>" +
         '<div><div class="placeholder">Photo</div><p class="caption">' + esc(s.beforeAfter[1]) + "</p></div></div></section>";
     }
@@ -631,9 +640,8 @@
       aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
         fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) +
       storyHtml +
-      '<section class="section" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section>" +
-      contactBlock() + nearbyList(c, 3) +
-      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p>' +
+      '<div class="section">' + media + '<section class="works" id="work"><h3>What we\'ve done and what\'s planned</h3>' + worksByProgram(c) + "</section></div>" +
+      contactBlock() + profileFoot(c, 3) +
       "</div>";
   }
 
@@ -647,15 +655,16 @@
     }).join("");
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
 
+    var middle = (c.works.length ? '<section class="works" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") + explainers;
+
     return profileBar(c) +
-      '<div class="placeholder hero small">Illustration (no photos yet)</div>' +
-      '<div class="profile-main">' +
+      '<div class="placeholder hero">Photos still to come</div>' +
+      '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
       aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
       // With no works data yet, the milestones in the About box stand in for the works list.
-      (c.works.length ? '<section class="section" id="work" aria-label="Work in this community">' + worksByProgram(c) + "</section>" : "") +
-      explainers + contactBlock() + nearbyList(c, 2) +
-      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p>' +
+      (middle ? '<div class="section">' + middle + "</div>" : "") +
+      contactBlock() + profileFoot(c, 2) +
       "</div>";
   }
 
@@ -669,7 +678,7 @@
 
   // The community's key details in a box like the service provider one, with its transition milestones.
   function aboutBlock(c, facts) {
-    return '<section class="about" aria-label="About ' + esc(c.name) + '">' +
+    return '<section class="band about" aria-label="About ' + esc(c.name) + '">' +
       '<div class="facts">' + facts + "</div>" +
       milestoneList() + "</section>";
   }
@@ -681,7 +690,8 @@
     var shown = C.milestones.filter(function (m) { return words[m.status]; });
     if (!shown.length) return "";
     return '<ol class="milestones" aria-label="Transition milestones">' + shown.map(function (m) {
-      return '<li class="milestone ' + m.status + '">' + icon(m.status === "completed" ? "done" : "image-placeholder") +
+      // Status icons exported from the creative's Figma (images/design/), drawn in a hand-made style the sprite can't recolour.
+      return '<li class="milestone ' + m.status + '"><span class="milestone-icon"><img src="images/design/milestone-' + m.status + '.svg" alt=""></span>' +
         "<span><strong>" + esc(m.title) + "</strong><small>" + esc(words[m.status]) + "</small></span></li>";
     }).join("") + "</ol>";
   }

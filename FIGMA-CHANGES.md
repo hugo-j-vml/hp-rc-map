@@ -76,6 +76,8 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
 
 ## Profiles (D03/D03b, D04/D04b, M03/M04)
 
+- **Visual treatment (Nov 2026):** the profiles now follow the creative's D03b and D04b frames in the separate file `P9Y58ygtCG3Ap8DGGMThu2` (style only, with the prototype's content), so they are no longer greyscale. That file, not this list, is the visual spec for the profiles. The wireframe export ("Export for Jaz - 11 November") still shows the greyscale profiles; don't restyle the wireframes unless asked.
+
 - **Width:** both profile types are now 560px wide on desktop (D04 was 400px).
 - **No tabs (client edit, Nov 2026):** the rich profile's Overview / Story / Work / Yarn with us tabs are gone. The content just scrolls down the panel: facts, story, work, Yarn with us, nearby communities. The "Community story" tag still scrolls the panel to the story. **In the 11 November export.**
 - **Hear the name (client edit, Nov 2026):** a round 40px speaker button sits 8px after the community name in both profile types (28px icon, 1.5 stroke, drawn to match the set). Hover fills it grey 100; while the clip plays it is solid grey 900 with a white icon. It is labelled "Hear how to say [name]". There are no recordings yet, so it shows a placeholder message. **In the 11 November export.**

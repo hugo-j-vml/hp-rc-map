@@ -29,6 +29,14 @@
   --white: #ffffff;
   --map-bg: #f5f5f5;
 
+  /* Creative's palette (Figma "desert" and "sky" styles), used by the profile panels so far. */
+  --red: #780d02;        /* desert/dark */
+  --red-mid: #d44a31;    /* desert/mid 1 */
+  --red-tint: #fef1e7;   /* in-progress and planned fills (no style name in Figma) */
+  --navy: #001e3c;       /* sky/dark, core/navy */
+  --sand: #f7f6f4;       /* desert/neutral 20: panel background */
+  --sand-dark: #ece9e4;  /* desert/neutral 50: bands and photo placeholders */
+
   --radius: 4px;
   --header-h: 138px;
   --panel-w: 560px;
@@ -257,87 +265,140 @@ img.hero { width: 100%; }
 /* Split in half: Clear all centred in the left half, the full-width button (text centred) in the right half. */
 .filters-foot .btn { width: 100%; justify-content: center; }
 
-/* ---------- Profile panel ---------- */
+/* ---------- Profile panel ----------
+   Visual treatment from the creative's Figma (Nov 2026): "D03b" (rich profile) and "D04b" (simple profile) in the
+   Remote Communities Map file P9Y58ygtCG3Ap8DGGMThu2. Values are copied from it; the rest of the page is still the
+   greyscale wireframe. Icon stroke widths are in the sprite's 32-unit viewBox, worked out from Figma's pixel strokes. */
+.panel.profile { background: var(--sand); }
 .profile-bar {
   position: sticky; top: 0; z-index: 2;
   display: flex; align-items: center; justify-content: flex-end;
-  height: 48px; padding: 0 32px; background: var(--white);
+  height: 48px; padding: 14px 32px; background: var(--sand);
 }
 .profile-bar .actions { display: flex; gap: 16px; }
-.profile-bar .actions .icon { width: 24px; height: 24px; }
-.hero { border-radius: 0; }
-.hero { height: 280px; }
-.hero.small { height: 152px; }
-.profile-main { padding: 32px 32px 24px; display: flex; flex-direction: column; gap: 32px; }
-.profile-name h2 { font-size: 32px; font-weight: 700; line-height: 1.3; }
+.profile-bar .actions button { display: flex; color: #1f1f1f; }
+.profile-bar .actions .icon { width: 20px; height: 20px; stroke-width: 2; }
+.hero { height: 280px; border-radius: var(--radius); }
+.panel.profile .placeholder { background: var(--sand-dark); color: var(--navy); }
+.profile-main { display: flex; flex-direction: column; color: var(--navy); }
+
+.profile-name { padding: 24px 32px; }
+.profile-name h2 { font-size: 32px; font-weight: 700; line-height: 1.45; color: var(--red); }
+.profile-main.simple .profile-name h2 { font-size: 30px; }
 .name-row { display: flex; align-items: center; gap: 8px; }
 .say-name {
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  width: 40px; height: 40px; border-radius: 50%; color: var(--grey-900);
+  width: 40px; height: 40px; border-radius: 20px; color: #212121;
 }
-.say-name:hover { background: var(--grey-100); }
-.say-name .icon { width: 28px; height: 28px; stroke-width: 1.5; }
-.say-name.playing { background: var(--grey-900); color: var(--white); }
-.profile-name .aka { color: var(--grey-700); margin-top: 4px; font-size: 15px; }
-.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 32px; }
-.fact span { display: block; font-size: 14px; color: var(--grey-700); }
-.fact strong { display: block; font-size: 18px; font-weight: 600; }
-.section h3 { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
-.section h4 { font-size: 14px; font-weight: 600; margin: 16px 0 4px; }
-.section p + p { margin-top: 12px; }
-.section > p { color: var(--grey-900); }
-.section .muted { color: var(--grey-700); }
-.video { height: 230px; flex-direction: column; gap: 10px; margin-top: 20px; }
-.video .play { width: 56px; height: 56px; display: grid; place-items: center; background: var(--white); border-radius: 50%; color: var(--grey-900); }
+.say-name:hover { background: var(--sand-dark); }
+.say-name .icon { width: 28px; height: 28px; stroke-width: 1.714; }
+.say-name.playing { background: var(--red); color: var(--white); }
+.profile-name .aka { margin-top: 6px; font-size: 15px; line-height: 1.45; color: var(--navy); }
+.profile-main.simple .profile-name .aka { line-height: normal; }
+
+/* Bands: full-width sand blocks with the creative's torn top and bottom edges (her "Intersect" shapes, exported as
+   SVG). The edges keep their shape and scale with the panel width; the plain block between them grows with the content. */
+.band {
+  position: relative; margin: calc(100% * 32 / 559) 0; background: var(--sand-dark);
+}
+.band::before, .band::after {
+  content: ""; position: absolute; left: 0; right: 0; aspect-ratio: 559 / 32;
+  background: no-repeat center / 100% 100%; pointer-events: none;
+}
+/* The top edge's artwork stops 0.89 units short of its 32-unit-tall SVG, so it's pulled down that much to meet the block without a seam. */
+.band::before { bottom: 100%; transform: translateY(calc(100% * 0.89 / 32)); background-image: url("../images/design/edge-top.svg"); }
+.band::after { top: 100%; background-image: url("../images/design/edge-bottom.svg"); }
+
+.about { padding: 35px 57px 37px; display: flex; flex-direction: column; gap: 16px; }
+.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.fact { display: flex; flex-direction: column; gap: 2px; }
+.fact span { font-size: 14px; line-height: 20px; color: var(--navy); }
+.fact strong { font-size: 18px; font-weight: 600; line-height: 24px; color: var(--red); }
+.milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.milestone { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-radius: var(--radius); background: var(--red); color: var(--white); }
+.milestone.in-progress { background: var(--red-tint); color: var(--red); padding: 11px 15px; border: 1px solid var(--red); }
+.milestone-icon { position: relative; flex-shrink: 0; width: 32px; height: 32px; }
+.milestone-icon img { position: absolute; left: 0; top: 0; width: 32px; height: 32px; }
+/* The in-progress icon's artwork is 34 × 35, offset in its 32px slot as it is in Figma. */
+.milestone.in-progress .milestone-icon img { left: -0.46px; top: -0.58px; width: 34px; height: 35px; }
+.milestone strong { display: block; font-size: 16px; font-weight: 600; line-height: normal; }
+.milestone small { display: block; font-size: 14px; line-height: normal; }
+
+.section { padding: 24px 32px; display: flex; flex-direction: column; gap: 28px; }
+.section h3 { margin: 0; color: var(--red); line-height: 1.45; }
+.story { gap: 16px; }
+.story h3 { font-size: 22px; font-weight: 700; }
+.story p { font-size: 16px; line-height: 1.45; }
 /* Link to an HP news article after a story's text: the article title as an underlined text link. */
-.section .story-article { margin-top: 16px; }
-.story-article .link-arrow { display: inline; text-decoration: underline; text-underline-offset: 3px; }
+.story-article .link-arrow { display: inline; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
 .story-article .link-arrow:hover { text-decoration-thickness: 2px; }
 .story-article .link-arrow .icon { display: inline-block; vertical-align: -6px; margin-left: 6px; }
-.caption { font-size: 12px; color: var(--grey-700); margin-top: 8px; }
-.quote { border-left: 4px solid var(--grey-900); padding: 4px 0 4px 16px; margin: 24px 0 0; }
-.quote p { font-size: 17px; font-style: italic; }
-.quote footer { font-size: 12px; color: var(--grey-700); margin-top: 8px; }
-.section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
-.section-head h3 { margin: 0; font-size: 18px; }
-.section-head a { font-size: 14px; font-weight: 500; text-decoration: none; }
-.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.photos .placeholder { aspect-ratio: 1.25; }
-.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.before-after .placeholder { aspect-ratio: 1.45; }
-.work-group h4 { margin-top: 20px; }
+.video { aspect-ratio: 496 / 278; flex-direction: column; gap: 10px; }
+.video .play { width: 64px; height: 64px; display: grid; place-items: center; background: var(--sand); border-radius: 32px; color: var(--red); }
+.video .play .icon { width: 40px; height: 40px; stroke-width: 2; }
+.caption { font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--navy); }
+.story .caption { margin-top: 0; }
+
+.quote { margin-left: 0; margin-right: 0; padding: 21px 43px 21px 67px; color: var(--red); }
+.quote p { font-size: 18px; font-style: italic; line-height: 1.45; }
+.quote footer { margin-top: 8px; font-size: 13px; font-weight: 500; line-height: 1.45; }
+
+.media { display: flex; flex-direction: column; gap: 12px; }
+.section-head { display: flex; justify-content: space-between; align-items: center; }
+.section-head h3 { font-size: 18px; font-weight: 600; }
+.section-head a { font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--navy); text-decoration: none; }
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.photos .placeholder { aspect-ratio: 1; }
+.photos .more { font-weight: 600; }
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.before-after .placeholder { aspect-ratio: 244 / 171; }
+.before-after .caption { margin-top: 6px; }
+
+.works { display: flex; flex-direction: column; gap: 14px; }
+.works > h3 { font-size: 22px; font-weight: 700; }
+.work-group { display: flex; flex-direction: column; gap: 8px; }
+.work-group h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .work-item {
-  display: grid; grid-template-columns: 32px 1fr auto; gap: 12px 16px; align-items: start;
-  padding: 16px 0; border-bottom: 1px solid var(--grey-200);
+  display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start;
+  padding: 16px 0; border-bottom: 1px solid var(--red-mid);
 }
-.work-item strong { display: block; font-weight: 600; line-height: 22px; }
-.work-item small { display: block; color: var(--grey-700); font-size: 14px; margin-top: 4px; }
-.work-empty { color: var(--grey-700); padding: 16px; background: var(--grey-050); border-radius: var(--radius); font-size: 14px; }
-.explainer { border: 1px solid var(--grey-300); border-radius: var(--radius); padding: 20px; }
-.explainer h4 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; margin: 0 0 8px; }
-.explainer h4 .icon { width: 20px; height: 20px; }
-.explainer p { font-size: 14px; color: var(--grey-700); }
-.explainer .link-arrow { font-size: 14px; margin-top: 12px; }
-.explainer .link-arrow .icon { width: 18px; height: 18px; }
-.about { background: var(--grey-100); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.milestones { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.milestone { display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--white); border-radius: var(--radius); }
-.milestone .icon { width: 32px; height: 32px; color: var(--grey-900); }
-.milestone strong { display: block; font-size: 16px; font-weight: 600; }
-.milestone small { display: block; font-size: 14px; color: var(--grey-700); }
-.contact { background: var(--grey-100); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-.contact small { font-size: 14px; color: var(--grey-700); }
-.contact h3 { font-size: 24px; font-weight: 600; line-height: 1.25; margin: 0; }
-.contact .buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.contact .alert { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
-.contact .alert .icon { width: 22px; height: 22px; }
-.nearby { list-style: none; padding: 0; margin: 0; }
-.nearby li { border-bottom: 1px solid var(--grey-200); }
-.nearby button { width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 0; text-align: left; }
+.work-item > .icon { width: 48px; height: 48px; color: var(--red); stroke-width: 1.667; }
+.work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
+.work-item small { display: block; margin-top: 4px; font-size: 14px; line-height: 20px; }
+.panel.profile .status { padding: 4px 8px; font-size: 14px; font-weight: 600; line-height: 20px; }
+.panel.profile .status.tag-solid { background: var(--navy); color: var(--white); }
+.panel.profile .status.tag-mid { background: var(--red); color: var(--white); }
+.panel.profile .status.tag-outline { padding: 3px 7px; background: var(--red-tint); color: var(--red); border-color: var(--red); }
+.work-empty { padding: 16px; font-size: 14px; border-radius: var(--radius); background: var(--sand-dark); }
+.explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
+.explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
+.explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }
+.explainer p { font-size: 14px; line-height: 1.45; }
+.explainer .link-arrow { gap: 6px; font-size: 14px; line-height: 1.45; color: var(--navy); }
+.explainer .link-arrow .icon { width: 16px; height: 16px; stroke-width: 2.5; }
+
+.contact { padding: 15px 57px 22px; display: flex; flex-direction: column; }
+.contact small { font-size: 14px; line-height: 20px; }
+.contact h3 { margin: 4px 0 0; font-size: 24px; font-weight: 600; line-height: 30px; color: var(--red); }
+.contact > p:not(.alert) { margin-top: 16px; font-size: 16px; line-height: 22px; }
+.contact .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.contact .btn { height: 46px; min-height: 46px; }
+.contact .btn .icon { stroke-width: 2; }
+.contact .btn-primary { background: var(--red); color: var(--white); }
+.contact .btn-secondary { padding: 11px 19px; border: 1px solid var(--red); background: none; color: var(--red); }
+.contact .alert { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; font-weight: 600; line-height: 20px; }
+.contact .alert .icon { width: 24px; height: 24px; stroke-width: 2; }
+
+.section h3#nearby-h { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.nearby { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.nearby li { border-bottom: 1px solid var(--red-mid); }
+.nearby button { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 0; text-align: left; color: var(--navy); }
+.nearby .icon { flex-shrink: 0; width: 32px; height: 32px; stroke-width: 1.5; }
+.nearby button > .icon:first-child { color: var(--red); }
 .nearby .text { flex: 1; }
-.nearby strong { display: block; font-weight: 600; }
-.nearby small { color: var(--grey-700); font-size: 14px; }
-.updated { font-size: 13px; color: var(--grey-700); }
+.nearby strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
+.nearby small { display: block; font-size: 14px; line-height: 20px; }
+.updated { font-size: 13px; line-height: 1.45; }
 
 /* ---------- Map ---------- */
 .map {
@@ -507,11 +568,11 @@ img.hero { width: 100%; }
 
   .profile-bar { padding: 0 20px; border-radius: 16px 16px 0 0; }
   .panel.profile.expanded .profile-bar { border-radius: 0; }
-  .hero { height: 195px !important; }
-  .hero.small { height: 120px !important; }
-  .profile-main { padding: 24px 20px; gap: 28px; }
-  .facts { gap: 16px; }
-  .about { padding: 20px; }
+  .hero { height: 195px; }
+  /* Mobile keeps the desktop treatment with the panel's usual 20px sides; bands keep their extra 20px inset. */
+  .profile-name, .section { padding-left: 20px; padding-right: 20px; }
+  .about, .contact { padding-left: 40px; padding-right: 40px; }
+  .quote { padding-left: 50px; padding-right: 26px; }
   .filters-head, .filters-body { padding-left: 20px; padding-right: 20px; }
   .filters-foot { padding: 16px 20px; gap: 8px; }
   /* Half a phone screen is tight for "Show 117 communities": 14px text with less side padding fits on one line at 360px and up,
