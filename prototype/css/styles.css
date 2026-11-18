@@ -372,19 +372,18 @@ img.hero { width: 100%; }
 .works { display: flex; flex-direction: column; gap: 14px; }
 /* The "Works" heading is an eyebrow like the facts' labels (Region, Service provider). */
 .works > h3 { margin: 0; font-size: 14px; font-weight: 400; line-height: 20px; color: var(--navy); }
-.work-group { display: flex; flex-direction: column; gap: 8px; }
-.work-group h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--red); }
-.work-item {
-  display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start;
-  padding: 16px 0; border-bottom: 1px solid var(--red-mid);
-}
-.work-item > .icon, .work-icon { width: 48px; height: 48px; color: var(--red); stroke-width: 1.667; }
-.work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
-.work-item small { display: block; margin-top: 4px; font-size: 14px; line-height: 20px; }
-.panel.profile .status { padding: 4px 8px; font-size: 14px; font-weight: 600; line-height: 20px; }
-.panel.profile .status.tag-solid { background: var(--navy); color: var(--white); }
-.panel.profile .status.tag-mid { background: var(--red); color: var(--white); }
-.panel.profile .status.tag-outline { padding: 3px 7px; background: var(--red-tint); color: var(--red); border-color: var(--red); }
+.work-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.work-item { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-radius: var(--radius); }
+.work-item.completed { background: var(--red); color: var(--white); }
+.work-item.in-progress { background: var(--red-tint); color: var(--red); padding: 11px 15px; border: 1px solid var(--red); }
+.work-item.planned { color: var(--red); padding: 11px 15px; border: 1px solid var(--red-mid); }
+.work-art { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; }
+.work-art .icon, .work-icon { width: 40px; height: 40px; stroke-width: 1.667; }
+.work-icon { display: block; }
+/* The hand-drawn works icons are dark red artwork; on the dark red block they're turned white. */
+.work-item.completed .work-icon { filter: brightness(0) invert(1); }
+.work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: normal; }
+.work-item small { display: block; font-size: 14px; line-height: normal; }
 .explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
 .explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }

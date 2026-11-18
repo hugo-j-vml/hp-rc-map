@@ -594,24 +594,23 @@
   }
 
   // ---------- Panel: profile ----------
+  // A work is a tight block like the old milestone rows (client edit): dark red when completed, pale with a red border
+  // when in progress, outlined only when planned. The status shows in colour and in the small line's text.
   function workItem(w) {
-    var status = C.statuses.find(function (s) { return s.id === w.status; });
-    var tagClass = w.status === "completed" ? "tag-solid" : w.status === "in-progress" ? "tag-mid" : "tag-outline";
     // Works icons use the creative's hand-drawn versions where the design has them (images/design/), else the sprite.
     var art = DESIGN_WORK_ICONS.indexOf(w.icon) > -1 ? '<img class="work-icon" src="images/design/work-' + w.icon + '.svg" alt="">' : icon(w.icon);
-    return '<div class="work-item">' + art +
-      "<div><strong>" + esc(w.title) + "</strong><small>" + esc(programsById[w.program].shortName + " · " + w.when) + "</small></div>" +
-      '<span class="tag status ' + tagClass + '">' + esc(status.name) + "</span></div>";
+    return '<li class="work-item ' + w.status + '"><span class="work-art">' + art + "</span>" +
+      "<span><strong>" + esc(w.title) + "</strong><small>" + esc(programsById[w.program].shortName + " · " + w.when) + "</small></span></li>";
   }
 
   var DESIGN_WORK_ICONS = ["battery", "fuel", "power-lines", "meter"];
 
-  function worksByProgram(c) {
-    return C.programs.map(function (p) {
-      var list = c.works.filter(function (w) { return w.program === p.id; });
-      if (!list.length) return "";
-      return '<div class="work-group"><h4>' + esc(p.name.replace(/ \(.*/, "") + " (" + p.shortName + ")") + "</h4>" + list.map(workItem).join("") + "</div>";
+  // Completed first, then in progress, then planned; the order within each stays as the data has it.
+  function worksByStatus(c) {
+    var rows = C.statuses.map(function (st) {
+      return c.works.filter(function (w) { return w.status === st.id; }).map(workItem).join("");
     }).join("");
+    return '<ul class="work-list" aria-label="Works">' + rows + "</ul>";
   }
 
   function contactBlock() {
@@ -724,7 +723,7 @@
   function aboutBlock(c, facts) {
     return '<section class="band about" id="work" aria-label="About ' + esc(c.name) + '">' +
       '<div class="facts">' + facts + "</div>" +
-      '<div class="works"><h3>Works</h3>' + worksByProgram(c) + "</div></section>";
+      '<div class="works"><h3>Works</h3>' + worksByStatus(c) + "</div></section>";
   }
 
   // A story's photo, or a grey placeholder if it hasn't got one. The card thumbnail is decorative (the card is

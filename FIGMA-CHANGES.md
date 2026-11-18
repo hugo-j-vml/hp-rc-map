@@ -124,3 +124,7 @@ Filter tile styles (program tiles with descriptions, selected = solid fill), fac
 ## Works list replaces the milestones in the About box (client edit, Nov 2026)
 
 The transition milestone rows are gone. "What we've done and what's planned" (now an eyebrow label "Works", 14px navy like Region and Service provider, replacing the heading; then works grouped by program with icon, title, program and date, and a Completed, In progress or Planned tag) now sits inside the About band, under the facts, on both profiles. It is no longer a separate section further down. Every community has works: Papulankutja and Kiwirrkurra the sample ones, the rest two or three placeholders. This supersedes the About box paragraph above. Not yet in the Figma wireframes.
+
+## Works as red blocks (client edit, Nov 2026)
+
+The works list uses the milestone rows' tight style: 12 × 16px padding, 4px apart, 4px corners, a 40px hand-drawn works icon, the title (16px Semibold) and a 14px "program · date" line. Completed is Desert/Dark `#780D02` with white text and a white icon; in progress is `#FEF1E7` with a 1px `#780D02` border and red text; planned is transparent with a 1px `#D44A31` border and red text. Order is completed, in progress, planned, with no program headings or status tags. Not yet in the Figma wireframes.
