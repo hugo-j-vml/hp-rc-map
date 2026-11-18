@@ -626,10 +626,9 @@
       }).join("") + "</ul></section>";
   }
 
-  // Nearby communities and the "Last updated" line, which close every profile.
+  // The nearby communities, which close every profile.
   function profileFoot(c, howMany) {
-    return '<div class="section">' + nearbyList(c, howMany) +
-      '<p class="updated">Last updated [date] · Something not right? <a href="#yarn" data-jump="yarn">Yarn with us</a></p></div>';
+    return '<div class="section">' + nearbyList(c, howMany) + "</div>";
   }
 
   function profileBar(c) {

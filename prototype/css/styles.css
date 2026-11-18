@@ -421,7 +421,6 @@ img.hero { width: 100%; }
 .nearby .text { flex: 1; }
 .nearby strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
 .nearby small { display: block; font-size: 14px; line-height: 20px; }
-.updated { font-size: 13px; line-height: 1.45; }
 
 /* ---------- Map ---------- */
 .map {
