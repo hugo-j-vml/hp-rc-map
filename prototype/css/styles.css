@@ -595,13 +595,13 @@ img.hero { width: 100%; }
   .profile-bar { padding: 0 16px; border-radius: 16px 16px 0 0; }
   .panel.profile.expanded .profile-bar { border-radius: 0; }
   .hero { height: 195px; }
-  /* Mobile keeps the desktop treatment with the panel's usual 16px sides; bands keep their extra 20px inset. */
+  /* Mobile keeps the desktop treatment with the panel's usual 16px sides. */
   .profile-name, .section { padding-left: 16px; padding-right: 16px; }
-  .about, .contact { padding-left: 36px; padding-right: 36px; }
+  .about, .contact { padding-left: 16px; padding-right: 16px; }
   /* Slimmer side padding so Call and Email fit on one line at phone widths. */
   .contact .btn-primary { padding-left: 14px; padding-right: 14px; }
   .contact .btn-secondary { padding-left: 13px; padding-right: 13px; }
-  .quote { padding-left: 46px; padding-right: 22px; }
+  .quote { padding-left: 16px; padding-right: 16px; }
   .filters-head, .filters-body { padding-left: 16px; padding-right: 16px; }
   .filters-foot { padding: 16px 16px; gap: 8px; }
   /* Half a phone screen is tight for "Show 117 communities": 14px text with less side padding fits on one line at 360px and up,
