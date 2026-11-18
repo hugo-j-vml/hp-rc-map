@@ -19,12 +19,11 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# Two jobs, as in GitHub's own Pages workflow: upload, then deploy. With both steps in one job, the deploy sometimes
+# looked for the artifact a second after uploading it and found nothing ("No artifacts named ... were found").
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
@@ -35,6 +34,14 @@ jobs:
         with:
           path: .
           name: github-pages-${{ github.run_attempt }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
         with:
