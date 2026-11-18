@@ -33,12 +33,13 @@ window.RC_OUTLINE = {
       goldfields: [[124.5, -23.47], [135, -23.47]].concat(goldfieldsSouth, [[121.9, -28.32], [121.9, -27.0], [124.5, -27.0]]),
     },
   };
-  // Label spots, picked to sit clear of communities.
+  // Label spots: the centres of the region names in the creative's map (D01, Figma 129:10153), converted to longitude
+  // and latitude. Her map is this outline at 0.832 scale.
   window.RC_REGION_LABELS = {
-    kimberley: [123.3, -19.35],
-    pilbara: [119.6, -22.3],
-    gascoyne: [116.6, -26.0],
-    goldfields: [125.6, -31.2],
+    kimberley: [123.7, -19.34],
+    pilbara: [123.69, -21.39],
+    gascoyne: [122.21, -25.72],
+    goldfields: [125.28, -30.72],
   };
 })();
 

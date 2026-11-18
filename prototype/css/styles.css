@@ -27,7 +27,7 @@
   --grey-700: #4d4d4d;
   --grey-900: #1f1f1f;
   --white: #ffffff;
-  --map-bg: #f5f5f5;
+  --map-bg: #e3ebf7; /* sea, from the creative's map */
 
   /* Creative's palette (Figma "desert" and "sky" styles), used by the profile panels so far. */
   --red: #780d02;        /* desert/dark */
@@ -81,13 +81,12 @@ a { color: inherit; }
   border-bottom: 1px solid var(--grey-200);
   background: var(--white);
 }
-.logo {
-  width: 150px; height: 40px; flex-shrink: 0;
-  display: grid; place-items: center; text-align: center;
-  background: var(--grey-300); border-radius: var(--radius);
-  font-size: 10px; font-weight: 500; line-height: 1.2; color: var(--grey-700); text-decoration: none;
-  padding: 0 8px;
-}
+/* Logo lock-up from the creative's Figma (desktop sizes exactly as there). */
+.logo { display: flex; align-items: center; gap: 22px; flex-shrink: 0; }
+.logo img { display: block; }
+.logo-hp { width: 142.642px; height: 51.816px; }
+.logo-divider { width: 2px; height: 49.033px; }
+.logo-rc { width: 129.198px; height: 49.528px; }
 .header-nav { align-self: stretch; display: flex; flex-direction: column; }
 .utility-nav {
   height: 82px; padding: 24px 0;
@@ -410,18 +409,24 @@ img.hero { width: 100%; }
 }
 .map-viewport.dragging { cursor: grabbing; }
 .map-stage { position: absolute; inset: 0; width: 100%; height: 100%; }
-/* The south west (South West Interconnected System) stays blank; each service area gets its own grey. */
-.map-stage .state { fill: var(--white); }
-.map-stage .region { stroke: var(--white); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.map-stage .region-kimberley { fill: #d9d9d9; }
-.map-stage .region-pilbara { fill: #e4e4e4; }
-.map-stage .region-gascoyne { fill: #ededed; }
-.map-stage .region-goldfields { fill: #e0e0e0; }
-.map-stage .state-edge { fill: none; stroke: var(--grey-500); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 1.5; }
+/* Map visual treatment from the creative's Figma (D01 "Map on load" 129:10145 and the overview 121:7214):
+   pale blue sea, sand service areas with rounded corners and a soft outline, and a navy coastline drawn inside the edge. */
+.map-stage .state { fill: #fbfbfa; } /* the South West Interconnected System area, left blank */
+.map-stage .region { stroke: #d9d3ca; stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.map-stage .region-kimberley { fill: #eae7e2; }
+.map-stage .region-pilbara { fill: #f2f0ec; }
+.map-stage .region-gascoyne { fill: var(--sand); }
+.map-stage .region-goldfields { fill: #f2f0ec; }
+/* 3px centred on the edge and clipped to the state leaves the design's 1.5px stroke on the inside. */
+.map-stage .state-edge { fill: none; stroke: var(--navy); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 3; }
 .map-labels { position: absolute; inset: 0; pointer-events: none; }
+/* A 1px white outline around map text, as in the design. */
+.region-label, .marker-label {
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
 .region-label {
   position: absolute; transform: translate(-50%, -50%);
-  font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--grey-700); white-space: nowrap; text-transform: uppercase;
+  font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--navy); white-space: nowrap; text-transform: uppercase;
 }
 
 .markers { position: absolute; inset: 0; pointer-events: none; }
@@ -429,36 +434,26 @@ img.hero { width: 100%; }
   position: absolute; transform: translate(-50%, -50%);
   pointer-events: auto;
   display: grid; place-items: center;
-  width: 28px; height: 28px; /* generous hit area around the 14px dot */
+  width: 28px; height: 28px; /* generous hit area */
 }
-.dot {
-  display: block; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--grey-700); border: 2px solid var(--white);
-}
-.dot.story {
-  width: 22px; height: 22px; background: var(--grey-900);
-  border: 0; box-shadow: inset 0 0 0 3px var(--grey-900), inset 0 0 0 7px var(--white);
-}
-.dot.faded { background: var(--grey-300); }
-.dot.story.faded { background: var(--grey-300); box-shadow: inset 0 0 0 3px var(--grey-300), inset 0 0 0 7px var(--white); }
-.marker.selected .dot {
-  /* Dark centre, white gap, then a thin dark ring hugging it: 26px across in total. */
-  width: 22px; height: 22px; background: var(--grey-900); border: 3px solid var(--white);
-  box-shadow: 0 0 0 2px var(--grey-900);
-}
+.marker-art { display: block; pointer-events: none; }
+/* Pin artwork: 20px frame with the tip 8px below its centre; the larger pin is 18 × 25 with its tip 11.5px below. */
+.marker.pin .marker-art { width: 20px; height: 20px; }
+.marker.pin-large { width: 32px; height: 32px; }
+.marker.pin-large .marker-art { width: 18px; height: 24.98px; }
+.marker.faded .marker-art { width: 14px; height: 14px; }
 .marker.selected { z-index: 3; }
-/* --gap is the space between the dot and its name; the selected dot is bigger, so its name sits further out. */
+/* --gap is the space between the marker's centre and its name: the pin's half-width, or the large pin's plus 3px. */
 .marker-label {
-  --gap: 14px; --corner: 4px;
+  --gap: 10px; --corner: 4px;
   position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 16px;
-  font-size: 13px; font-weight: 500; color: var(--grey-700); white-space: nowrap;
-  pointer-events: auto; cursor: pointer; /* clicking the name selects the community, like its dot */
-  text-shadow: 0 0 3px var(--map-bg), 0 0 3px var(--map-bg), 0 0 3px var(--map-bg);
+  font-size: 13px; font-weight: 500; color: var(--navy); white-space: nowrap;
+  pointer-events: auto; cursor: pointer; /* clicking the name selects the community, like its pin */
   /* Padding is cancelled out by the negative margin so the text stays put when the highlight appears. */
   padding: 2px 6px; margin: -2px -6px; border-radius: var(--radius);
-  translate: 0 2px; /* optical nudge: Inter sits high in its line box, so names looked above the dots' centres */
+  translate: 0 2px; /* optical nudge: names sat high in their line box */
 }
-.marker.selected .marker-label { --gap: 25px; --corner: 10px; }
+.marker.pin-large .marker-label { --gap: 19px; --corner: 10px; }
 .marker-label.at-left { left: auto; right: calc(50% + var(--gap)); }
 .marker-label.at-top { left: 50%; top: auto; bottom: calc(50% + var(--gap)); transform: translateX(-50%); }
 .marker-label.at-bottom { left: 50%; top: calc(50% + var(--gap)); transform: translateX(-50%); }
@@ -466,49 +461,52 @@ img.hero { width: 100%; }
 .marker-label.at-top-left { left: auto; right: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
 .marker-label.at-bottom-right { left: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
 .marker-label.at-bottom-left { left: auto; right: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
-.marker.faded .marker-label { color: var(--grey-500); }
-/* Hover, focus and selection highlight the name where it already sits. Dots without a visible name get the tooltip. */
-.marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label {
-  background: var(--grey-900); color: var(--white); font-weight: 600; text-shadow: none;
+.marker.faded .marker-label { color: #6e87b4; }
+/* Hover, focus and selection highlight the name where it already sits (the design's "Highlight" map label).
+   Dots without a visible name get the tooltip, styled the same. */
+.marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label, .tooltip {
+  background: var(--red); color: var(--white); font-family: "Inter", sans-serif; font-weight: 600; text-shadow: none;
 }
 .marker:hover, .marker:focus-visible { z-index: 5; }
 .marker:not(.has-label):hover .tooltip, .marker:not(.has-label):focus-visible .tooltip, .marker.selected:not(.has-label) .tooltip { display: block; }
 .tooltip {
-  display: none; position: absolute; bottom: calc(50% + 14px); left: 50%; transform: translateX(-50%);
-  background: var(--grey-900); color: var(--white); border-radius: var(--radius);
-  padding: 4px 12px; font-size: 14px; font-weight: 600; line-height: 20px; white-space: nowrap;
+  display: none; position: absolute; bottom: calc(50% + 12px); left: 50%; transform: translateX(-50%);
+  border-radius: var(--radius); padding: 2px 6px; font-size: 13px; line-height: 16px; white-space: nowrap;
   pointer-events: none; z-index: 4;
 }
-.marker.selected .tooltip { bottom: calc(50% + 20px); }
+.marker.pin-large .tooltip { bottom: calc(50% + 16px); }
+/* Groups: 34px red disc in a 3px white border; a group with a story gets a 2px red outer ring (44px in all). */
 .cluster {
   display: grid; place-items: center;
   width: 40px; height: 40px; border-radius: 50%;
-  background: var(--grey-900); color: var(--white); border: 3px solid var(--white);
-  font-size: 14px; font-weight: 700;
+  background: var(--red); color: var(--white); border: 3px solid var(--white);
+  font-family: "Inter", sans-serif; font-size: 14px; font-weight: 700;
 }
 .marker.is-cluster { width: 40px; height: 40px; }
-.marker.is-cluster.faded .cluster { background: var(--grey-300); color: var(--white); }
-.marker.is-cluster.has-story .cluster { box-shadow: 0 0 0 2px var(--grey-900); }
-.marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px var(--grey-300); }
+.marker.is-cluster.faded .cluster { background: #6e87b4; }
+.marker.is-cluster.has-story .cluster { box-shadow: 0 0 0 2px var(--red); }
+.marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px #6e87b4; }
 
 .legend {
   position: absolute; left: 24px; bottom: 24px;
-  background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--radius);
-  padding: 16px; width: 236px;
+  background: var(--white); border: 1px solid var(--navy); border-radius: var(--radius);
+  padding: 16px; width: 236px; font-family: "Inter", sans-serif; color: #1f1f1f;
 }
 .legend-toggle {
   width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
   font-weight: 600; line-height: 22px; margin-bottom: 8px;
 }
 .legend-toggle .icon { width: 24px; height: 24px; transform: rotate(180deg); transition: transform .15s ease; }
-.legend.collapsed { width: auto; padding: 0; border-radius: 999px; border-color: var(--grey-500); }
+.legend.collapsed { width: auto; padding: 0; border-radius: 999px; }
 .legend.collapsed .legend-toggle { margin: 0; padding: 10px 16px 10px 20px; }
 .legend.collapsed .legend-toggle .icon { transform: none; }
 .legend.collapsed ul { display: none; }
 .legend ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.legend li { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.legend li { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 20px; }
 .legend .m { width: 32px; height: 32px; display: grid; place-items: center; }
-.legend .cluster { width: 32px; height: 32px; font-size: 12px; border-width: 2px; }
+.legend .m img { display: block; }
+.legend .m img[src$="key-pin-story.svg"] { width: 16px; height: 22.98px; }
+.legend .cluster { width: 32px; height: 32px; font-size: 11.2px; border-width: 2.4px; }
 
 .zoom { position: absolute; right: 18px; bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
 .zoom button {
@@ -526,7 +524,11 @@ img.hero { width: 100%; }
 @media (max-width: 900px) {
   :root { --header-h: 81px; }
   .site-header { padding: 0 16px; }
-  .logo { width: 130px; height: 32px; font-size: 8px; }
+  /* No mobile header in the creative's Figma: the same lock-up scaled down to 24px tall (user's choice). */
+  .logo { gap: 10.19px; }
+  .logo-hp { width: 66.07px; height: 24px; }
+  .logo-divider { width: 0.93px; height: 22.71px; }
+  .logo-rc { width: 59.84px; height: 22.94px; }
   .header-nav { flex: 1; justify-content: center; }
   .utility-nav { height: auto; padding: 0; border: 0; gap: 0; justify-content: flex-end; }
   .utility-nav a { width: 56px; justify-content: center; }

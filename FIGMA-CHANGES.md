@@ -74,6 +74,10 @@ Figma v2 had its own header: HP logo, "Remote Communities Map", About the progra
   - **Mobile:** it starts as the pill.
 - **Zoom buttons (desktop):** unchanged, bottom right, 48 × 48.
 
+## Header logo and map (Nov 2026)
+
+- The header logo and the whole map now follow the creative's frames in `P9Y58ygtCG3Ap8DGGMThu2` (overview `121:7214`, D01 `129:10904`); see `CLAUDE.md` for the values. That file, not this list, is the visual spec for them. The wireframe export still shows the greyscale map and placeholder logo.
+
 ## Profiles (D03/D03b, D04/D04b, M03/M04)
 
 - **Visual treatment (Nov 2026):** the profiles now follow the creative's D03b and D04b frames in the separate file `P9Y58ygtCG3Ap8DGGMThu2` (style only, with the prototype's content), so they are no longer greyscale. That file, not this list, is the visual spec for the profiles. The wireframe export ("Export for Jaz - 11 November") still shows the greyscale profiles; don't restyle the wireframes unless asked.

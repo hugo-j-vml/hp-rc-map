@@ -182,6 +182,22 @@
     requestAnimationFrame(step);
   }
 
+  // The creative's map rounds every service-area corner by 4px at the whole-of-WA view (her Figma's corner radius).
+  // That's 4.8 units in the outline's space, as her map draws the state at 0.83 of its size.
+  var REGION_CORNER = 4.8;
+  function roundedPath(pts, radius) {
+    var n = pts.length, d = "";
+    for (var i = 0; i < n; i++) {
+      var p = pts[i], a = pts[(i - 1 + n) % n], b = pts[(i + 1) % n];
+      var la = Math.hypot(a.x - p.x, a.y - p.y), lb = Math.hypot(b.x - p.x, b.y - p.y);
+      var r = Math.min(radius, la / 2, lb / 2);
+      var p1 = { x: p.x + (a.x - p.x) / la * r, y: p.y + (a.y - p.y) / la * r };
+      var p2 = { x: p.x + (b.x - p.x) / lb * r, y: p.y + (b.y - p.y) / lb * r };
+      d += (i ? "L" : "M") + p1.x.toFixed(2) + " " + p1.y.toFixed(2) + "Q" + p.x.toFixed(2) + " " + p.y.toFixed(2) + " " + p2.x.toFixed(2) + " " + p2.y.toFixed(2);
+    }
+    return d + "Z";
+  }
+
   function drawOutline() {
     var svgNS = "http://www.w3.org/2000/svg";
     var group = document.createElementNS(svgNS, "g");
@@ -208,15 +224,15 @@
       regionGroup.setAttribute("class", "regions");
       regionGroup.dataset.variant = variant;
       C.regions.forEach(function (r) {
-        var d = shapes[r.id].map(function (pt, i) {
-          var p = window.projectWA(pt[1], pt[0]);
-          return (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1);
-        }).join("") + "Z";
-        regionGroup.appendChild(path(d, "region region-" + r.id));
+        var pts = shapes[r.id].map(function (pt) { return window.projectWA(pt[1], pt[0]); });
+        regionGroup.appendChild(path(roundedPath(pts, REGION_CORNER), "region region-" + r.id));
       });
       group.appendChild(regionGroup);
     });
-    group.appendChild(path(OUTLINE.state, "state-edge"));
+    // The coastline is drawn on the inside of the edge only (the creative's "inside" stroke), so it's clipped to the state.
+    var edge = path(OUTLINE.state, "state-edge");
+    edge.setAttribute("clip-path", "url(#state-clip)");
+    group.appendChild(edge);
     var labels = document.createElement("div");
     labels.className = "map-labels";
     labels.id = "map-labels";
@@ -308,8 +324,18 @@
     );
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
+    // Single communities are pins with their tip on the spot, so the marker (and its name) centres on the pin's head:
+    // 8px above the spot for a pin, 11.5px for the larger story and selected pin. Blue "not in filter" dots centre on the spot.
+    groups.forEach(function (g) {
+      if (g.items.length > 1) return;
+      var c = g.items[0];
+      if (c.id === state.selected) g.faded = false; // the selected community always shows its pin, even outside the filter
+      if (g.faded) return;
+      g.large = c.story || c.id === state.selected;
+      g.sy -= g.large ? 11.49 : 8;
+    });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 21 : g.items[0].id === state.selected ? 14 : 8;
+      var r = g.items.length > 1 ? 21 : g.large ? 12 : 8;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -324,10 +350,13 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, selected ? 25 : 14) : null;
-      return '<button type="button" class="marker' + (g.faded ? " faded" : "") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 19 : 10) : null;
+      // The creative's pin artwork (images/design/): red pin, the larger outlined pin for stories and the selected
+      // community, and a blue dot for communities outside the current filter.
+      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-pin";
+      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " pin") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
-        '<span class="dot' + (c.story ? " story" : "") + (g.faded ? " faded" : "") + '"></span>' +
+        '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
         '<span class="tooltip">' + esc(displayName(c)) + "</span></button>";
     }).join("");
@@ -338,7 +367,7 @@
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
   function placeLabel(placed, owner, x, y, text, gap) {
-    var w = textWidth(text), h = 16, corner = gap === 14 ? 4 : 10;
+    var w = textWidth(text), h = 16, corner = gap > 10 ? 10 : 4;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
@@ -359,7 +388,7 @@
 
   var measureCtx = document.createElement("canvas").getContext("2d");
   function textWidth(text) {
-    measureCtx.font = "600 13px " + getComputedStyle(document.body).fontFamily;
+    measureCtx.font = "600 13px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
     return measureCtx.measureText(text).width;
   }
 
