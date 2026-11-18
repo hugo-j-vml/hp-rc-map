@@ -579,7 +579,7 @@ img.hero { width: 100%; }
   .panel.profile { height: 71%; }
   .panel.profile.expanded, .panel.filters-open { height: 100%; border-radius: 0; }
   .sheet-handle {
-    display: block; flex-shrink: 0; height: 22px; cursor: pointer;
+    display: block; flex-shrink: 0; height: 22px; pointer-events: none; /* decoration only: clicks go to the buttons under it */
     background: linear-gradient(var(--grey-300), var(--grey-300)) center 10px / 40px 4px no-repeat;
   }
   .panel.filters-open .sheet-handle { display: none; }

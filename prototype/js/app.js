@@ -922,11 +922,6 @@
     if (first) openProfile(first.id);
   });
 
-  document.querySelector(".sheet-handle").addEventListener("click", function () {
-    state.expanded = !state.expanded;
-    el.panel.classList.toggle("expanded", state.expanded);
-  });
-
   document.addEventListener("keydown", function (e) {
     var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== "checkbox";
     if (e.shiftKey && e.key.toLowerCase() === "o" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
