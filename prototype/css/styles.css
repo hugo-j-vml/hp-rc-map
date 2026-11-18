@@ -588,7 +588,6 @@ img.hero { width: 100%; }
   .home { --pad: 20px; padding: 4px var(--pad) 0; gap: 16px; }
   .home .stories.band { padding-bottom: 24px; }
   .home h1 { font-size: 22px; }
-  .home .intro { display: none; }
 
   .search { order: 2; }
   .stories { order: 4; }
