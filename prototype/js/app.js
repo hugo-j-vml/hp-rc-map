@@ -203,20 +203,24 @@
     var group = document.createElementNS(svgNS, "g");
     el.stage.appendChild(group);
     el.stageGroup = group;
-    function path(d, cls) {
+    function path(d, cls, transform) {
       var node = document.createElementNS(svgNS, "path");
       node.setAttribute("d", d);
       node.setAttribute("class", cls);
+      if (transform) node.setAttribute("transform", transform);
       return node;
     }
+    // The land and coastline are the creative's smoothed shapes (RC_COAST in outline.js), not the raw outline.
+    var LAND = window.RC_COAST.land;
+    function coast(shape, cls) { return path(shape.d, cls, shape.transform); }
     // The state is drawn blank, then each service area is shaded on top, clipped to the coastline.
     var defs = document.createElementNS(svgNS, "defs");
     var clip = document.createElementNS(svgNS, "clipPath");
     clip.setAttribute("id", "state-clip");
-    clip.appendChild(path(OUTLINE.state, ""));
+    clip.appendChild(coast(LAND, ""));
     defs.appendChild(clip);
     group.appendChild(defs);
-    group.appendChild(path(OUTLINE.state, "state"));
+    group.appendChild(coast(LAND, "state"));
     Object.keys(window.RC_REGION_SHAPES).forEach(function (variant) {
       var shapes = window.RC_REGION_SHAPES[variant];
       var regionGroup = document.createElementNS(svgNS, "g");
@@ -229,10 +233,12 @@
       });
       group.appendChild(regionGroup);
     });
-    // The coastline is drawn on the inside of the edge only (the creative's "inside" stroke), so it's clipped to the state.
-    var edge = path(OUTLINE.state, "state-edge");
-    edge.setAttribute("clip-path", "url(#state-clip)");
-    group.appendChild(edge);
+    // The coastline is drawn 1.5px on the inside of the edge only (the design's "inside" stroke): a 3px stroke clipped to
+    // the land. The clip sits on a plain wrapper, as a clip path is read in the clipped element's own (transformed) space.
+    var wrap = document.createElementNS(svgNS, "g");
+    wrap.setAttribute("clip-path", "url(#state-clip)");
+    wrap.appendChild(coast(LAND, "state-edge"));
+    group.appendChild(wrap);
     var labels = document.createElement("div");
     labels.className = "map-labels";
     labels.id = "map-labels";
