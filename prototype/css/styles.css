@@ -569,7 +569,7 @@ img.hero { width: 100%; border-radius: 0; }
   .legend, .zoom { top: auto; bottom: calc(40% + 12px); transition: bottom .25s ease; }
   .map.sheet-profile .legend, .map.sheet-profile .zoom { bottom: calc(71% + 12px); }
   .zoom { right: 10px; }
-  .legend { left: auto; right: 66px; }
+  .legend { left: auto; right: 54px; } /* the zoom buttons are 36px wide at right: 10px, so this leaves their 8px gap */
 
   .panel {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;
