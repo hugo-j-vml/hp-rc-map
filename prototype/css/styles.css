@@ -532,9 +532,11 @@ img.hero { width: 100%; border-radius: 0; }
 
 .zoom { position: absolute; right: 18px; bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
 .zoom button {
-  width: 48px; height: 48px; display: grid; place-items: center;
+  width: 36px; height: 36px; display: grid; place-items: center;
   background: var(--white); border: 1px solid var(--grey-500); border-radius: var(--radius);
 }
+/* The plus and minus are sized down to fit the 36px buttons (client edit). */
+.zoom button .icon { width: 20px; height: 20px; }
 
 .toast {
   position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); z-index: 50;
