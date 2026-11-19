@@ -519,10 +519,10 @@ img.hero { width: 100%; border-radius: 0; }
   font-weight: 600; line-height: 22px; margin-bottom: 8px;
 }
 .legend-toggle .icon { width: 24px; height: 24px; transform: rotate(180deg); transition: transform .15s ease; }
-/* The collapsed key is a 36px-tall button to match the zoom buttons, in the outlined style of the secondary buttons (client edit). */
-.legend.collapsed { width: auto; padding: 0; border: 2px solid var(--orange); border-radius: var(--radius); color: var(--orange); }
-.legend.collapsed:hover { border-color: var(--red); color: var(--red); }
-.legend.collapsed .legend-toggle { margin: 0; padding: 6px 8px 6px 12px; font-size: 14px; line-height: 20px; }
+/* The collapsed key is a 36px-tall button to match the zoom buttons, with the zoom buttons' 1px grey border and orange text (client edit). */
+.legend.collapsed { width: auto; padding: 0; border: 1px solid var(--grey-500); border-radius: var(--radius); color: var(--orange); }
+.legend.collapsed:hover { color: var(--red); }
+.legend.collapsed .legend-toggle { margin: 0; padding: 7px 9px 7px 13px; font-size: 14px; line-height: 20px; }
 .legend.collapsed .legend-toggle .icon { width: 20px; height: 20px; }
 .legend.collapsed .legend-toggle .icon { transform: none; }
 .legend.collapsed ul { display: none; }
