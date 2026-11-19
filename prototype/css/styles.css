@@ -148,9 +148,9 @@ a { color: inherit; }
    2px when active. Its one border wraps the search button too (user's choice), so field and button read as one control. */
 .search-field {
   position: relative; display: flex; height: 48px; min-width: 0;
-  border: 1px solid var(--navy); border-radius: var(--radius); background: var(--white);
+  border: 2px solid var(--navy); border-radius: var(--radius); background: var(--white); /* 2px to match the Filters button (client edit) */
 }
-.search-field:focus-within { box-shadow: 0 0 0 1px var(--navy); } /* the design system's 2px "active" border */
+.search-field:focus-within { box-shadow: 0 0 0 1px var(--navy); } /* the border grows by 1px when active */
 .search-field input {
   flex: 1; min-width: 0; border: 0; border-radius: var(--radius) 0 0 var(--radius); background: none;
   padding: 12px 16px; font: inherit; font-size: 16px; font-weight: 400; line-height: 22px; color: var(--navy);
@@ -160,8 +160,8 @@ a { color: inherit; }
 .search-field > button {
   width: 46px; flex-shrink: 0;
   display: grid; place-items: center;
-  background: var(--grey-900); color: var(--white);
-  border-radius: 0 3px 3px 0; /* sits just inside the field's 4px corners */
+  background: var(--navy); color: var(--white); /* Core/Navy, like the field's border (client edit) */
+  border-radius: 0 2px 2px 0; /* sits just inside the field's 4px corners and 2px border */
 }
 .search-field > button .icon { width: 24px; height: 24px; stroke-width: 1.667; } /* icon buttons: 24px icon, 12px padding */
 .search .btn-secondary { height: 48px; min-width: 0; padding: 10px 16px; gap: 8px; }
@@ -169,8 +169,9 @@ a { color: inherit; }
 /* Buttons on the landing and filters panels follow HP's design system (Figma "Design System" YO73hE2jQ5KwtoR9eYrnzj,
    Buttons 7453:3951): primary is Core/Orange with white text, darkening to Desert/Dark on hover; secondary is a 2px
    orange outline with orange text, darkening the same way (the design system's theme buttons do this on hover). */
-.home .btn-primary, .filters .btn-primary, .search-field > button { background: var(--orange); color: var(--white); }
-.home .btn-primary:hover, .filters .btn-primary:hover, .search-field > button:hover { background: var(--red); }
+.home .btn-primary, .filters .btn-primary { background: var(--orange); color: var(--white); }
+.home .btn-primary:hover, .filters .btn-primary:hover { background: var(--red); }
+.search-field > button:hover { background: var(--red); } /* darkens to Desert/Dark like the other buttons */
 .home .btn-secondary { border-color: var(--orange); color: var(--orange); }
 .home .btn-secondary:hover { border-color: var(--red); color: var(--red); }
 .home .search .btn-secondary .count { background: var(--orange); }
