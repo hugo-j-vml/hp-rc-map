@@ -387,7 +387,7 @@
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
   function placeLabel(placed, owner, x, y, text, gap) {
-    var w = textWidth(text), h = 18, corner = gap > 13 ? 13 : 5;
+    var w = textWidth(text), h = 20, corner = gap > 13 ? 13 : 5;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
@@ -408,7 +408,7 @@
 
   var measureCtx = document.createElement("canvas").getContext("2d");
   function textWidth(text) {
-    measureCtx.font = "600 14px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
+    measureCtx.font = "600 16px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
     return measureCtx.measureText(text).width;
   }
 

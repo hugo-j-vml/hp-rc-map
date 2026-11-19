@@ -448,7 +448,7 @@ img.hero { width: 100%; border-radius: 0; }
 }
 .region-label {
   position: absolute; transform: translate(-50%, -50%);
-  font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--navy); white-space: nowrap; text-transform: uppercase;
+  font-size: 16px; font-weight: 600; letter-spacing: .04em; color: var(--navy); white-space: nowrap; text-transform: uppercase;
 }
 
 .markers { position: absolute; inset: 0; pointer-events: none; }
@@ -470,8 +470,8 @@ img.hero { width: 100%; border-radius: 0; }
 /* --gap is the space between the marker's centre and its name: the pin's half-width, or the large pin's plus 3px. */
 .marker-label {
   --gap: 13px; --corner: 5px;
-  position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 18px;
-  font-size: 14px; font-weight: 500; color: var(--navy); white-space: nowrap;
+  position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 20px;
+  font-size: 16px; font-weight: 500; color: var(--navy); white-space: nowrap;
   pointer-events: auto; cursor: pointer; /* clicking the name selects the community, like its pin */
   /* Padding is cancelled out by the negative margin so the text stays put when the highlight appears. */
   padding: 2px 6px; margin: -2px -6px; border-radius: var(--radius);
@@ -495,7 +495,7 @@ img.hero { width: 100%; border-radius: 0; }
 .marker:not(.has-label):hover .tooltip, .marker:not(.has-label):focus-visible .tooltip, .marker.selected:not(.has-label) .tooltip { display: block; }
 .tooltip {
   display: none; position: absolute; bottom: calc(50% + 15px); left: 50%; transform: translateX(-50%);
-  border-radius: var(--radius); padding: 2px 6px; font-size: 14px; line-height: 18px; white-space: nowrap;
+  border-radius: var(--radius); padding: 2px 6px; font-size: 16px; line-height: 20px; white-space: nowrap;
   pointer-events: none; z-index: 4;
 }
 .marker.pin-large .tooltip { bottom: calc(50% + 21px); }

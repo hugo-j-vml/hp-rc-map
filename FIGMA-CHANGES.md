@@ -132,3 +132,5 @@ The works list uses the milestone rows' tight style: 12 × 16px padding, 4px apa
 Every community's works also start with a completed "Initial visit and safety inspection" ("Completed 2025", no program), using the ticked-circle icon in the dark red block. Not yet in the Figma wireframes.
 
 Map pins are 30% larger than the design (20px pin becomes 26px; the 18 × 25 story and selected pin becomes 23.4 × 32.5) and place names are 14px instead of 13px (client edit). The key's own pins are unchanged. Not yet in the Figma wireframes.
+
+All map text is 16px (client edit): community names, the highlighted and tooltip labels, and region names (design: 13px, 13px and 10px). The numbers in group circles stay at 14px. Not yet in the Figma wireframes.
