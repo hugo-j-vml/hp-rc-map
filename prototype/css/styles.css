@@ -172,9 +172,9 @@ a { color: inherit; }
 .home .btn-primary, .filters .btn-primary { background: var(--orange); color: var(--white); }
 .home .btn-primary:hover, .filters .btn-primary:hover { background: var(--red); }
 .search-field > button:hover { background: var(--red); } /* darkens to Desert/Dark like the other buttons */
-.home .btn-secondary { border-color: var(--orange); color: var(--orange); }
+.home .btn-secondary { border-color: var(--navy); color: var(--navy); } /* Filters is navy to go with the search field (client edit) */
 .home .btn-secondary:hover { border-color: var(--red); color: var(--red); }
-.home .search .btn-secondary .count { background: var(--orange); }
+.home .search .btn-secondary .count { background: var(--navy); }
 .home .search .btn-secondary:hover .count { background: var(--red); }
 .search .btn-secondary .count {
   display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;

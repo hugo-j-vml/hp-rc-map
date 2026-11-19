@@ -134,3 +134,5 @@ Every community's works also start with a completed "Initial visit and safety in
 Map pins are 30% larger than the design (20px pin becomes 26px; the 18 × 25 story and selected pin becomes 23.4 × 32.5) and place names are 14px instead of 13px (client edit). The key's own pins are unchanged. Not yet in the Figma wireframes.
 
 Community names and the highlighted and tooltip labels are 16px (client edit; design: 13px). Region names stay at the design's 10px (16px was tried and looked out of place). The numbers in group circles stay at 14px. Not yet in the Figma wireframes.
+
+The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count badge) instead of orange, to go with the navy search field; it darkens to Desert/Dark on hover (client edit). Not yet in the Figma wireframes.
