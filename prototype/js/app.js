@@ -639,7 +639,7 @@
 
   // The nearby communities, which close every profile.
   function profileFoot(c, howMany) {
-    return '<div class="section">' + nearbyList(c, howMany) + "</div>";
+    return '<div class="section nearby-section">' + nearbyList(c, howMany) + "</div>";
   }
 
   function profileBar(c) {
