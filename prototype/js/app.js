@@ -345,17 +345,17 @@
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
     // Single communities are pins with their tip on the spot, so the marker (and its name) centres on the pin's head:
-    // 8px above the spot for a pin, 11.5px for the larger story and selected pin. Blue "not in filter" dots centre on the spot.
+    // 10.4px above the spot for a pin, 14.9px for the larger story and selected pin (both scaled up 30%). Blue "not in filter" dots centre on the spot.
     groups.forEach(function (g) {
       if (g.items.length > 1) return;
       var c = g.items[0];
       if (c.id === state.selected) g.faded = false; // the selected community always shows its pin, even outside the filter
       if (g.faded) return;
       g.large = c.story || c.id === state.selected;
-      g.sy -= g.large ? 11.49 : 8;
+      g.sy -= g.large ? 14.94 : 10.4;
     });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 19 : g.large ? 12 : 8;
+      var r = g.items.length > 1 ? 19 : g.large ? 16 : 11;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -370,7 +370,7 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 19 : 10) : null;
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : 13) : null;
       // The creative's pin artwork (images/design/): red pin, the larger outlined pin for stories and the selected
       // community, and a blue dot for communities outside the current filter.
       var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-pin";
@@ -387,7 +387,7 @@
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
   function placeLabel(placed, owner, x, y, text, gap) {
-    var w = textWidth(text), h = 16, corner = gap > 10 ? 10 : 4;
+    var w = textWidth(text), h = 18, corner = gap > 13 ? 13 : 5;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
@@ -408,7 +408,7 @@
 
   var measureCtx = document.createElement("canvas").getContext("2d");
   function textWidth(text) {
-    measureCtx.font = "600 13px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
+    measureCtx.font = "600 14px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
     return measureCtx.measureText(text).width;
   }
 
