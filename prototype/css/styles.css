@@ -393,7 +393,7 @@ img.hero { width: 100%; border-radius: 0; }
 .explainer .link-arrow { gap: 6px; font-size: 14px; line-height: 1.45; color: var(--navy); }
 .explainer .link-arrow .icon { width: 16px; height: 16px; stroke-width: 2.5; }
 
-.contact { padding: 15px 57px 22px; display: flex; flex-direction: column; }
+.contact { padding: 32px 57px 32px; display: flex; flex-direction: column; }
 .contact small { font-size: 14px; line-height: 20px; }
 .contact h3 { margin: 4px 0 0; font-size: 24px; font-weight: 600; line-height: 30px; color: var(--red); }
 .contact > p:not(.alert) { margin-top: 16px; font-size: 16px; line-height: 22px; }
