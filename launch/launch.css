@@ -118,6 +118,8 @@ a.index-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 0
 .index-options .option-row:first-child { margin-top: 0; }
 .option-label { margin: 0 0 10px; font-size: var(--index-intro-size); font-weight: var(--index-weight-link); }
 .option-text { margin: 0; }
+.option-list { margin: 0; padding-left: 1.2em; }
+.option-list li + li { margin-top: 4px; }
 
 .index-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--index-gutter); margin-top: auto; padding-top: var(--index-footer-top); }
 .index-wordmark { display: block; flex: none; width: var(--index-wordmark-width); height: auto; }
