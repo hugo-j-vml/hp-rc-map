@@ -404,7 +404,7 @@
       if (g.large) g.sy -= 14.94;
     });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 19 : g.large ? 16 : 11;
+      var r = g.items.length > 1 ? 19 : g.large ? 16 : g.items[0].story && !g.faded ? 13 : 11;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -422,11 +422,12 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : 13) : null;
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story && !g.faded ? 16 : 13) : null;
       // The creative's artwork (images/design/): the larger outlined pin for the selected community, a Mid 1 dot for the
       // rest, and a blue dot for communities outside the current filter.
-      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-dot";
-      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
+      var storyDot = !g.faded && !g.large && c.story; // a community with a story is a larger bush green dot (client edit)
+      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : storyDot ? "map-dot-story" : "map-dot";
+      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : storyDot ? " dot dot-story" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
@@ -521,7 +522,7 @@
   // corners. Returns that position, or null when every spot would overlap another name or marker.
   var LABEL_SPOTS = ["right", "left", "top", "bottom", "top-right", "top-left", "bottom-right", "bottom-left"];
   function placeLabel(placed, owner, x, y, text, gap) {
-    var w = textWidth(text), h = 20, corner = gap > 13 ? 13 : 5;
+    var w = textWidth(text), h = 20, corner = gap > 20 ? 13 : gap > 13 ? 7 : 5;
     for (var i = 0; i < LABEL_SPOTS.length; i++) {
       var spot = LABEL_SPOTS[i];
       var cx = spot === "right" ? x + gap + w / 2 : spot === "left" ? x - gap - w / 2
