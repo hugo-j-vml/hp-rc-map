@@ -289,9 +289,34 @@
   }
 
   var frameRequested = false;
+  // While the zoom level is changing, the markers, names and region names just slide with the map, and are only worked out afresh
+  // (groups, name spots) once it has been still for a moment. Redoing them every frame made names jump between spots
+  // as the spacing changed. Panning at a steady zoom still redraws every frame.
+  var renderedK = null, settleTimer = 0;
+  function slideMarkers() {
+    var nodes = el.markers.children, i, n;
+    for (i = 0; i < nodes.length; i++) {
+      n = nodes[i];
+      if (n.dataset.ux === undefined) continue;
+      n.style.left = (view.x + n.dataset.ux * view.k) + "px";
+      n.style.top = (view.y + n.dataset.uy * view.k + Number(n.dataset.dy)) + "px";
+    }
+    var regions = document.querySelectorAll("#map-labels .region-label");
+    for (i = 0; i < regions.length; i++) {
+      n = regions[i];
+      n.style.left = (view.x + n.dataset.ux * view.k + Number(n.dataset.ox)) + "px";
+      n.style.top = (view.y + n.dataset.uy * view.k + Number(n.dataset.oy)) + "px";
+    }
+  }
   function applyView(skipClamp) {
     if (!skipClamp) clampView();
     el.stageGroup.setAttribute("transform", "translate(" + view.x + " " + view.y + ") scale(" + view.k + ")");
+    if (renderedK !== null && view.k !== renderedK) {
+      slideMarkers();
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(renderMarkers, 120);
+      return;
+    }
     if (!frameRequested) {
       frameRequested = true;
       requestAnimationFrame(function () { frameRequested = false; renderMarkers(); });
@@ -384,11 +409,14 @@
     });
     var html = groups.map(function (g, i) {
       var style = 'style="left:' + g.sx + "px;top:" + g.sy + 'px"';
+      // Where the spot sits on the map (outline units) and the marker's fixed screen offset from it (a pin's head is above its
+      // tip), so the marker can follow the map while zooming without being rebuilt.
+      var pos = ' data-ux="' + ((g.sx - view.x) / view.k) + '" data-uy="' + ((g.sy + (g.large ? 14.94 : 0) - view.y) / view.k) + '" data-dy="' + (g.large ? -14.94 : 0) + '"';
       if (g.items.length > 1) {
         var names = g.items.length + " communities, including " + g.items.slice(0, 3).map(function (c) { return c.name; }).join(", ");
         var hasStory = g.items.some(function (c) { return c.story; });
         if (hasStory) names += ", with a community story";
-        return '<button type="button" class="marker is-cluster' + (g.faded ? " faded" : "") + (hasStory ? " has-story" : "") + '" ' + style +
+        return '<button type="button" class="marker is-cluster' + (g.faded ? " faded" : "") + (hasStory ? " has-story" : "") + '" ' + style + pos +
           ' data-cluster="' + g.items.map(function (c) { return c.id; }).join(",") + '" aria-label="' + esc(names) + '. Zoom in.">' +
           '<span class="cluster">' + g.items.length + "</span></button>";
       }
@@ -398,7 +426,7 @@
       // The creative's artwork (images/design/): the larger outlined pin for the selected community, a Mid 1 dot for the
       // rest, and a blue dot for communities outside the current filter.
       var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-dot";
-      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
+      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
@@ -406,6 +434,8 @@
     }).join("");
     el.markers.innerHTML = html;
     renderRegionLabels(placedLabels);
+    renderedK = view.k;
+    clearTimeout(settleTimer);
   }
 
   // Region names dodge the markers and community names. Each takes the spot nearest the creative's position for it
@@ -482,7 +512,8 @@
         if (cost < best.cost) best = { cost: cost, x: cx, y: cy, box: box };
       }
       if (best.box) taken.push(best.box);
-      return '<span class="region-label" style="left:' + best.x + "px;top:" + best.y + 'px">' + esc(r.name) + "</span>";
+      return '<span class="region-label" style="left:' + best.x + "px;top:" + best.y + 'px" data-ux="' + u.x + '" data-uy="' + u.y +
+        '" data-ox="' + (best.x - home.x) + '" data-oy="' + (best.y - home.y) + '">' + esc(r.name) + "</span>";
     }).join("");
   }
 

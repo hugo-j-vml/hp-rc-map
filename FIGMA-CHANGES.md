@@ -145,3 +145,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Region labels:** 16px (was 10px) in Desert/Dark `#780D02` (was navy), still semibold with 4% letter spacing and a 1px white outline.
 - **Region labels dodge things:** the four region names move from their designed spots to the nearest clear spot (no overlap with groups, dots, place names, the Key or zoom buttons; inside their own region's land and the map). They return to the designed spots when nothing is in the way.
 - **Smooth zoom:** the wheel and +/- buttons ease over about a quarter of a second instead of jumping 1.6 × in one frame; not a visual change to any frame.
+- **Names hold still while zooming:** place names, groups and region names slide with the map during a zoom and are redone once it stops, rather than jumping between spots each frame.
