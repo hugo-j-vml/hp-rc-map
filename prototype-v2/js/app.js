@@ -304,12 +304,6 @@
   }
 
   function renderMarkers() {
-    var labels = document.getElementById("map-labels");
-    labels.innerHTML = C.regions.map(function (r) {
-      var at = window.RC_REGION_LABELS[r.id], u = window.projectWA(at[1], at[0]), p = toScreen(u.x, u.y);
-      return '<span class="region-label" style="left:' + p.x + "px;top:" + p.y + 'px">' + esc(r.name) + "</span>";
-    }).join("");
-
     var zoom = zoomLevel();
     var filtering = activeFilterCount() > 0;
     // Stories and the selected community always show on their own; everything else groups when crowded.
@@ -383,6 +377,85 @@
         '<span class="tooltip">' + esc(displayName(c)) + "</span></button>";
     }).join("");
     el.markers.innerHTML = html;
+    renderRegionLabels(placedLabels);
+  }
+
+  // Region names dodge the markers and community names. Each takes the spot nearest the creative's position for it
+  // (RC_REGION_LABELS) that overlaps least and keeps the name on its own region's land. Community names are placed first, so
+  // a region name never pushes one out. The search is cheap: spots are tried nearest first and it stops once no spot
+  // further out could beat the best so far.
+  var regionSpots = null, landPath = null, regionPolys = {};
+  function regionLabelSpots() {
+    if (regionSpots) return regionSpots;
+    regionSpots = [];
+    for (var dy = -100; dy <= 100; dy += 10) for (var dx = -140; dx <= 140; dx += 10) regionSpots.push([dx, dy, Math.hypot(dx, dy)]);
+    regionSpots.sort(function (a, b) { return a[2] - b[2]; });
+    return regionSpots;
+  }
+  var landCtx = null, landT = null;
+  function onLand(ux, uy) {
+    if (!landPath) {
+      landT = window.RC_COAST.land.transform.match(/matrix\(([^)]+)\)/)[1].split(/\s+/).map(Number); // a 0 0 d e f
+      landPath = new Path2D(window.RC_COAST.land.d);
+      landCtx = document.createElement("canvas").getContext("2d");
+    }
+    return landCtx.isPointInPath(landPath, (ux - landT[4]) / landT[0], (uy - landT[5]) / landT[3]);
+  }
+  function inPolygon(poly, x, y) {
+    var inside = false;
+    for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      if ((poly[i].y > y) !== (poly[j].y > y) && x < (poly[j].x - poly[i].x) * (y - poly[i].y) / (poly[j].y - poly[i].y) + poly[i].x) inside = !inside;
+    }
+    return inside;
+  }
+  function regionPoly(variant, id) {
+    var key = variant + id;
+    if (!regionPolys[key]) regionPolys[key] = window.RC_REGION_SHAPES[variant][id].map(function (pt) { return window.projectWA(pt[1], pt[0]); });
+    return regionPolys[key];
+  }
+  function overlapArea(a, b) {
+    var w = Math.min(a.x2, b.x2) - Math.max(a.x1, b.x1), h = Math.min(a.y2, b.y2) - Math.max(a.y1, b.y1);
+    return w > 0 && h > 0 ? w * h : 0;
+  }
+  function renderRegionLabels(obstacles) {
+    var variant = options.ngLands ? "ngLands" : "poster";
+    var size = mapSize();
+    var taken = obstacles.slice();
+    // The Key and zoom buttons sit over the map, so names stay out from under them too.
+    var vp = el.viewport.getBoundingClientRect();
+    [".legend", ".zoom"].forEach(function (sel) {
+      var node = document.querySelector(sel);
+      if (!node) return;
+      var b = node.getBoundingClientRect();
+      if (b.width) taken.push({ x1: b.left - vp.left - 6, x2: b.right - vp.left + 6, y1: b.top - vp.top - 6, y2: b.bottom - vp.top + 6 });
+    });
+    document.getElementById("map-labels").innerHTML = C.regions.map(function (r) {
+      var at = window.RC_REGION_LABELS[r.id], u = window.projectWA(at[1], at[0]), home = toScreen(u.x, u.y);
+      var w = textWidth(r.name, "600 16px Inter, sans-serif") + r.name.length * 0.64 + 4, h = 18;
+      var poly = regionPoly(variant, r.id);
+      var best = { cost: Infinity, x: home.x, y: home.y };
+      // Far off screen there's nothing to dodge: leave the name where it belongs.
+      var visible = home.x > -300 && home.x < size.w + 300 && home.y > -300 && home.y < size.h + 300;
+      var spots = visible ? regionLabelSpots() : [[0, 0, 0]];
+      for (var i = 0; i < spots.length; i++) {
+        var sp = spots[i];
+        if (sp[2] * 0.5 >= best.cost) break; // nothing further out can win
+        var cx = home.x + sp[0], cy = home.y + sp[1];
+        var box = { x1: cx - w / 2 - 3, x2: cx + w / 2 + 3, y1: cy - h / 2 - 2, y2: cy + h / 2 + 2 };
+        var cost = sp[2] * 0.5;
+        if (visible && (box.x1 < 4 || box.x2 > size.w - 4)) cost += 400; // keep the whole name inside the map
+        for (var k = 0; k < taken.length && cost < best.cost; k++) cost += overlapArea(box, taken[k]);
+        if (cost >= best.cost) continue;
+        // Nine points around the name should all sit on this region's land; each that doesn't costs a lot.
+        for (var gx = -1; gx <= 1 && cost < best.cost; gx++) for (var gy = -1; gy <= 1; gy++) {
+          var ux = (cx + gx * w / 2 - view.x) / view.k, uy = (cy + gy * h / 2 - view.y) / view.k;
+          if (!inPolygon(poly, ux, uy) || !onLand(ux, uy)) cost += 150;
+        }
+        if (cost < best.cost) best = { cost: cost, x: cx, y: cy, box: box };
+      }
+      if (best.box) taken.push(best.box);
+      return '<span class="region-label" style="left:' + best.x + "px;top:" + best.y + 'px">' + esc(r.name) + "</span>";
+    }).join("");
   }
 
   // Puts a community's name in the first free spot around its dot: right, then left, above, below and the
@@ -409,8 +482,8 @@
   }
 
   var measureCtx = document.createElement("canvas").getContext("2d");
-  function textWidth(text) {
-    measureCtx.font = "600 16px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
+  function textWidth(text, font) {
+    measureCtx.font = font || "600 16px Inter, sans-serif"; // the highlighted name is Inter Semibold in the creative's design
     return measureCtx.measureText(text).width;
   }
 

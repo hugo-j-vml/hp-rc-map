@@ -143,3 +143,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Sentence case:** region names on the map are sentence case, not all caps.
 - **Place names appear earlier:** community names show from 1.4 × the state view (was 3.5 ×), two zoom-button presses earlier.
 - **Region labels:** 16px (was 10px) in Desert/Dark `#780D02` (was navy), still semibold with 4% letter spacing and a 1px white outline.
+- **Region labels dodge things:** the four region names move from their designed spots to the nearest clear spot (no overlap with groups, dots, place names, the Key or zoom buttons; inside their own region's land and the map). They return to the designed spots when nothing is in the way.
