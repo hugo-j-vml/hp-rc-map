@@ -338,6 +338,8 @@ img.hero { width: 100%; border-radius: 0; }
 
 .about { padding: 35px 57px 37px; display: flex; flex-direction: column; gap: 16px; }
 .facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+/* The details sit under the name, above the band (client edit); the band holds only the works. */
+.profile-name .facts { margin-top: 16px; }
 .fact { display: flex; flex-direction: column; gap: 2px; }
 .fact span { font-size: 14px; line-height: 20px; color: var(--navy); }
 .fact strong { font-size: 18px; font-weight: 600; line-height: 24px; color: var(--red); }

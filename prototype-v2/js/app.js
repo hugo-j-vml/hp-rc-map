@@ -818,9 +818,10 @@
     return profileBar(c) +
       storyImage(s, "hero") +
       '<div class="profile-main">' +
-      '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
-      aboutBlock(c, fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
-        fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) +
+      '<div class="profile-name">' + nameRow(c) + aka +
+        factsBlock(fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
+          fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) + "</div>" +
+      aboutBlock(c) +
       storyHtml +
       (media ? '<div class="section">' + media + "</div>" : "") +
       contactBlock() + profileFoot(c, 3) +
@@ -839,8 +840,9 @@
 
     return profileBar(c) +
       '<div class="profile-main simple">' +
-      '<div class="profile-name">' + nameRow(c) + aka + "</div>" +
-      aboutBlock(c, fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) +
+      '<div class="profile-name">' + nameRow(c) + aka +
+        factsBlock(fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) + "</div>" +
+      aboutBlock(c) +
       (explainers ? '<div class="section">' + explainers + "</div>" : "") +
       contactBlock() + profileFoot(c, 2) +
       "</div>";
@@ -854,11 +856,14 @@
       icon("sound") + "</button></div>";
   }
 
-  // The community's key details in a box like the service provider one, then what's been done and what's planned
-  // (it replaced the transition milestones here, client edit).
-  function aboutBlock(c, facts) {
-    return '<section class="band about" id="work" aria-label="About ' + esc(c.name) + '">' +
-      '<div class="facts">' + facts + "</div>" +
+  // The community's key details (region, service provider and so on) sit under its name, above the sand band (client edit).
+  function factsBlock(facts) {
+    return '<div class="facts">' + facts + "</div>";
+  }
+
+  // The sand band holds only the works: what's been done and what's planned (it replaced the transition milestones here, client edit).
+  function aboutBlock(c) {
+    return '<section class="band about" id="work" aria-label="Works in ' + esc(c.name) + '">' +
       '<div class="works"><h3>Works</h3>' + worksByStatus(c) + "</div></section>";
   }
 
