@@ -10,7 +10,7 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 ## Versions (from 25 Nov 2026)
 
-- **`prototype/` is version 1 and frozen.** It is the first client review, kept exactly as it was (git tag `v1-nov-2026`). Don't edit it.
+- **`prototype/` is version 1 and frozen.** It is the first client review, kept exactly as it was (its last commit before the copy is `e8d4674`; pushing git tags is blocked in cloud sessions, so there is no tag). Don't edit it.
 - **`prototype-v2/` is the current version:** a copy of v1 taken for the client's feedback round. **All new work goes here**; every path in this file that says `prototype/` means `prototype-v2/` for new work. Its Beausite font files are git-ignored like v1's.
 - **The root `index.html` forwards to `prototype-v2/`** (the latest version). If another round comes in, copy the latest folder to `prototype-v3/`, freeze the old one and move the forward.
 - **`versions/` is the launch page** listing every version, with ← and → to slide between them (client request). The layout, spacing and slide animation are lifted from the UWA navigation prototype's index page (`hugo-j-vml/uwa-nav-proto`, `src/pages/index.astro` and `components.css`), rebuilt as plain HTML, CSS and ES5 JavaScript with no build step, and re-themed for Horizon Power: sand background, navy text, desert red accents, the HP Remote Communities logo lock-up (copies in `versions/images/`) and a warm dot-grid "heat haze" animation instead of the black halftone facets. To add a version: copy a panel in `versions/index.html`, bump its numbers and enable the arrows either side. Update the "Last updated" line by hand.

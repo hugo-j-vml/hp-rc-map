@@ -6,7 +6,7 @@ Horizon Power Remote Communities Interactive Map.
 
 A plain HTML, CSS and vanilla JavaScript prototype. There is no build step, framework or server. Open the folder's `index.html` in a browser, or host it on any static host.
 
-There are two versions: [`prototype/`](prototype/) is **version 1** (the first client review, frozen, tagged `v1-nov-2026`) and [`prototype-v2/`](prototype-v2/) is **version 2**, the current one, built from the client's feedback. A launch page listing both is in [`versions/`](versions/).
+There are two versions: [`prototype/`](prototype/) is **version 1** (the first client review, frozen; last commit before the copy `e8d4674`) and [`prototype-v2/`](prototype-v2/) is **version 2**, the current one, built from the client's feedback. A launch page listing both is in [`versions/`](versions/).
 
 Live on GitHub Pages at https://hugo-j-vml.github.io/hp-rc-map/ (served from `main`, root folder). The root `index.html` forwards to the latest version, `prototype-v2/`; the launch page is at `/versions/`. Any push to `main` updates the site. The notes below describe the prototype as it stands in version 1 and carry over to version 2.
 
