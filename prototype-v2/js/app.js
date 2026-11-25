@@ -165,6 +165,33 @@
     view.k = next;
     applyView();
   }
+  // Smooth zoom for the wheel and the +/- buttons (client edit: it jerked): each press or wheel notch moves a goal, and the view
+  // eases toward it over about a quarter of a second, keeping the point under the cursor (or the map's centre) fixed. Zoom is
+  // multiplicative, so the easing is too. Goals add up, so quick repeats glide on rather than restart. Pinching still tracks the fingers.
+  var zoomGoal = null, zoomRaf = 0;
+  function zoomSmooth(factor, px, py) {
+    var base = zoomGoal ? zoomGoal.k : view.k;
+    var k = Math.min(baseK * MAX_ZOOM, Math.max(baseK * 0.8, base * factor));
+    zoomGoal = { k: k, px: px, py: py };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      zoomAt(k / view.k, px, py);
+      zoomGoal = null;
+      return;
+    }
+    if (zoomRaf) return;
+    var last = null;
+    function step(t) {
+      if (!zoomGoal) { zoomRaf = 0; return; }
+      var dt = last === null ? 16 : Math.min(50, t - last);
+      last = t;
+      var next = view.k * Math.pow(zoomGoal.k / view.k, 1 - Math.exp(-dt / 85));
+      if (Math.abs(Math.log(zoomGoal.k / next)) < 0.002) next = zoomGoal.k;
+      zoomAt(next / view.k, zoomGoal.px, zoomGoal.py);
+      if (next === zoomGoal.k) { zoomGoal = null; zoomRaf = 0; return; }
+      zoomRaf = requestAnimationFrame(step);
+    }
+    zoomRaf = requestAnimationFrame(step);
+  }
   // Centre a point (in outline units) in the visible part of the map, at a given zoom level.
   function centreOn(ux, uy, zoom, animate) {
     var a = visibleArea();
@@ -177,6 +204,7 @@
     moveTo(target, animate);
   }
   function moveTo(target, animate) {
+    zoomGoal = null; // a glide (cluster click, opening a profile) replaces any smooth zoom in progress
     if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       Object.assign(view, target);
       applyView();
@@ -564,7 +592,7 @@
     e.preventDefault();
     collapseLegendOnFirstUse();
     var rect = el.viewport.getBoundingClientRect();
-    zoomAt(Math.exp(-e.deltaY * 0.0022), e.clientX - rect.left, e.clientY - rect.top);
+    zoomSmooth(Math.exp(-e.deltaY * 0.0022), e.clientX - rect.left, e.clientY - rect.top);
   }, { passive: false });
 
   el.markers.addEventListener("click", function (e) {
@@ -581,7 +609,7 @@
     button.addEventListener("click", function () {
       collapseLegendOnFirstUse();
       var a = visibleArea();
-      zoomAt(button.dataset.zoom === "in" ? 1.6 : 1 / 1.6, a.x + a.w / 2, a.y + a.h / 2);
+      zoomSmooth(button.dataset.zoom === "in" ? 1.6 : 1 / 1.6, a.x + a.w / 2, a.y + a.h / 2);
     });
   });
 
