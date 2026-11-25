@@ -140,3 +140,5 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 ## Version 2 (prototype-v2, from 25 Nov 2026)
 
 - **Map markers:** unselected communities are 14px Mid 1 (`#D44A31`) dots with a white ring instead of red pins; the selected community keeps the large outlined pin. Story communities are dots until selected. The Key lists Community, Selected community, Not in current filter and Group of communities.
+- **Sentence case:** region names on the map are sentence case, not all caps.
+- **Place names appear earlier:** community names show from 1.4 × the state view (was 3.5 ×), two zoom-button presses earlier.

@@ -125,7 +125,8 @@
   // Relative to the whole-state view. Deep enough to pull apart the closest communities (Embulgun and
   // Munget are about 700 m apart); there is no street basemap, so this never shows anything finer.
   var MAX_ZOOM = 80;
-  var LABEL_ZOOM = 3.5;
+  // Names start showing two zoom-button presses (1.6 x each) earlier than in version 1, which used 3.5 (client edit).
+  var LABEL_ZOOM = 1.4;
   var CLUSTER_RADIUS = 34;
   var STORY_SOLO_ZOOM = 2.5;
 
