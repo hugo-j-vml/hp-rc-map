@@ -7,7 +7,7 @@
 
 :root {
   --index-bg: #d9d3ca;                /* the map's service-area outline colour (client edit) */
-  --index-text: #001e3c;              /* Core/Navy; the logo's own colour */
+  --index-text: #780d02;              /* Desert/Dark: all text, rules and button fills (client edit) */
   --index-muted: #6e6e6e;
   --accent: #780d02;                  /* Desert/Dark */
   --accent-mid: #d44a31;              /* Desert/Mid 1 */
