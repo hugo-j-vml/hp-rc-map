@@ -1,0 +1,668 @@
+/* Horizon Power's brand font. Licensed for internal use only, so the files live in prototype/fonts/ on your own
+   machine and are never committed (see fonts/README.md). Without them, everything falls back to Inter. */
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 400; font-display: swap;
+  src: local("Beausite Classic Regular"), local("BeausiteClassic-Regular"), url("../fonts/BeausiteClassic-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 500; font-display: swap;
+  src: local("Beausite Classic Medium"), local("BeausiteClassic-Medium"), url("../fonts/BeausiteClassic-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 600; font-display: swap;
+  src: local("Beausite Classic Semibold"), local("BeausiteClassic-Semibold"), url("../fonts/BeausiteClassic-Semibold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Beausite Classic"; font-style: normal; font-weight: 700; font-display: swap;
+  src: local("Beausite Classic Bold"), local("BeausiteClassic-Bold"), url("../fonts/BeausiteClassic-Bold.woff2") format("woff2");
+}
+
+/* Tokens from the v2 wireframe kit (HP Design System lookalikes, greyscale). */
+:root {
+  --grey-050: #f7f7f7;
+  --grey-100: #eeeeee;
+  --grey-200: #dedede;
+  --grey-300: #c4c4c4;
+  --grey-500: #8a8a8a;
+  --grey-700: #4d4d4d;
+  --grey-900: #1f1f1f;
+  --white: #ffffff;
+  --map-bg: #e3ebf7; /* sea, from the creative's map */
+
+  /* Creative's palette (Figma "desert" and "sky" styles), used by the profile panels so far. */
+  --red: #780d02;        /* desert/dark */
+  --red-mid: #d44a31;    /* desert/mid 1 */
+  --red-tint: #fef1e7;   /* in-progress and planned fills (no style name in Figma) */
+  --navy: #001e3c;       /* sky/dark, core/navy */
+  --orange: #c54630;     /* core/orange: the design system's primary button colour */
+  --sand: #f7f6f4;       /* desert/neutral 20: panel background */
+  --sand-dark: #ece9e4;  /* desert/neutral 50: bands and photo placeholders */
+
+  --radius: 4px;
+  --header-h: 138px;
+  --panel-w: 560px;
+  --font: "Beausite Classic", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--grey-900);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--grey-900); outline-offset: 2px; }
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.icon {
+  width: 32px; height: 32px; flex-shrink: 0;
+  fill: none; stroke: currentColor; stroke-width: 1.25;
+}
+.icon-24 { width: 24px; height: 24px; }
+.icon-20 { width: 20px; height: 20px; }
+.icon-48 { width: 48px; height: 48px; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- Header ---------- */
+/* Wireframe of the remotecommunities.horizonpower.com.au header: logo left, utility links above the main nav on the right. */
+.site-header {
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px 0 48px;
+  border-bottom: 1px solid var(--grey-200);
+  background: var(--white);
+}
+/* Logo lock-up from the creative's Figma (desktop sizes exactly as there). */
+.logo { display: flex; align-items: center; gap: 22px; flex-shrink: 0; }
+.logo img { display: block; }
+.logo-hp { width: 142.642px; height: 51.816px; }
+.logo-divider { width: 2px; height: 49.033px; }
+.logo-rc { width: 129.198px; height: 49.528px; }
+.header-nav { align-self: stretch; display: flex; flex-direction: column; }
+.utility-nav {
+  height: 82px; padding: 24px 0;
+  display: flex; justify-content: flex-end; gap: 32px;
+  border-bottom: 1px solid var(--grey-300);
+}
+.utility-nav a {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 500; color: var(--grey-500); text-decoration: none;
+}
+.main-nav { display: flex; justify-content: flex-end; gap: 32px; }
+.main-nav a {
+  padding: 15px 0 18px;
+  font-size: 16px; font-weight: 600; color: var(--grey-900); text-decoration: none; white-space: nowrap;
+}
+.menu-btn { display: none; }
+
+/* ---------- Layout ---------- */
+.layout {
+  height: calc(100% - var(--header-h));
+  display: flex;
+}
+.panel {
+  width: var(--panel-w); flex-shrink: 0;
+  border-right: 1px solid var(--grey-200);
+  background: var(--white);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.panel-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; }
+.sheet-handle { display: none; }
+
+/* ---------- Shared components ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 46px; padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 16px; font-weight: 600; line-height: 22px; text-decoration: none;
+  white-space: nowrap;
+}
+.btn .icon { width: 24px; height: 24px; }
+.btn-primary { background: var(--grey-900); color: var(--white); }
+.btn-secondary { border: 2px solid var(--grey-900); padding: 10px 18px; background: var(--white); }
+.btn-link { padding: 12px 0; }
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 600; text-decoration: none;
+}
+.link-arrow .icon { width: 24px; height: 24px; }
+
+/* Search and Filters split the panel width 50/50. */
+/* The search box takes the room; Filters is only as wide as its content (about a quarter of the panel). */
+/* Filters is at least as wide as the story thumbnails below it (120px), so their right-hand columns line up;
+   it grows when the active-filter count appears. */
+.search { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, auto); gap: 8px; }
+/* The search field follows HP's Design System text input (Figma YO73hE2jQ5KwtoR9eYrnzj, Input 7453:15863): white, a 1px
+   Core/Navy border with 4px corners, 12 x 16px padding and navy Beausite Regular 16/22 text, with the border going to
+   2px when active. Its one border wraps the search button too (user's choice), so field and button read as one control. */
+.search-field {
+  position: relative; display: flex; height: 48px; min-width: 0;
+  border: 2px solid var(--navy); border-radius: var(--radius); background: var(--white); /* 2px to match the Filters button (client edit) */
+}
+.search-field:focus-within { box-shadow: 0 0 0 1px var(--navy); } /* the border grows by 1px when active */
+.search-field input {
+  flex: 1; min-width: 0; border: 0; border-radius: var(--radius) 0 0 var(--radius); background: none;
+  padding: 12px 16px; font: inherit; font-size: 16px; font-weight: 400; line-height: 22px; color: var(--navy);
+}
+.search-field input:focus-visible { outline: none; } /* the field's active border shows focus instead */
+.search-field input::placeholder { color: var(--navy); opacity: 1; }
+.search-field > button {
+  width: 46px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: var(--navy); color: var(--white); /* Core/Navy, like the field's border (client edit) */
+  border-radius: 0 2px 2px 0; /* sits just inside the field's 4px corners and 2px border */
+}
+.search-field > button .icon { width: 24px; height: 24px; stroke-width: 1.667; } /* icon buttons: 24px icon, 12px padding */
+.search .btn-secondary { height: 48px; min-width: 0; padding: 10px 16px; gap: 8px; }
+
+/* Buttons on the landing and filters panels follow HP's design system (Figma "Design System" YO73hE2jQ5KwtoR9eYrnzj,
+   Buttons 7453:3951): primary is Core/Orange with white text, darkening to Desert/Dark on hover; secondary is a 2px
+   orange outline with orange text, darkening the same way (the design system's theme buttons do this on hover). */
+.home .btn-primary, .filters .btn-primary { background: var(--orange); color: var(--white); }
+.home .btn-primary:hover, .filters .btn-primary:hover { background: var(--red); }
+.search-field > button:hover { background: var(--red); } /* darkens to Desert/Dark like the other buttons */
+.home .btn-secondary { border-color: var(--navy); color: var(--navy); } /* Filters is navy to go with the search field (client edit) */
+.home .btn-secondary:hover { border-color: var(--red); color: var(--red); }
+.home .search .btn-secondary .count { background: var(--navy); }
+.home .search .btn-secondary:hover .count { background: var(--red); }
+.search .btn-secondary .count {
+  display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 11px; background: var(--grey-900); color: var(--white); font-size: 12px;
+}
+
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: var(--radius);
+  font-size: 12px; font-weight: 600; line-height: 18px; white-space: nowrap;
+}
+.tag .icon { width: 16px; height: 16px; stroke-width: 2.5; }
+.tag-outline { border: 1px solid var(--grey-900); background: var(--white); text-decoration: none; }
+.tag-solid { background: var(--grey-900); color: var(--white); }
+.tag-mid { background: var(--grey-300); }
+.status { font-size: 14px; padding: 4px 8px; }
+
+.placeholder {
+  display: grid; place-items: center; text-align: center;
+  background: var(--grey-200); color: var(--grey-700);
+  border-radius: var(--radius); font-size: 14px; padding: 12px;
+}
+
+/* ---------- Home panel ---------- */
+.home { --pad: 32px; padding: 32px var(--pad) 0; display: flex; flex-direction: column; gap: 20px; min-height: 100%; }
+.home h1 { font-size: 32px; font-weight: 700; line-height: 1.3; color: var(--red); } /* the profile name's colour */
+.home .intro { font-size: 15px; color: var(--grey-700); margin-top: -8px; }
+
+/* Search results drop down over the content under the search field, like a native select, rather than pushing it down. */
+.results {
+  position: absolute; top: calc(100% + 4px); left: -1px; right: -1px; z-index: 5;
+  list-style: none; margin: 0; padding: 0; max-height: 320px; overflow-y: auto;
+  background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.results[hidden] { display: none; }
+.results li + li { border-top: 1px solid var(--grey-200); }
+.results button { width: 100%; text-align: left; padding: 12px 16px; display: flex; flex-direction: column; }
+.results button:hover { background: var(--grey-050); }
+.results small { color: var(--grey-700); font-size: 14px; }
+.results .empty { padding: 12px 16px; color: var(--grey-700); font-size: 14px; }
+
+/* The story list sits in a sand band, as in the profiles: the torn top edge between the search row and the first story
+   (client edit), then the band runs to the bottom of the panel with no bottom edge. The panel above stays white. */
+.stories { display: flex; flex-direction: column; }
+.home .stories.band {
+  flex: 1; margin: calc((100% + 2 * var(--pad)) * 32 / 559) calc(-1 * var(--pad)) 0;
+  padding: 0 var(--pad) 32px;
+}
+.home .stories.band::after { display: none; }
+.story-card {
+  position: relative; cursor: pointer;
+  display: grid; grid-template-columns: 1fr 120px; grid-template-rows: auto 1fr; gap: 4px 16px;
+  padding: 20px 0; border-bottom: 2px solid var(--white);
+}
+.story-card:last-child { border-bottom: 0; }
+.story-card h3 { font-size: 18px; font-weight: 600; }
+.story-card h3 a { text-decoration: none; }
+/* Stretch the title link over the whole card, so the card is one big, clearly named target. */
+.story-card h3 a::after { content: ""; position: absolute; inset: 0; }
+.story-card:hover h3 a { text-decoration: underline; }
+.story-card h3 a:focus-visible { outline: none; }
+.story-card:focus-within { outline: 3px solid var(--grey-900); outline-offset: 4px; }
+.story-card p { color: var(--grey-700); grid-column: 1; }
+.story-card .thumb { grid-column: 2; grid-row: 1 / span 2; width: 100%; height: 90px; }
+.photo { display: block; object-fit: cover; background: var(--grey-200); border-radius: var(--radius); }
+img.hero { width: 100%; border-radius: 0; }
+
+/* ---------- Filters panel ---------- */
+.filters { display: flex; flex-direction: column; min-height: 100%; }
+.filters-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 32px 32px 0;
+}
+.filters-head h2 { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; }
+.filters-head h2 button { display: grid; }
+.filters-head .icon { width: 24px; height: 24px; }
+.text-link { font-size: 14px; font-weight: 500; color: var(--grey-700); text-decoration: underline; }
+.filters-body { flex: 1; padding: 24px 32px; display: flex; flex-direction: column; gap: 24px; }
+.filter-group { display: flex; flex-direction: column; gap: 8px; border: 0; margin: 0; padding: 0; }
+.filter-group legend { font-size: 15px; font-weight: 600; padding: 0; margin-bottom: 8px; }
+.tile {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; min-height: 56px; padding: 12px 20px 12px 12px;
+  border: 1px solid var(--grey-500); border-radius: var(--radius);
+  background: var(--white); text-align: left;
+}
+.tile + .tile { margin-top: 8px; }
+.tile.no-icon { padding-left: 12px; }
+.tile .label { flex: 1; font-weight: 600; line-height: 22px; }
+.tile .count { font-size: 14px; color: var(--grey-700); }
+.tile .desc { display: block; font-weight: 400; font-size: 14px; line-height: 20px; color: var(--grey-700); margin-top: 2px; }
+.tile.medium { min-height: 72px; }
+.tile[aria-pressed="true"] { background: var(--grey-900); border-color: var(--grey-900); color: var(--white); }
+.tile[aria-pressed="true"] .count, .tile[aria-pressed="true"] .desc { color: var(--grey-200); }
+.show-more { align-self: flex-start; font-size: 14px; font-weight: 600; text-decoration: underline; margin-top: 8px; }
+.select { position: relative; display: flex; height: 48px; }
+.select select {
+  flex: 1; appearance: none; border: 1px solid var(--grey-500); border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius); padding: 0 16px; font: inherit; color: var(--grey-700); background: var(--white);
+}
+.select span {
+  width: 48px; display: grid; place-items: center; background: var(--grey-900); color: var(--white);
+  border-radius: 0 var(--radius) var(--radius) 0; pointer-events: none;
+}
+.note { font-size: 13px; color: var(--grey-700); }
+.filters-foot {
+  position: sticky; bottom: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px;
+  height: 80px; padding: 16px 32px;
+  border-top: 1px solid var(--grey-200); background: var(--white);
+}
+/* Split in half: Clear all centred in the left half, the full-width button (text centred) in the right half. */
+.filters-foot .btn { width: 100%; justify-content: center; }
+
+/* ---------- Profile panel ----------
+   Visual treatment from the creative's Figma (Nov 2026): "D03b" (rich profile) and "D04b" (simple profile) in the
+   Remote Communities Map file P9Y58ygtCG3Ap8DGGMThu2. Values are copied from it; the rest of the page is still the
+   greyscale wireframe. Icon stroke widths are in the sprite's 32-unit viewBox, worked out from Figma's pixel strokes. */
+.panel.profile { background: var(--sand); }
+.profile-bar {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: flex-end;
+  height: 48px; padding: 14px 16px 14px 32px; background: var(--sand);
+}
+.profile-bar .actions { display: flex; gap: 16px; }
+.profile-bar .actions button { display: flex; color: #1f1f1f; }
+.profile-bar .actions .icon { width: 20px; height: 20px; stroke-width: 2; }
+.hero { height: 280px; border-radius: 0; }
+.panel.profile .placeholder { background: var(--sand-dark); color: var(--navy); }
+.profile-main { display: flex; flex-direction: column; color: var(--navy); }
+
+.profile-name { padding: 0 32px 24px; }
+/* With a feature photo above it, the name keeps its 24px of space on top. */
+.profile-main:not(.simple) .profile-name { padding-top: 24px; }
+.profile-name h2 { font-size: 32px; font-weight: 700; line-height: 1.45; color: var(--red); }
+.name-row { display: flex; align-items: center; gap: 8px; }
+.say-name {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 20px; color: #212121;
+}
+.say-name:hover { background: var(--sand-dark); }
+.say-name .icon { width: 28px; height: 28px; stroke-width: 1.714; }
+.say-name.playing { background: var(--red); color: var(--white); }
+.profile-name .aka { margin-top: 6px; font-size: 15px; line-height: 1.45; color: var(--navy); }
+.profile-main.simple .profile-name .aka { line-height: normal; }
+
+/* Bands: full-width sand blocks with the creative's torn top and bottom edges (the design's "Intersect" shapes, exported as
+   SVG). The edges keep their shape and scale with the panel width; the plain block between them grows with the content. */
+.band {
+  position: relative; margin: calc(100% * 32 / 559) 0; background: var(--sand-dark);
+}
+.band::before, .band::after {
+  content: ""; position: absolute; left: 0; right: 0; aspect-ratio: 559 / 32;
+  background: no-repeat center / 100% 100%; pointer-events: none;
+}
+/* The top edge's artwork stops 0.89 units short of its 32-unit-tall SVG, so it's pulled down that much to meet the block without a seam. */
+.band::before { bottom: 100%; transform: translateY(calc(100% * 0.89 / 32)); background-image: url("../images/design/edge-top.svg"); }
+/* Flipped left to right so the bottom tear is not just the top one turned upside down. */
+.band::after { top: 100%; transform: scaleX(-1); background-image: url("../images/design/edge-bottom.svg"); }
+
+.about { padding: 35px 57px 37px; display: flex; flex-direction: column; gap: 16px; }
+.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.fact { display: flex; flex-direction: column; gap: 2px; }
+.fact span { font-size: 14px; line-height: 20px; color: var(--navy); }
+.fact strong { font-size: 18px; font-weight: 600; line-height: 24px; color: var(--red); }
+
+.section { padding: 24px 32px; display: flex; flex-direction: column; gap: 28px; }
+.section h3 { margin: 0; color: var(--red); line-height: 1.45; }
+.story { gap: 16px; }
+.story h3 { font-size: 22px; font-weight: 700; }
+.story p { font-size: 16px; line-height: 1.45; }
+/* Link to an HP news article after a story's text: the article title as an underlined text link. */
+.story-article .link-arrow { display: inline; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.story-article .link-arrow:hover { text-decoration-thickness: 2px; }
+.story-article .link-arrow .icon { display: inline-block; vertical-align: -6px; margin-left: 6px; }
+.video { aspect-ratio: 496 / 278; flex-direction: column; gap: 10px; }
+.video .play { width: 64px; height: 64px; display: grid; place-items: center; background: var(--sand); border-radius: 32px; color: var(--red); }
+.video .play img { width: 40px; height: 40px; }
+.caption { font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--navy); }
+.story .caption { margin-top: 0; }
+
+.quote { margin-left: 0; margin-right: 0; padding: 21px 43px 21px 67px; color: var(--red); }
+.quote p { font-size: 18px; font-style: italic; line-height: 1.45; }
+.quote footer { margin-top: 8px; font-size: 13px; font-weight: 500; line-height: 1.45; }
+
+.media { display: flex; flex-direction: column; gap: 12px; }
+.section-head { display: flex; justify-content: space-between; align-items: center; }
+.section-head h3 { font-size: 18px; font-weight: 600; }
+.section-head a { font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--navy); text-decoration: none; }
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.photos .placeholder { aspect-ratio: 1; }
+.photos .more { font-weight: 600; }
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.before-after .placeholder { aspect-ratio: 244 / 171; }
+.before-after .caption { margin-top: 6px; }
+
+.works { display: flex; flex-direction: column; gap: 2px; } /* the same 2px as a fact's label and value */
+/* The "Works" heading is an eyebrow like the facts' labels (Region, Service provider). */
+.works > h3 { margin: 0; font-size: 14px; font-weight: 400; line-height: 20px; color: var(--navy); }
+.work-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.work-item { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-radius: var(--radius); }
+.work-item.completed { background: var(--red); color: var(--white); }
+.work-item.in-progress { background: var(--red-tint); color: var(--red); padding: 11px 15px; border: 1px solid var(--red); }
+.work-item.planned { color: var(--red); padding: 11px 15px; border: 1px solid var(--red-mid); }
+.work-art { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; }
+.work-art .icon, .work-icon { width: 40px; height: 40px; stroke-width: 1.667; }
+.work-icon { display: block; }
+/* The hand-drawn works icons are dark red artwork; on the dark red block they're turned white. */
+.work-item.completed .work-icon { filter: brightness(0) invert(1); }
+.work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: normal; }
+.work-item small { display: block; font-size: 14px; line-height: normal; }
+.explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
+.explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
+.explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }
+.explainer p { font-size: 14px; line-height: 1.45; }
+.explainer .link-arrow { gap: 6px; font-size: 14px; line-height: 1.45; color: var(--navy); }
+.explainer .link-arrow .icon { width: 16px; height: 16px; stroke-width: 2.5; }
+
+.contact { padding: 32px 57px 32px; display: flex; flex-direction: column; }
+.contact small { font-size: 14px; line-height: 20px; }
+.contact h3 { margin: 4px 0 0; font-size: 24px; font-weight: 600; line-height: 30px; color: var(--red); }
+.contact > p:not(.alert) { margin-top: 16px; font-size: 16px; line-height: 22px; }
+.contact .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.contact .btn { height: 46px; min-height: 46px; }
+.contact .btn .icon { stroke-width: 2; }
+/* The design system's buttons, as on the landing panel: primary is core/orange, secondary a 2px orange outline; both go desert/dark on hover. */
+.contact .btn-primary { background: var(--orange); color: var(--white); }
+.contact .btn-primary:hover { background: var(--red); }
+.contact .btn-secondary { border-color: var(--orange); color: var(--orange); }
+.contact .btn-secondary:hover { border-color: var(--red); color: var(--red); }
+.contact .alert { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; font-weight: 600; line-height: 20px; }
+.contact .alert .icon { width: 24px; height: 24px; stroke-width: 2; }
+
+/* The nearby communities start 32px down, at every breakpoint (client edit). */
+.section.nearby-section { padding-top: 32px; }
+.section h3#nearby-h { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.nearby { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.nearby li { border-bottom: 1px solid var(--red-mid); }
+.nearby button { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 0; text-align: left; color: var(--navy); }
+.nearby .icon { flex-shrink: 0; width: 32px; height: 32px; stroke-width: 1.5; }
+.nearby button > .icon:first-child { color: var(--red); }
+.nearby .text { flex: 1; }
+.nearby strong { display: block; font-size: 16px; font-weight: 600; line-height: 22px; }
+.nearby small { display: block; font-size: 14px; line-height: 20px; }
+
+/* ---------- Map ---------- */
+.map {
+  flex: 1; position: relative; overflow: hidden;
+  background: var(--map-bg);
+}
+.map-viewport {
+  position: absolute; inset: 0;
+  touch-action: none; cursor: grab;
+}
+.map-viewport.dragging { cursor: grabbing; }
+.map-stage { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Map visual treatment from the creative's Figma (D01 "Map on load" 129:10145 and the overview 121:7214):
+   pale blue sea, sand service areas with rounded corners and a soft outline, and a navy coastline drawn inside the edge. */
+.map-stage .state { fill: #fbfbfa; } /* the South West Interconnected System area, left blank */
+.map-stage .region { stroke: #d9d3ca; stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.map-stage .region-kimberley { fill: #eae7e2; }
+.map-stage .region-pilbara { fill: #f2f0ec; }
+.map-stage .region-gascoyne { fill: var(--sand); }
+.map-stage .region-goldfields { fill: #f2f0ec; }
+/* 3px centred on the edge and clipped to the state leaves the design's 1.5px stroke on the inside. */
+.map-stage .state-edge { fill: none; stroke: var(--navy); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 3; }
+.map-labels { position: absolute; inset: 0; pointer-events: none; }
+/* A 1px white outline around map text, as in the design. */
+.region-label, .marker-label {
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
+.region-label {
+  position: absolute; transform: translate(-50%, -50%);
+  font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--navy); white-space: nowrap; text-transform: uppercase;
+}
+
+.markers { position: absolute; inset: 0; pointer-events: none; }
+.marker {
+  position: absolute; transform: translate(-50%, -50%);
+  pointer-events: auto;
+  display: grid; place-items: center;
+  width: 28px; height: 28px; /* generous hit area */
+}
+.marker-art { display: block; pointer-events: none; }
+/* Pin artwork, scaled up 30% (client edit): a 26px frame with the tip 10.4px below its centre; the larger pin is 23.4 × 32.5
+   with its tip 14.9px below (the design's 20px and 18 × 25 pins). */
+.marker.pin { width: 34px; height: 34px; }
+.marker.pin .marker-art { width: 26px; height: 26px; }
+.marker.pin-large { width: 42px; height: 42px; }
+.marker.pin-large .marker-art { width: 23.4px; height: 32.47px; }
+.marker.faded .marker-art { width: 14px; height: 14px; }
+.marker.selected { z-index: 3; }
+/* --gap is the space between the marker's centre and its name: the pin's half-width, or the large pin's plus 3px. */
+.marker-label {
+  --gap: 13px; --corner: 5px;
+  position: absolute; left: calc(50% + var(--gap)); top: 50%; transform: translateY(-50%); line-height: 20px;
+  font-size: 16px; font-weight: 500; color: var(--navy); white-space: nowrap;
+  pointer-events: auto; cursor: pointer; /* clicking the name selects the community, like its pin */
+  /* Padding is cancelled out by the negative margin so the text stays put when the highlight appears. */
+  padding: 2px 6px; margin: -2px -6px; border-radius: var(--radius);
+  translate: 0 2px; /* optical nudge: names sat high in their line box */
+}
+.marker.pin-large .marker-label { --gap: 24px; --corner: 13px; }
+.marker-label.at-left { left: auto; right: calc(50% + var(--gap)); }
+.marker-label.at-top { left: 50%; top: auto; bottom: calc(50% + var(--gap)); transform: translateX(-50%); }
+.marker-label.at-bottom { left: 50%; top: calc(50% + var(--gap)); transform: translateX(-50%); }
+.marker-label.at-top-right { left: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-top-left { left: auto; right: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-bottom-right { left: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
+.marker-label.at-bottom-left { left: auto; right: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
+.marker.faded .marker-label { color: #6e87b4; }
+/* Hover, focus and selection highlight the name where it already sits (the design's "Highlight" map label).
+   Dots without a visible name get the tooltip, styled the same. */
+.marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label, .tooltip {
+  background: var(--red); color: var(--white); font-family: "Inter", sans-serif; font-weight: 600; text-shadow: none;
+}
+.marker:hover, .marker:focus-visible { z-index: 5; }
+.marker:not(.has-label):hover .tooltip, .marker:not(.has-label):focus-visible .tooltip, .marker.selected:not(.has-label) .tooltip { display: block; }
+.tooltip {
+  display: none; position: absolute; bottom: calc(50% + 15px); left: 50%; transform: translateX(-50%);
+  border-radius: var(--radius); padding: 2px 6px; font-size: 16px; line-height: 20px; white-space: nowrap;
+  pointer-events: none; z-index: 4;
+}
+.marker.pin-large .tooltip { bottom: calc(50% + 21px); }
+/* Groups: a 36px red disc with a 2px white border (client edit, was 40px with 3px); a group with a story gets a 2px red outer ring (40px in all). */
+.cluster {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--red); color: var(--white); border: 2px solid var(--white);
+  font-family: "Inter", sans-serif; font-size: 14px; font-weight: 700;
+}
+.marker.is-cluster { width: 36px; height: 36px; }
+.marker.is-cluster.faded .cluster { background: #6e87b4; }
+.marker.is-cluster.has-story .cluster { box-shadow: 0 0 0 2px var(--red); }
+.marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px #6e87b4; }
+
+.legend {
+  position: absolute; z-index: 6; left: 24px; bottom: 24px; /* above the map pins and labels, hovered ones included */
+  background: var(--white); border: 1px solid var(--navy); border-radius: var(--radius);
+  padding: 16px; width: 236px; font-family: "Inter", sans-serif; color: #1f1f1f;
+}
+.legend-toggle {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  font-weight: 600; line-height: 22px; margin-bottom: 8px;
+}
+.legend-toggle .icon { width: 24px; height: 24px; transition: transform .15s ease; }
+/* The collapsed key is a 36px-tall button to match the zoom buttons, styled like the zoom buttons: white, 1px grey border, dark text (client edit). */
+.legend.collapsed { width: auto; padding: 0; border: 1px solid var(--grey-500); border-radius: var(--radius); }
+.legend.collapsed .legend-toggle { margin: 0; padding: 7px 9px 7px 13px; font-size: 14px; line-height: 20px; }
+.legend.collapsed .legend-toggle .icon { width: 20px; height: 20px; }
+.legend.collapsed .legend-toggle .icon { transform: rotate(180deg); }
+.legend.collapsed ul { display: none; }
+.legend ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.legend li { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 20px; }
+.legend .m { width: 32px; height: 32px; display: grid; place-items: center; }
+.legend .m img { display: block; }
+.legend .m img[src$="key-pin-story.svg"] { width: 16px; height: 22.98px; }
+.legend .cluster { width: 32px; height: 32px; font-size: 11.2px; border-width: 2.4px; }
+
+.zoom { position: absolute; z-index: 6; right: 18px; bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
+.zoom button {
+  width: 36px; height: 36px; display: grid; place-items: center;
+  background: var(--white); border: 1px solid var(--grey-500); border-radius: var(--radius);
+}
+/* The plus and minus are sized down to fit the 36px buttons (client edit). */
+.zoom button .icon { width: 20px; height: 20px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); z-index: 50;
+  background: var(--grey-900); color: var(--white); padding: 10px 16px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 900px) {
+  :root { --header-h: 81px; }
+  .site-header { padding: 0 16px; }
+  /* No mobile header in the creative's Figma: the same lock-up scaled down to 24px tall (user's choice). */
+  .logo { gap: 10.19px; }
+  .logo-hp { width: 66.07px; height: 24px; }
+  .logo-divider { width: 0.93px; height: 22.71px; }
+  .logo-rc { width: 59.84px; height: 22.94px; }
+  .header-nav { flex: 1; justify-content: center; }
+  .utility-nav { height: auto; padding: 0; border: 0; gap: 0; justify-content: flex-end; }
+  .utility-nav a { width: 56px; justify-content: center; }
+  .utility-nav span, .main-nav { display: none; }
+  .menu-btn { display: grid; place-items: center; width: 40px; height: 44px; margin-left: 4px; }
+
+  .layout { position: relative; display: block; }
+  .map { position: absolute; inset: 0; }
+  /* Key and zoom sit bottom right of the strip of map left above the sheet (sheet heights below). */
+  .legend, .zoom { top: auto; bottom: calc(40% + 12px); transition: bottom .25s ease; }
+  .map.sheet-profile .legend, .map.sheet-profile .zoom { bottom: calc(71% + 12px); }
+  .zoom { right: 10px; }
+  .legend { left: auto; right: 54px; } /* the zoom buttons are 36px wide at right: 10px, so this leaves their 8px gap */
+
+  .panel {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;
+    width: auto; height: 40%;
+    border-right: 0; border-radius: 16px 16px 0 0;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, .08);
+    transition: height .25s ease;
+  }
+  .panel.expanded { height: calc(100% - 24px); }
+  .panel.profile { height: 71%; }
+  .panel.profile.expanded, .panel.filters-open { height: 100%; border-radius: 0; }
+  .sheet-handle {
+    display: block; flex-shrink: 0; height: 22px; pointer-events: none; /* decoration only: clicks go to the buttons under it */
+  }
+  .panel.filters-open .sheet-handle { display: none; }
+  .panel.profile .sheet-handle { position: absolute; left: 0; right: 0; top: 0; z-index: 3; }
+
+  .home { --pad: 32px; padding: 4px var(--pad) 0; gap: 16px; }
+  .home .stories.band { padding-bottom: 24px; }
+  .home h1 { font-size: 22px; }
+
+  .search { order: 2; }
+  .stories { order: 4; }
+
+  .profile-bar { border-radius: 16px 16px 0 0; }
+  .panel.profile.expanded .profile-bar { border-radius: 0; }
+  .hero { height: 195px; }
+}
+
+/* Phones only: 16px from the screen edge. Tablets (601-900px) keep the desktop 32px sides. */
+@media (max-width: 600px) {
+  .home { --pad: 16px; }
+  .profile-bar { padding: 0 16px; }
+  .profile-name, .section { padding-left: 16px; padding-right: 16px; }
+  .about, .contact { padding-left: 16px; padding-right: 16px; }
+  /* Slimmer side padding so Call and Email fit on one line at phone widths. */
+  .contact .btn-primary { padding-left: 14px; padding-right: 14px; }
+  .contact .btn-secondary { padding-left: 12px; padding-right: 12px; }
+  .quote { padding-left: 16px; padding-right: 16px; }
+  .filters-head, .filters-body { padding-left: 16px; padding-right: 16px; }
+  .filters-foot { padding: 16px 16px; gap: 8px; }
+  /* Half a phone screen is tight for "Show 117 communities": 14px text with less side padding fits on one line at 360px and up,
+     and on narrower phones it wraps to two lines rather than spilling out of the button. */
+  .filters-foot .btn-primary { padding-left: 6px; padding-right: 6px; font-size: 14px; white-space: normal; text-align: center; line-height: 18px; }
+}
+
+/* The creative's base plate (Figma 166:10023) over a solid desert/dark bar with "Back to top", at the panel's width only. */
+.base-plate { margin-top: 64px; }
+/* On the landing panel the story band's sand carries on through a 16px gap (client edit; the profiles keep 64px), down to the plate. */
+.base-plate.on-band { margin-top: 0; padding-top: 16px; background: var(--sand-dark); }
+.base-plate > img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 67; }
+.back-top {
+  display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: -1px;
+  padding: 0 16px 32px; background: var(--red); color: var(--white);
+  font-size: 14px; font-weight: 600; line-height: 18px; letter-spacing: 0.0042px; cursor: pointer;
+}
+.back-top img { width: 32px; height: 32px; }
+.back-top:hover { text-decoration: underline; }
+
+/* ---------- Prototype options panel (Shift + O) ---------- */
+.options {
+  position: fixed; right: 16px; bottom: 16px; z-index: 60; width: 320px;
+  background: #000; color: var(--white); border-radius: 8px; padding: 16px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .3); font-size: 14px;
+}
+.options[hidden] { display: none; }
+.options :focus-visible { outline-color: var(--white); }
+.options-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.options-head h2 { font-size: 16px; font-weight: 600; }
+.options-head button { display: grid; color: var(--white); }
+.options-head .icon { width: 22px; height: 22px; }
+.options-list { list-style: none; margin: 0; padding: 0; }
+.option-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 12px 0; border-top: 1px solid #333; cursor: pointer;
+}
+.option-text strong { display: block; font-weight: 600; }
+.option-text small { display: block; font-size: 12px; color: #b5b5b5; margin-top: 2px; }
+.option-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.option-row.disabled { opacity: .4; cursor: default; }
+.switch {
+  position: relative; flex-shrink: 0; width: 40px; height: 24px;
+  border: 2px solid var(--white); border-radius: 12px; transition: background .15s ease;
+}
+.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--white); transition: transform .15s ease, background .15s ease;
+}
+.option-row input:checked + .switch { background: var(--white); }
+.option-row input:checked + .switch::after { transform: translateX(16px); background: #000; }
+.option-row input:focus-visible + .switch { outline: 2px solid var(--white); outline-offset: 2px; }
+.options-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 1px solid #333; }
+.options-foot button { border: 1px solid var(--white); border-radius: var(--radius); padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--white); }
+.options-foot small { font-size: 12px; color: #8a8a8a; text-align: right; }
+

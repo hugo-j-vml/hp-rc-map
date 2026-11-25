@@ -8,6 +8,13 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 **Current phase:** a simple, clickable wireframe prototype for client review, in plain HTML, CSS and vanilla JavaScript in `prototype/`. The larger React, MapLibre and custom CMS build in `plan.md` is **parked**. Don't start on it unless asked.
 
+## Versions (from 25 Nov 2026)
+
+- **`prototype/` is version 1 and frozen.** It is the first client review, kept exactly as it was (git tag `v1-nov-2026`). Don't edit it.
+- **`prototype-v2/` is the current version:** a copy of v1 taken for the client's feedback round. **All new work goes here**; every path in this file that says `prototype/` means `prototype-v2/` for new work. Its Beausite font files are git-ignored like v1's.
+- **The root `index.html` forwards to `prototype-v2/`** (the latest version). If another round comes in, copy the latest folder to `prototype-v3/`, freeze the old one and move the forward.
+- **`versions/` is the launch page** listing every version, with ← and → to slide between them (client request). The layout, spacing and slide animation are lifted from the UWA navigation prototype's index page (`hugo-j-vml/uwa-nav-proto`, `src/pages/index.astro` and `components.css`), rebuilt as plain HTML, CSS and ES5 JavaScript with no build step, and re-themed for Horizon Power: sand background, navy text, desert red accents, the HP Remote Communities logo lock-up (copies in `versions/images/`) and a warm dot-grid "heat haze" animation instead of the black halftone facets. To add a version: copy a panel in `versions/index.html`, bump its numbers and enable the arrows either side. Update the "Last updated" line by hand.
+
 ## Working rules
 
 - **Commit titles say what changed, in 50 characters or fewer,** e.g. "Remove All communities link from profiles". The GitHub Actions list truncates longer titles, which looks untidy; put detail in the commit body. Don't start every title with the same prefix: they become impossible to tell apart in the history.
@@ -25,7 +32,10 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 | File | What it holds |
 |---|---|
-| `index.html` (repo root) | Forwards to `prototype/`, so GitHub Pages serves the prototype from the repo root |
+| `index.html` (repo root) | Forwards to the latest version (`prototype-v2/`), so GitHub Pages serves it from the repo root |
+| `versions/` | Launch page listing the versions (`index.html`, `launch.css`, `launch.js`, `images/` for the logo) |
+| `prototype/` | Version 1, frozen |
+| `prototype-v2/` | Version 2, the current working copy |
 | `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, and filter and speaker icons drawn to match (the kit has neither) |
 | `prototype/css/styles.css` | All styles. Tokens at the top. Mobile rules under `@media (max-width: 900px)` |
 | `prototype/js/app.js` | Everything interactive: data prep, filtering, map zoom/pan/clustering/labels, key, panels (home, filters, profiles), routing, options panel |
