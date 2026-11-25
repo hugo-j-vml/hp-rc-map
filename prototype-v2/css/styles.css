@@ -34,6 +34,7 @@
   --red-mid: #d44a31;    /* desert/mid 1 */
   --red-tint: #fef1e7;   /* in-progress and planned fills (no style name in Figma) */
   --navy: #001e3c;       /* sky/dark, core/navy */
+  --bush: #4c6a48; /* bush green: high content (story) nodes, their selected pin and highlighted name (client edit) */
   --orange: #c54630;     /* core/orange: the design system's primary button colour */
   --sand: #f7f6f4;       /* desert/neutral 20: panel background */
   --sand-dark: #ece9e4;  /* desert/neutral 50: bands and photo placeholders */
@@ -498,6 +499,8 @@ img.hero { width: 100%; border-radius: 0; }
 .marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label, .tooltip {
   background: var(--red); color: var(--white); font-family: "Inter", sans-serif; font-weight: 600; text-shadow: none;
 }
+/* High content (story) communities highlight in bush green instead (client edit). */
+.marker.is-story:hover .marker-label, .marker.is-story:focus-visible .marker-label, .marker.is-story.selected .marker-label, .marker.is-story .tooltip { background: var(--bush); }
 .marker:hover, .marker:focus-visible { z-index: 5; }
 .marker:not(.has-label):hover .tooltip, .marker:not(.has-label):focus-visible .tooltip, .marker.selected:not(.has-label) .tooltip { display: block; }
 .tooltip {

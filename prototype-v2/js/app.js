@@ -423,11 +423,11 @@
       var c = g.items[0];
       var selected = c.id === state.selected;
       var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story && !g.faded ? 16 : 13) : null;
-      // The creative's artwork (images/design/): the larger outlined pin for the selected community, a Mid 1 dot for the
-      // rest, and a blue dot for communities outside the current filter.
+      // The creative's artwork (images/design/): the larger outlined pin for the selected community (recoloured bush green for a story
+      // community, client edit), a Mid 1 dot for the rest, and a blue dot for communities outside the current filter.
       var storyDot = !g.faded && !g.large && c.story; // a community with a story is a larger bush green dot (client edit)
-      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : storyDot ? "map-dot-story" : "map-dot";
-      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : storyDot ? " dot dot-story" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
+      var art = g.faded ? "map-dot-faded" : g.large ? (c.story ? "map-pin-large-green" : "map-pin-large") : storyDot ? "map-dot-story" : "map-dot";
+      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : storyDot ? " dot dot-story" : " dot") + (selected ? " selected" : "") + (c.story ? " is-story" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +
