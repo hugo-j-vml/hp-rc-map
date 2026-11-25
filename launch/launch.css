@@ -51,6 +51,23 @@ body { background: var(--index-bg); color: var(--index-text); font-family: var(-
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; padding: 0; cursor: pointer; }
 
+/* Pattern (the HP Design System's "rc bg pattern"): a fixed layer behind every screen, bleeding off the right and bottom.
+   The six rings are separate SVGs placed in the pattern's own 2697 x 2650 space, as percentages, so any ring can be moved
+   or scaled on its own: change its left, top and width below. Move the whole pattern with the left and top on .index-pattern. */
+.index-pattern-layer { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.index-pattern { --pat-w: max(135vw, 1000px); position: absolute; width: var(--pat-w); aspect-ratio: 2697 / 2650;
+  left: calc(var(--pat-w) * 0.2325); top: calc(var(--pat-w) * -0.0334); }
+/* Narrower windows: a smaller pattern, placed so the rings clear the "About this version" text and the footer; phones show it faint behind the footer */
+@media (max-width: 1599px) { .index-pattern { --pat-w: 96vw; left: 48vw; top: 22vh; } }
+@media (max-width: 639px) { .index-pattern { --pat-w: 1100px; left: -40px; top: 360px; opacity: 0.3; } }
+.index-pattern .ring { position: absolute; display: block; height: auto; }
+.ring-1 { left: 35.663%; top: 34.110%; width: 27.799%; }
+.ring-2 { left: 30.525%; top: 28.407%; width: 39.127%; }
+.ring-3 { left: 26.307%; top: 25.161%; width: 48.333%; }
+.ring-4 { left: 22.737%; top: 22.080%; width: 55.782%; }
+.ring-5 { left: 18.557%; top: 17.940%; width: 63.981%; }
+.ring-6 { left: 15.579%; top: 14.596%; width: 70.671%; }
+
 /* Screens: only the current one shows, plus the one leaving while they slide (launch.js) */
 .index-phases { position: relative; isolation: isolate; overflow-x: clip; }
 .index-page { display: none; position: relative; flex-direction: column; min-height: 100vh; padding: var(--index-gutter); }
@@ -105,3 +122,6 @@ a.index-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 0
 .index-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--index-gutter); margin-top: auto; padding-top: var(--index-footer-top); }
 .index-wordmark { display: block; flex: none; width: var(--index-wordmark-width); height: auto; }
 .index-build { margin: 0; text-align: right; font-size: var(--index-build-size); line-height: 1.3; }
+
+/* Where a ring does cross text, a halo in the background colour keeps it readable */
+.index-options, .index-build { text-shadow: 0 0 2px var(--index-bg), 0 0 4px var(--index-bg), 0 0 6px var(--index-bg), 0 0 8px var(--index-bg); }
