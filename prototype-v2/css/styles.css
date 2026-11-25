@@ -449,7 +449,7 @@ img.hero { width: 100%; border-radius: 0; }
 }
 .region-label {
   position: absolute; transform: translate(-50%, -50%);
-  font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--navy); white-space: nowrap; /* sentence case, as typed (client edit; was all caps) */
+  font-size: 16px; font-weight: 600; letter-spacing: .04em; color: var(--red); white-space: nowrap; /* sentence case, as typed, 16px like the community names and Desert/Dark (client edits; was 10px navy all caps) */
 }
 
 .markers { position: absolute; inset: 0; pointer-events: none; }
