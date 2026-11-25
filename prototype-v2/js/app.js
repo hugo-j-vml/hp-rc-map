@@ -344,15 +344,16 @@
     );
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
-    // Single communities are pins with their tip on the spot, so the marker (and its name) centres on the pin's head:
-    // 10.4px above the spot for a pin, 14.9px for the larger story and selected pin (both scaled up 30%). Blue "not in filter" dots centre on the spot.
+    // Single communities are Mid 1 dots centred on the spot (version 2; the red pin is now only the selected state).
+    // The selected community is the larger outlined pin with its tip on the spot, so the marker (and its name) centres on
+    // the pin's head, 14.9px above it. Blue "not in filter" dots centre on the spot too.
     groups.forEach(function (g) {
       if (g.items.length > 1) return;
       var c = g.items[0];
       if (c.id === state.selected) g.faded = false; // the selected community always shows its pin, even outside the filter
       if (g.faded) return;
-      g.large = c.story || c.id === state.selected;
-      g.sy -= g.large ? 14.94 : 10.4;
+      g.large = c.id === state.selected;
+      if (g.large) g.sy -= 14.94;
     });
     var placedLabels = groups.map(function (g, i) {
       var r = g.items.length > 1 ? 19 : g.large ? 16 : 11;
@@ -371,10 +372,10 @@
       var c = g.items[0];
       var selected = c.id === state.selected;
       var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : 13) : null;
-      // The creative's pin artwork (images/design/): red pin, the larger outlined pin for stories and the selected
-      // community, and a blue dot for communities outside the current filter.
-      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-pin";
-      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " pin") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
+      // The creative's artwork (images/design/): the larger outlined pin for the selected community, a Mid 1 dot for the
+      // rest, and a blue dot for communities outside the current filter.
+      var art = g.faded ? "map-dot-faded" : g.large ? "map-pin-large" : "map-dot";
+      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : " dot") + (selected ? " selected" : "") + (labelPos ? " has-label" : "") + '" ' + style +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +

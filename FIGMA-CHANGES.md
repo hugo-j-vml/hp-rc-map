@@ -136,3 +136,7 @@ Map pins are 30% larger than the design (20px pin becomes 26px; the 18 × 25 sto
 Community names and the highlighted and tooltip labels are 16px (client edit; design: 13px). Region names stay at the design's 10px (16px was tried and looked out of place). The numbers in group circles stay at 14px. Not yet in the Figma wireframes.
 
 The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count badge) instead of orange, to go with the navy search field; it darkens to Desert/Dark on hover (client edit). Not yet in the Figma wireframes.
+
+## Version 2 (prototype-v2, from 25 Nov 2026)
+
+- **Map markers:** unselected communities are 14px Mid 1 (`#D44A31`) dots with a white ring instead of red pins; the selected community keeps the large outlined pin. Story communities are dots until selected. The Key lists Community, Selected community, Not in current filter and Group of communities.
