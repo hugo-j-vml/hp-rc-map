@@ -12,13 +12,13 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 - **`prototype/` is version 1 and frozen.** It is the first client review, kept exactly as it was (its last commit before the copy is `e8d4674`; pushing git tags is blocked in cloud sessions, so there is no tag). Don't edit it.
 - **`prototype-v2/` is the current version:** a copy of v1 taken for the client's feedback round. **All new work goes here**; every path in this file that says `prototype/` means `prototype-v2/` for new work. Its Beausite font files are git-ignored like v1's.
-- **The root `index.html` forwards to `prototype-v2/`** (the latest version). If another round comes in, copy the latest folder to `prototype-v3/`, freeze the old one and move the forward.
-- **`versions/` is the launch page** listing every version, with ← and → to slide between them (client request). The layout, spacing and slide animation are lifted from the UWA navigation prototype's index page (`hugo-j-vml/uwa-nav-proto`, `src/pages/index.astro` and `components.css`), rebuilt as plain HTML, CSS and ES5 JavaScript with no build step, and re-themed for Horizon Power: sand background, navy text, desert red accents, the HP Remote Communities logo lock-up (copies in `versions/images/`) and a warm dot-grid "heat haze" animation instead of the black halftone facets. To add a version: copy a panel in `versions/index.html`, bump its numbers and enable the arrows either side. Update the "Last updated" line by hand.
+- **The root `index.html` is the launch page, the parent of every version** (client request). Its default screen is the latest version. If another round comes in, copy the latest folder to `prototype-v3/`, freeze the old one and add a screen.
+- **The launch page** lists every version, with ← and → to slide between them (client request). The layout, spacing and slide animation are lifted from the UWA navigation prototype's index page (`hugo-j-vml/uwa-nav-proto`, `src/pages/index.astro` and `components.css`), rebuilt as plain HTML, CSS and ES5 JavaScript with no build step, and re-themed for Horizon Power: sand background, navy text, desert red accents, the HP Remote Communities logo lock-up (copies in `launch/images/`) and a warm dot-grid "heat haze" animation instead of the black halftone facets. To add a version: copy a panel in `index.html`, bump its numbers and enable the arrows either side. Update the "Last updated" line by hand.
 
 ## Working rules
 
 - **Commit titles say what changed, in 50 characters or fewer,** e.g. "Remove All communities link from profiles". The GitHub Actions list truncates longer titles, which looks untidy; put detail in the commit body. Don't start every title with the same prefix: they become impossible to tell apart in the history.
-- **Commit and push straight to `main`.** No feature branches or PRs unless asked. Every push to `main` updates the live site: https://hugo-j-vml.github.io/hp-rc-map/ (GitHub Pages, deployed by `.github/workflows/pages.yml`, so each run in the Actions tab is titled with its commit message. The root `index.html` forwards to `prototype/`).
+- **Commit and push straight to `main`.** No feature branches or PRs unless asked. Every push to `main` updates the live site: https://hugo-j-vml.github.io/hp-rc-map/ (GitHub Pages, deployed by `.github/workflows/pages.yml`, so each run in the Actions tab is titled with its commit message. The root `index.html` is the launch page).
 - **UK English and Australian dollars** in all copy and docs.
 - **Say "the creative"** for the designer behind the visual treatment, in chat, docs, comments and commits. Never "she", "he" or "they" for them, and don't guess anyone's pronouns.
 - **Keep it simple:** no frameworks, build step, package manager or external JavaScript libraries. It must still work when `prototype/index.html` is opened straight from disk (`file://`), so data is loaded as `<script>` files, not `fetch`.
@@ -32,8 +32,8 @@ An interactive map of Horizon Power's 117 remote Aboriginal communities in WA, b
 
 | File | What it holds |
 |---|---|
-| `index.html` (repo root) | Forwards to the latest version (`prototype-v2/`), so GitHub Pages serves it from the repo root |
-| `versions/` | Launch page listing the versions (`index.html`, `launch.css`, `launch.js`, `images/` for the logo) |
+| `index.html` (repo root) | The launch page, parent of the versions: one screen per version, with links to each |
+| `launch/` | The launch page's `launch.css`, `launch.js` and `images/` (the logo lock-up) |
 | `prototype/` | Version 1, frozen |
 | `prototype-v2/` | Version 2, the current working copy |
 | `prototype/index.html` | Page shell, wireframe of the HP Remote Communities site header, and the inline SVG icon sprite: HP RC icons from Figma, and filter and speaker icons drawn to match (the kit has neither) |
