@@ -153,3 +153,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Filters:** each group (Region, Service provider, Program, Type of work, Status) is a folded-up 56px button with the name, an "N selected" badge and a chevron; click to open its tiles. Service provider is a live filter with three tiles (78, 25 and 14 communities).
 - **Works heading:** the "Works" label above the works list in the sand band is gone on both profiles.
 - **Photos:** a plain gallery of six placeholder tiles, three across, with no "View all" link or "+ more" tile.
+- **Low content profile details:** the simple profile's details are Region, Languages spoken, Traditional Owners and Service provider, in the same two-column grid as the story profile.

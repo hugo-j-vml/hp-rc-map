@@ -852,7 +852,8 @@
     return profileBar(c) +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka +
-        factsBlock(fact("Region", regionsById[c.region].name) + fact("Service provider", rspName(c))) + "</div>" +
+        factsBlock(fact("Region", regionsById[c.region].name) + fact("Languages spoken", nameList(c, "languages", "[Traditional language]")) +
+          fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) + fact("Service provider", rspName(c))) + "</div>" +
       aboutBlock(c) +
       (explainers ? '<div class="section">' + explainers + "</div>" : "") +
       contactBlock() + profileFoot(c, 2) +
