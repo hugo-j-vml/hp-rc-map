@@ -883,7 +883,7 @@
   // The sand band holds only the works: what's been done and what's planned (it replaced the transition milestones here, client edit).
   function aboutBlock(c) {
     return '<section class="band about" id="work" aria-label="Works in ' + esc(c.name) + '">' +
-      '<div class="works"><h3>Works</h3>' + worksByStatus(c) + "</div></section>";
+      '<div class="works">' + worksByStatus(c) + "</div></section>";
   }
 
   // A story's photo, or a grey placeholder if it hasn't got one. The card thumbnail is decorative (the card is
