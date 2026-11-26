@@ -30,6 +30,7 @@ Everything below applies to `prototype-v2/` only; v1 is untouched. Add each chan
 - **No "Works" heading (26 Nov 2026):** the sand band on both profiles no longer has a "Works" label above the list (client edit); the section is still named "Works in [name]" for screen readers and the list is labelled "Works".
 - **Photo gallery (26 Nov 2026):** a story's Photos section is a plain gallery (client edit): six placeholder tiles, three across, running down the panel as needed, with no "View all 12" link and no "+ N more" tile (`photos` in `content.js` is the number of placeholder tiles; only Papulankutja has any).
 - **RSP names in full (26 Nov 2026):** the providers show by full name only, with no abbreviations (KRSP, MMS, NgS), wherever they appear: the Service provider fact and the filter tiles (client edit).
+- **Favicon (26 Nov 2026):** the launch page and version 2 use Horizon Power's favicon (`launch/images/favicon.ico` and `prototype-v2/images/favicon.ico`, our own copies of the icon from the HP Remote Communities site, linked with `<link rel="icon">`), which also stops the browser asking for `/favicon.ico` at the github.io root and logging a 404. Version 1 is frozen, so it still has none.
 
 ## Working rules
 
