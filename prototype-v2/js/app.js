@@ -43,8 +43,9 @@
     selected: null,
     query: "",
     resultsOpen: false, // whether the search results dropdown is showing
-    filters: { region: new Set(), program: new Set(), type: new Set(), status: new Set() },
+    filters: { region: new Set(), rsp: new Set(), program: new Set(), type: new Set(), status: new Set() },
     showAllTypes: false,
+    openGroups: {},        // which filter groups are expanded (they start folded up)
     expanded: false,       // mobile sheet
   };
 
@@ -93,11 +94,12 @@
   // ---------- Filtering ----------
   function activeFilterCount() {
     var f = state.filters;
-    return f.region.size + f.program.size + f.type.size + f.status.size;
+    return f.region.size + f.rsp.size + f.program.size + f.type.size + f.status.size;
   }
   function matches(c) {
     var f = state.filters;
     if (f.region.size && !f.region.has(c.region)) return false;
+    if (f.rsp.size && !f.rsp.has(C.rsps[c.region])) return false;
     if (!f.program.size && !f.type.size && !f.status.size) return true;
     return c.works.some(function (w) {
       return (!f.program.size || f.program.has(w.program)) &&
@@ -701,6 +703,16 @@
       (opts.count != null ? '<span class="count">' + opts.count + "</span>" : "") + "</button>";
   }
 
+  // Each filter is a folded-up group: one big button (name, how many are chosen, a chevron) that opens its options on a click.
+  function filterGroup(id, name, body) {
+    var open = !!state.openGroups[id];
+    var chosen = state.filters[id].size;
+    return '<section class="filter-group">' +
+      '<h3><button type="button" class="group-toggle" data-action="toggle-group" data-group="' + id + '" aria-expanded="' + open + '" aria-controls="fg-' + id + '">' +
+      '<span class="label">' + name + "</span>" + (chosen ? '<span class="count">' + chosen + " selected</span>" : "") + icon("chevron-down") + "</button></h3>" +
+      '<div class="group-body" id="fg-' + id + '" role="group" aria-label="' + name + '"' + (open ? "" : " hidden") + ">" + body + "</div></section>";
+  }
+
   function renderFilters() {
     var types = state.showAllTypes ? C.workTypes : C.workTypes.slice(0, 5);
     var hidden = C.workTypes.length - 5;
@@ -709,20 +721,16 @@
       '<div class="filters-head"><h2><button type="button" data-action="home" aria-label="Back">' + icon("chevron-left") + "</button>Filters</h2>" +
       '<button type="button" class="text-link" data-action="clear">Clear all</button></div>' +
       '<div class="filters-body">' +
-      '<fieldset class="filter-group"><legend>Region</legend>' +
-      C.regions.map(function (r) {
+      filterGroup("region", "Region", C.regions.map(function (r) {
         return tile("region", r, { count: communities.filter(function (c) { return c.region === r.id; }).length });
-      }).join("") + "</fieldset>" +
-      '<fieldset class="filter-group"><legend>Program</legend>' +
-      C.programs.map(function (p) { return tile("program", p, { medium: true }); }).join("") + "</fieldset>" +
-      '<fieldset class="filter-group"><legend>Type of work</legend>' +
-      types.map(function (t) { return tile("type", t); }).join("") +
-      '<button type="button" class="show-more" data-action="more-types">' + (state.showAllTypes ? "Show fewer" : "Show " + hidden + " more") + "</button></fieldset>" +
-      '<fieldset class="filter-group"><legend>Status</legend>' +
-      C.statuses.map(function (s) { return tile("status", s); }).join("") + "</fieldset>" +
-      '<fieldset class="filter-group"><legend>Service provider</legend>' +
-      '<div class="select"><label class="visually-hidden" for="rsp">Service provider</label><select id="rsp" disabled><option>All service providers</option></select><span>' + icon("chevron-down") + "</span></div>" +
-      '<p class="note">Service provider details are still to come from Horizon Power.</p></fieldset>' +
+      }).join("")) +
+      filterGroup("rsp", "Service provider", C.rspList.map(function (r) {
+        return tile("rsp", r, { count: communities.filter(function (c) { return C.rsps[c.region] === r.id; }).length });
+      }).join("")) +
+      filterGroup("program", "Program", C.programs.map(function (p) { return tile("program", p, { medium: true }); }).join("")) +
+      filterGroup("type", "Type of work", types.map(function (t) { return tile("type", t); }).join("") +
+        '<button type="button" class="show-more" data-action="more-types">' + (state.showAllTypes ? "Show fewer" : "Show " + hidden + " more") + "</button>") +
+      filterGroup("status", "Status", C.statuses.map(function (s) { return tile("status", s); }).join("")) +
       '<p class="note">Program, type of work and status use sample works from the Figma profiles until the works data arrives.</p>' +
       "</div>" +
       '<div class="filters-foot"><button type="button" class="btn btn-link" data-action="clear">Clear all</button>' +
@@ -858,7 +866,10 @@
   }
 
   // The Regional Service Provider follows the region; Traditional Owner groups and languages come from content.js, comma separated.
-  function rspName(c) { return C.rsps[c.region] || "[RSP name]"; }
+  function rspName(c) {
+    var id = C.rsps[c.region];
+    return id ? C.rspList.filter(function (r) { return r.id === id; })[0].name : "[RSP name]";
+  }
   function nameList(c, key, placeholder) {
     var d = C.communityDetails[c.id];
     return d && d[key] && d[key].length ? d[key].join(", ") : placeholder;
@@ -1002,6 +1013,7 @@
         // The logo returns to the page-load state: no profile, search or filters, and the whole-of-WA view.
         state.query = "";
         state.showAllTypes = false;
+        state.openGroups = {};
         Object.keys(state.filters).forEach(function (k) { state.filters[k].clear(); });
         goHome();
         fitState(true);
@@ -1016,6 +1028,11 @@
         break;
       case "clear":
         Object.keys(state.filters).forEach(function (k) { state.filters[k].clear(); });
+        render({ keepScroll: true });
+        break;
+      case "toggle-group":
+        var gid = e.target.closest("[data-group]").dataset.group;
+        state.openGroups[gid] = !state.openGroups[gid];
         render({ keepScroll: true });
         break;
       case "more-types":
