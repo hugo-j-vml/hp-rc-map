@@ -161,3 +161,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Search and Filters colour:** the search field (border, text, placeholder, button) and the Filters button (outline, text, icon, count circle) are `#780D02` instead of navy; hover is `#C54630` on the search button and a `#FEF1E7` fill on Filters.
 - **Info icon:** the circled "i" is removed everywhere (explainer headings and the emergency line); the text stands alone.
 - **Option: region colours** (Shift + O, off by default): flat region fills with no outlines: Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF`; SWIS area blank.
+- **Options:** the "Goldfields takes in the NG lands" option is removed; Esperance/Goldfields is always the poster's drawing.

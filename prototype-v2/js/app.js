@@ -476,7 +476,7 @@
     return w > 0 && h > 0 ? w * h : 0;
   }
   function renderRegionLabels(obstacles) {
-    var variant = options.ngLands ? "ngLands" : "poster";
+    var variant = "poster"; // the NG lands drawing was removed as an option (client: no need to change it)
     var size = mapSize();
     var taken = obstacles.slice();
     // The Key and zoom buttons sit over the map, so names stay out from under them too.
@@ -1147,10 +1147,8 @@
 
   // ---------- Prototype options (Shift + O) ----------
   // Layout experiments that can be switched on and off. Settings are remembered in this browser, and
-  // URL parameters (e.g. ?ngLands=1) override them so a particular set-up can be shared as a link.
+  // URL parameters (e.g. ?regionColours=1) override them so a particular set-up can be shared as a link.
   var OPTIONS = [
-    { id: "ngLands", label: "Goldfields takes in the NG lands",
-      description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
     { id: "regionColours", label: "Region-specific colours",
       description: "Gives each service area its own flat colour with no borders: a pale green Kimberley, pale teal Pilbara, pale yellow Gascoyne/Mid West and pale blue Esperance/Goldfields.", initial: false },
   ];
@@ -1214,7 +1212,7 @@
     }
   });
   function showRegionVariant() {
-    var variant = options.ngLands ? "ngLands" : "poster";
+    var variant = "poster"; // the NG lands drawing was removed as an option (client: no need to change it)
     el.stage.querySelectorAll(".regions").forEach(function (g) { g.style.display = g.dataset.variant === variant ? "" : "none"; });
   }
 

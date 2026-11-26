@@ -36,6 +36,7 @@ Everything below applies to `prototype-v2/` only; v1 is untouched. Add each chan
 - **Search and Filters back to dark red (26 Nov 2026, client edit):** the search field's border, text, placeholder and button, and the Filters button's outline, text, icon and count circle are Desert/Dark `#780D02` again (they were Core/Navy). The search button lightens to Core/Orange on hover, and Filters gets the pale `--red-tint` fill on hover. The search field's clear (x) button is redrawn as a flat Desert/Dark cross (`::-webkit-search-cancel-button` in `styles.css`; the browser's own is blue). This replaces the navy notes in the Search row and Landing buttons decisions for version 2.
 - **No info icon (26 Nov 2026, client edit):** the circled "i" is gone from version 2 everywhere (the "What is ReGen?" explainers and the emergency line in the service provider band); don't use it anywhere in the prototype. The sprite symbol and its styles are removed.
 - **Region colour option (26 Nov 2026):** a second option in the Shift + O panel, `regionColours` ("Region-specific colours", off by default, `?regionColours=1`). Off is the original look (neutral sands with 2px `#D9D3CA` outlines). On gives each service area a flat colour with no outlines: Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF` (the client's values, not in the creative's palette notes); the SWIS area stays blank `#FBFBFA`. It is a `.region-colours` class on the map SVG, set in `applyOptions()`, with the colours in `styles.css`, so the NG lands drawing gets them too. Not on the launch page's Changes list, as it's an option rather than a change.
+- **NG lands option removed (26 Nov 2026, client edit):** the "Goldfields takes in the NG lands" option is gone from version 2's options panel and the map always uses the poster's drawing.
 
 ## Working rules
 
@@ -144,7 +145,7 @@ To add an option:
 3. React to changes in `applyOptions()`.
 4. Document it in the README.
 
-Current options: `ngLands` (NG lands region drawing) and, in version 2, `regionColours`. Floating story cards, pinned cards and progress bars were removed after client review (Nov 2026); they're in the git history if needed again.
+Current options in version 2: `regionColours` only. Version 2 no longer has the `ngLands` option (NG lands region drawing): the client doesn't think the region drawing needs to change, so Esperance/Goldfields stays as the poster draws it (the alternative shapes are still in `outline.js` and the hidden second drawing is still built, in case it's wanted again). Version 1 keeps its option. Floating story cards, pinned cards and progress bars were removed after client review (Nov 2026); they're in the git history if needed again.
 
 ## Regression checklist (before each push)
 
