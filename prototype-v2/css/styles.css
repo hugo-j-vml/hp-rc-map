@@ -460,6 +460,12 @@ img.hero { width: 100%; border-radius: 0; }
 .map-stage .region-pilbara { fill: #f2f0ec; }
 .map-stage .region-gascoyne { fill: var(--sand); }
 .map-stage .region-goldfields { fill: #f2f0ec; }
+/* Option "Region-specific colours" (Shift + O): each service area a flat colour of its own, with no outlines. */
+.map-stage.region-colours .region { stroke: none; }
+.map-stage.region-colours .region-kimberley { fill: #a9bc98; }
+.map-stage.region-colours .region-pilbara { fill: #8ed0d4; }
+.map-stage.region-colours .region-gascoyne { fill: #f2b63e; }
+.map-stage.region-colours .region-goldfields { fill: #c8d7f0; }
 /* 3px centred on the edge and clipped to the state leaves the design's 1.5px stroke on the inside. */
 .map-stage .state-edge { fill: none; stroke: var(--navy); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 3; }
 .map-labels { position: absolute; inset: 0; pointer-events: none; }

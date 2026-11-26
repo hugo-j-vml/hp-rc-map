@@ -1151,6 +1151,8 @@
   var OPTIONS = [
     { id: "ngLands", label: "Goldfields takes in the NG lands",
       description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
+    { id: "regionColours", label: "Region-specific colours",
+      description: "Gives each service area its own flat colour with no borders: Kimberley green, Pilbara teal, Gascoyne/Mid West yellow, Esperance/Goldfields blue. Off keeps the original neutral sand colours and outlines. Perth and the south west stay blank either way.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
@@ -1218,11 +1220,12 @@
 
   function applyOptions() {
     showRegionVariant();
+    el.stage.classList.toggle("region-colours", !!options.regionColours);
   }
 
   // ---------- Start ----------
   drawOutline();
-  showRegionVariant();
+  applyOptions();
   // Name labels are placed using measured text widths, so re-place them once the brand font has loaded.
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { renderMarkers(); });
   render();

@@ -35,6 +35,7 @@ Everything below applies to `prototype-v2/` only; v1 is untouched. Add each chan
 - **Filter styling (26 Nov 2026, client edit):** the options inside an open filter group are indented 24px so they read as children of their heading. An open heading takes the brand colour: a 2px Desert/Dark outline, the pale `--red-tint` fill and Desert/Dark text, with a Desert/Dark "N selected" badge. The option buttons (`.tile`) use the works blocks' style: outlined in Mid 1 with Desert/Dark text when off (like a planned work), a pale fill on hover, and Desert/Dark with white text when on (like a completed work). This applies to every filter group's options, not just Program.
 - **Search and Filters back to dark red (26 Nov 2026, client edit):** the search field's border, text, placeholder and button, and the Filters button's outline, text, icon and count circle are Desert/Dark `#780D02` again (they were Core/Navy). The search button lightens to Core/Orange on hover, and Filters gets the pale `--red-tint` fill on hover. The search field's clear (x) button is redrawn as a flat Desert/Dark cross (`::-webkit-search-cancel-button` in `styles.css`; the browser's own is blue). This replaces the navy notes in the Search row and Landing buttons decisions for version 2.
 - **No info icon (26 Nov 2026, client edit):** the circled "i" is gone from version 2 everywhere (the "What is ReGen?" explainers and the emergency line in the service provider band); don't use it anywhere in the prototype. The sprite symbol and its styles are removed.
+- **Region colour option (26 Nov 2026):** a second option in the Shift + O panel, `regionColours` ("Region-specific colours", off by default, `?regionColours=1`). Off is the original look (neutral sands with 2px `#D9D3CA` outlines). On gives each service area a flat colour with no outlines: Kimberley `#A9BC98`, Pilbara `#8ED0D4`, Gascoyne/Mid West `#F2B63E`, Esperance/Goldfields `#C8D7F0` (the client's values, not in the creative's palette notes); the SWIS area stays blank `#FBFBFA`. It is a `.region-colours` class on the map SVG, set in `applyOptions()`, with the colours in `styles.css`, so the NG lands drawing gets them too. Not on the launch page's Changes list, as it's an option rather than a change.
 
 ## Working rules
 
@@ -143,7 +144,7 @@ To add an option:
 3. React to changes in `applyOptions()`.
 4. Document it in the README.
 
-Current options: `ngLands` (NG lands region drawing). Floating story cards, pinned cards and progress bars were removed after client review (Nov 2026); they're in the git history if needed again.
+Current options: `ngLands` (NG lands region drawing) and, in version 2, `regionColours`. Floating story cards, pinned cards and progress bars were removed after client review (Nov 2026); they're in the git history if needed again.
 
 ## Regression checklist (before each push)
 

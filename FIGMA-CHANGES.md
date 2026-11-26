@@ -160,3 +160,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Profile details reordered:** both profiles now list Traditional Owners and Languages spoken on the first row, then Region and Service provider; the story profile still adds Population on a third row.
 - **Search and Filters colour:** the search field (border, text, placeholder, button) and the Filters button (outline, text, icon, count circle) are `#780D02` instead of navy; hover is `#C54630` on the search button and a `#FEF1E7` fill on Filters.
 - **Info icon:** the circled "i" is removed everywhere (explainer headings and the emergency line); the text stands alone.
+- **Option: region colours** (Shift + O, off by default): flat region fills with no outlines: Kimberley `#A9BC98`, Pilbara `#8ED0D4`, Gascoyne/Mid West `#F2B63E`, Esperance/Goldfields `#C8D7F0`; SWIS area blank.
