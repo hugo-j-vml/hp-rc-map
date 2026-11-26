@@ -410,8 +410,7 @@ img.hero { width: 100%; border-radius: 0; }
 .work-item strong { display: block; font-size: 16px; font-weight: 600; line-height: normal; }
 .work-item small { display: block; font-size: 14px; line-height: normal; }
 .explainer { padding: 18px 20px; border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
-.explainer h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
-.explainer h4 .icon { width: 18px; height: 18px; stroke-width: 2.222; }
+.explainer h4 { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.45; color: var(--red); }
 .explainer p { font-size: 14px; line-height: 1.45; }
 .explainer .link-arrow { gap: 6px; font-size: 14px; line-height: 1.45; color: var(--navy); }
 .explainer .link-arrow .icon { width: 16px; height: 16px; stroke-width: 2.5; }
@@ -428,8 +427,7 @@ img.hero { width: 100%; border-radius: 0; }
 .contact .btn-primary:hover { background: var(--red); }
 .contact .btn-secondary { border-color: var(--orange); color: var(--orange); }
 .contact .btn-secondary:hover { border-color: var(--red); color: var(--red); }
-.contact .alert { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; font-weight: 600; line-height: 20px; }
-.contact .alert .icon { width: 24px; height: 24px; stroke-width: 2; }
+.contact .alert { margin-top: 16px; font-size: 14px; font-weight: 600; line-height: 20px; }
 
 /* The nearby communities start 32px down, at every breakpoint (client edit). */
 .section.nearby-section { padding-top: 32px; }

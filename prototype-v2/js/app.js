@@ -761,7 +761,7 @@
       "<h3>" + esc(k.heading) + "</h3><p>" + esc(k.body) + "</p>" +
       '<div class="buttons"><a class="btn btn-primary" href="tel:">' + icon("call") + "Call " + esc(k.phone) + "</a>" +
       '<a class="btn btn-secondary" href="mailto:">' + icon("email") + "Email</a></div>" +
-      '<p class="alert">' + icon("info") + esc(k.emergency) + "</p></section>";
+      '<p class="alert">' + esc(k.emergency) + "</p></section>";
   }
 
   function nearbyList(c, howMany) {
@@ -840,7 +840,7 @@
     c.works.forEach(function (w) { if (w.program && programs.indexOf(w.program) === -1) programs.push(w.program); });
     var explainers = programs.map(function (id) {
       var e = programsById[id].explainer;
-      return '<div class="explainer"><h4>' + icon("info") + esc(e.title) + "</h4><p>" + esc(e.body) + "</p>" +
+      return '<div class="explainer"><h4>' + esc(e.title) + "</h4><p>" + esc(e.body) + "</p>" +
         '<a class="link-arrow" href="#">' + esc(e.link) + icon("arrow-right") + "</a></div>";
     }).join("");
     var aka = c.otherNames.length ? '<p class="aka">Also known as ' + esc(c.otherNames.join(", ")) + "</p>" : "";
