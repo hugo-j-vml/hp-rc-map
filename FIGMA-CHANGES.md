@@ -157,3 +157,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Profile details aligned:** both profiles list Region, Service provider, Traditional Owners and Languages spoken in that order (two columns); the story profile adds Population on a third row.
 - **Filtered-out nodes:** communities outside the current filter are hidden on the map (no blue dots or blue groups), and the Key has no "Not in current filter" row.
 - **Filter styling:** options are indented 24px under their heading; an open heading has a 2px `#780D02` outline with a `#FEF1E7` fill; option buttons are outlined `#D44A31` with `#780D02` text when off, and `#780D02` with white text when on, like the works blocks.
+- **Profile details reordered:** both profiles now list Traditional Owners and Languages spoken on the first row, then Region and Service provider; the story profile still adds Population on a third row.

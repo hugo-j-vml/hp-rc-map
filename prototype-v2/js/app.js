@@ -873,12 +873,12 @@
     return d && d[key] && d[key].length ? d[key].join(", ") : placeholder;
   }
 
-  // The same details in the same order on both profiles (client edit): Region and Service provider, then Traditional Owners
-  // and Languages spoken. A story profile adds Population underneath.
+  // The same details in the same order on both profiles (client edit): Traditional Owners and Languages spoken, then Region and
+  // Service provider. A story profile adds Population underneath.
   function commonFacts(c) {
-    return fact("Region", regionsById[c.region].name) + fact("Service provider", rspName(c)) +
-      fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) +
-      fact("Languages spoken", nameList(c, "languages", "[Traditional language]"));
+    return fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) +
+      fact("Languages spoken", nameList(c, "languages", "[Traditional language]")) +
+      fact("Region", regionsById[c.region].name) + fact("Service provider", rspName(c));
   }
 
   // The community's key details (region, service provider and so on) sit under its name, above the sand band (client edit).
