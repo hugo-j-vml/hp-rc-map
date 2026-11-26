@@ -152,3 +152,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Service provider and names:** the Service provider fact shows the region's provider (KRSP for Kimberley, MMS for Pilbara and Gascoyne/Mid West, NgS for Esperance/Goldfields); Traditional Owners and Languages spoken are comma-separated lists, with `[Traditional Owner group]` and `[Traditional language]` as placeholders.
 - **Filters:** each group (Region, Service provider, Program, Type of work, Status) is a folded-up 56px button with the name, an "N selected" badge and a chevron; click to open its tiles. Service provider is a live filter with three tiles (KRSP 78, MMS 25, NgS 14).
 - **Works heading:** the "Works" label above the works list in the sand band is gone on both profiles.
+- **Photos:** a plain gallery of six placeholder tiles, three across, with no "View all" link or "+ more" tile.

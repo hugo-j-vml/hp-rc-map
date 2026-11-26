@@ -384,7 +384,6 @@ img.hero { width: 100%; border-radius: 0; }
 .section-head a { font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--navy); text-decoration: none; }
 .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .photos .placeholder { aspect-ratio: 1; }
-.photos .more { font-weight: 600; }
 .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .before-after .placeholder { aspect-ratio: 244 / 171; }
 .before-after .caption { margin-top: 6px; }

@@ -144,7 +144,7 @@ window.RC_CONTENT = {
       video: "Video · Community visit · 2:30",
       quote: "“[Quote from a community member about what the change means for them, used with their permission.]”",
       quoteBy: "[Name], [role or relationship to community]",
-      photos: 12,
+      photos: 6,
       beforeAfter: ["Before · old power station", "After · new power station"],
     },
     {

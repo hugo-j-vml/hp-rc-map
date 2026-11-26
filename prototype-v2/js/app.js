@@ -815,8 +815,10 @@
     if (s.quote) storyHtml += '<blockquote class="band quote"><p>' + esc(s.quote) + "</p><footer>" + esc(s.quoteBy) + "</footer></blockquote>";
     var media = "";
     if (s.photos) {
-      media += '<section class="media"><div class="section-head"><h3>Photos</h3><a href="#">View all ' + s.photos + "</a></div>" +
-        '<div class="photos"><div class="placeholder">Photo</div><div class="placeholder">Photo</div><div class="placeholder more">+' + (s.photos - 3) + " more</div></div></section>";
+      // A plain gallery (client edit): every photo tiles across and down the panel, with no "View all" or "+ more".
+      var tiles = "";
+      for (var pi = 0; pi < s.photos; pi++) tiles += '<div class="placeholder">Photo</div>';
+      media += '<section class="media"><div class="section-head"><h3>Photos</h3></div><div class="photos">' + tiles + "</div></section>";
     }
     if (s.beforeAfter) {
       media += '<section class="media"><div class="section-head"><h3>Before and after</h3></div><div class="before-after">' +
