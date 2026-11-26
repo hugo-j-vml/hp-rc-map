@@ -404,7 +404,7 @@
       if (g.large) g.sy -= 14.94;
     });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 19 : g.large ? 16 : g.items[0].story && !g.faded ? 13 : 11;
+      var r = g.items.length > 1 ? 19 : g.large ? 16 : g.items[0].story && !g.faded ? 14 : 11;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -422,7 +422,7 @@
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story && !g.faded ? 16 : 13) : null;
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story && !g.faded ? 17 : 13) : null;
       // The creative's artwork (images/design/): the larger outlined pin for the selected community (recoloured bush green for a story
       // community, client edit), a Mid 1 dot for the rest, and a blue dot for communities outside the current filter.
       var storyDot = !g.faded && !g.large && c.story; // a community with a story is a larger bush green dot (client edit)

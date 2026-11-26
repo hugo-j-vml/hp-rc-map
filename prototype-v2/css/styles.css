@@ -471,9 +471,9 @@ img.hero { width: 100%; border-radius: 0; }
 .marker.pin-large .marker-art { width: 23.4px; height: 32.47px; }
 .marker.faded .marker-art, .marker.dot .marker-art { width: 14px; height: 14px; }
 /* A community with a story: a larger bush green (#4C6A48) dot (client edit), its name a little further out. */
-.marker.dot-story .marker-art { width: 18px; height: 18px; }
-.marker.dot-story .marker-label { --gap: 16px; --corner: 7px; }
-.marker.dot-story .tooltip { bottom: calc(50% + 17px); } /* version 2: the unselected community is a Mid 1 dot */
+.marker.dot-story .marker-art { width: 20px; height: 20px; }
+.marker.dot-story .marker-label { --gap: 17px; --corner: 7px; }
+.marker.dot-story .tooltip { bottom: calc(50% + 18px); } /* version 2: the unselected community is a Mid 1 dot */
 .marker.selected { z-index: 3; }
 /* --gap is the space between the marker's centre and its name: the pin's half-width, or the large pin's plus 3px. */
 .marker-label {
@@ -518,7 +518,7 @@ img.hero { width: 100%; border-radius: 0; }
 }
 .marker.is-cluster { width: 36px; height: 36px; }
 .marker.is-cluster.faded .cluster { background: #6e87b4; }
-.marker.is-cluster.has-story .cluster { box-shadow: 0 0 0 2px var(--red); }
+.marker.is-cluster.has-story .cluster { background: var(--bush); box-shadow: 0 0 0 2px var(--bush); } /* a group with a story is bush green too (client edit) */
 .marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px #6e87b4; }
 
 .legend {
