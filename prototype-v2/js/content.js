@@ -9,6 +9,19 @@ window.RC_CONTENT = {
     { id: "goldfields", name: "Esperance/Goldfields" },
   ],
 
+  // Regional Service Providers (RSPs) by region (client's list, Nov 2026; still to be confirmed with HP). Every community in a region
+  // shows its region's provider.
+  rsps: {
+    kimberley: "Kimberley Regional Service Providers (KRSP)",
+    pilbara: "Meta Maya Services (MMS)",
+    gascoyne: "Meta Maya Services (MMS)",
+    goldfields: "Ngaanyatjarra Services (NgS)",
+  },
+
+  // Traditional Owner groups and languages by community id, as lists of names, e.g. papulankutja: { owners: ["..."], languages: ["..."] }.
+  // Placeholders show wherever a community has none. Real names are still to come.
+  communityDetails: {},
+
   programs: [
     {
       id: "ami",

@@ -820,8 +820,8 @@
       storyImage(s, "hero") +
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka +
-        factsBlock(fact("Population", "[About 000 people]") + fact("Languages spoken", "[Language names]") +
-          fact("Traditional Owners", "[Traditional Owner group]") + fact("Service provider", "[RSP name]")) + "</div>" +
+        factsBlock(fact("Population", "[About 000 people]") + fact("Languages spoken", nameList(c, "languages", "[Traditional language]")) +
+          fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) + fact("Service provider", rspName(c))) + "</div>" +
       aboutBlock(c) +
       storyHtml +
       (media ? '<div class="section">' + media + "</div>" : "") +
@@ -842,7 +842,7 @@
     return profileBar(c) +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka +
-        factsBlock(fact("Region", regionsById[c.region].name) + fact("Service provider", "[RSP name]")) + "</div>" +
+        factsBlock(fact("Region", regionsById[c.region].name) + fact("Service provider", rspName(c))) + "</div>" +
       aboutBlock(c) +
       (explainers ? '<div class="section">' + explainers + "</div>" : "") +
       contactBlock() + profileFoot(c, 2) +
@@ -855,6 +855,13 @@
     return '<div class="name-row"><h2 id="profile-title">' + esc(c.name) + "</h2>" +
       '<button type="button" class="say-name" data-action="say-name" aria-label="Hear how to say ' + esc(c.name) + '">' +
       icon("sound") + "</button></div>";
+  }
+
+  // The Regional Service Provider follows the region; Traditional Owner groups and languages come from content.js, comma separated.
+  function rspName(c) { return C.rsps[c.region] || "[RSP name]"; }
+  function nameList(c, key, placeholder) {
+    var d = C.communityDetails[c.id];
+    return d && d[key] && d[key].length ? d[key].join(", ") : placeholder;
   }
 
   // The community's key details (region, service provider and so on) sit under its name, above the sand band (client edit).
