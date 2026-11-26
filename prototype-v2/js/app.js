@@ -830,8 +830,7 @@
       storyImage(s, "hero") +
       '<div class="profile-main">' +
       '<div class="profile-name">' + nameRow(c) + aka +
-        factsBlock(fact("Population", "[About 000 people]") + fact("Languages spoken", nameList(c, "languages", "[Traditional language]")) +
-          fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) + fact("Service provider", rspName(c))) + "</div>" +
+        factsBlock(commonFacts(c) + fact("Population", "[About 000 people]")) + "</div>" +
       aboutBlock(c) +
       storyHtml +
       (media ? '<div class="section">' + media + "</div>" : "") +
@@ -852,8 +851,7 @@
     return profileBar(c) +
       '<div class="profile-main simple">' +
       '<div class="profile-name">' + nameRow(c) + aka +
-        factsBlock(fact("Region", regionsById[c.region].name) + fact("Languages spoken", nameList(c, "languages", "[Traditional language]")) +
-          fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) + fact("Service provider", rspName(c))) + "</div>" +
+        factsBlock(commonFacts(c)) + "</div>" +
       aboutBlock(c) +
       (explainers ? '<div class="section">' + explainers + "</div>" : "") +
       contactBlock() + profileFoot(c, 2) +
@@ -876,6 +874,14 @@
   function nameList(c, key, placeholder) {
     var d = C.communityDetails[c.id];
     return d && d[key] && d[key].length ? d[key].join(", ") : placeholder;
+  }
+
+  // The same details in the same order on both profiles (client edit): Region and Service provider, then Traditional Owners
+  // and Languages spoken. A story profile adds Population underneath.
+  function commonFacts(c) {
+    return fact("Region", regionsById[c.region].name) + fact("Service provider", rspName(c)) +
+      fact("Traditional Owners", nameList(c, "owners", "[Traditional Owner group]")) +
+      fact("Languages spoken", nameList(c, "languages", "[Traditional language]"));
   }
 
   // The community's key details (region, service provider and so on) sit under its name, above the sand band (client edit).

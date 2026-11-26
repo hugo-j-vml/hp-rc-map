@@ -154,3 +154,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Works heading:** the "Works" label above the works list in the sand band is gone on both profiles.
 - **Photos:** a plain gallery of six placeholder tiles, three across, with no "View all" link or "+ more" tile.
 - **Low content profile details:** the simple profile's details are Region, Languages spoken, Traditional Owners and Service provider, in the same two-column grid as the story profile.
+- **Profile details aligned:** both profiles list Region, Service provider, Traditional Owners and Languages spoken in that order (two columns); the story profile adds Population on a third row.
