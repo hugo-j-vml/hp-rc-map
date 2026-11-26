@@ -512,7 +512,7 @@
         if (cost < best.cost) best = { cost: cost, x: cx, y: cy, box: box };
       }
       if (best.box) taken.push(best.box);
-      return '<span class="region-label" style="left:' + best.x + "px;top:" + best.y + 'px" data-ux="' + u.x + '" data-uy="' + u.y +
+      return '<span class="region-label region-label-' + r.id + '" style="left:' + best.x + "px;top:" + best.y + 'px" data-ux="' + u.x + '" data-uy="' + u.y +
         '" data-ox="' + (best.x - home.x) + '" data-oy="' + (best.y - home.y) + '">' + esc(r.name) + "</span>";
     }).join("");
   }
@@ -1151,6 +1151,8 @@
   var OPTIONS = [
     { id: "regionColours", label: "Region-specific colours",
       description: "Gives each service area its own flat colour with no borders: a pale green Kimberley, pale teal Pilbara, pale yellow Gascoyne/Mid West and pale blue Esperance/Goldfields.", initial: false },
+    { id: "rcPalette", label: "RC palette colours",
+      description: "Gives each service area a strong flat colour from the RC palette: sage green Kimberley, yellow Pilbara, orange Gascoyne/Mid West and bush green Esperance/Goldfields.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
@@ -1195,6 +1197,9 @@
     var id = e.target.dataset.option;
     if (!id) return;
     options[id] = e.target.checked;
+    // The two colour options are alternatives: turning one on turns the other off.
+    if (e.target.checked && id === "rcPalette") options.regionColours = false;
+    if (e.target.checked && id === "regionColours") options.rcPalette = false;
     saveOptions();
     applyOptions();
     renderOptions();
@@ -1218,8 +1223,12 @@
 
   function applyOptions() {
     showRegionVariant();
-    el.stage.classList.toggle("region-colours", !!options.regionColours);
-    document.getElementById("map").classList.toggle("region-colours", !!options.regionColours); // the sea changes colour too
+    // The two colour options are alternatives; if both are somehow on (e.g. from a link), the RC palette wins.
+    var palette = !!options.rcPalette, pale = !!options.regionColours && !palette;
+    el.stage.classList.toggle("region-colours", pale);
+    document.getElementById("map").classList.toggle("region-colours", pale || palette); // the sea changes colour too
+    el.stage.classList.toggle("rc-palette", palette);
+    document.getElementById("map").classList.toggle("rc-palette", palette);
   }
 
   // ---------- Start ----------

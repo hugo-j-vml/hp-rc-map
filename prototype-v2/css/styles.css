@@ -467,6 +467,14 @@ img.hero { width: 100%; border-radius: 0; }
 .map-stage.region-colours .region-pilbara { fill: #e8f6f6; }
 .map-stage.region-colours .region-gascoyne { fill: #fcf0d8; }
 .map-stage.region-colours .region-goldfields { fill: #dfedff; }
+/* Option "RC palette colours": strong flat fills from the RC palette (design system), no outlines. */
+.map-stage.rc-palette .region { stroke: none; }
+.map-stage.rc-palette .region-kimberley { fill: #9ea790; }  /* Bush / Mid 2 */
+.map-stage.rc-palette .region-pilbara { fill: #f2b63e; }    /* Desert / Light */
+.map-stage.rc-palette .region-gascoyne { fill: #f07a3f; }   /* Desert / Mid 2 */
+.map-stage.rc-palette .region-goldfields { fill: #4c6a48; } /* Bush / Mid 1 */
+/* Esperance/Goldfields is dark in this palette, so its name goes white. */
+.map.rc-palette .region-label-goldfields { color: #fff; text-shadow: none; }
 /* 3px centred on the edge and clipped to the state leaves the design's 1.5px stroke on the inside. */
 .map-stage .state-edge { fill: none; stroke: var(--navy); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 3; }
 .map-labels { position: absolute; inset: 0; pointer-events: none; }
