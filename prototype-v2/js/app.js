@@ -1219,6 +1219,7 @@
   function applyOptions() {
     showRegionVariant();
     el.stage.classList.toggle("region-colours", !!options.regionColours);
+    document.getElementById("map").classList.toggle("region-colours", !!options.regionColours); // the sea changes colour too
   }
 
   // ---------- Start ----------

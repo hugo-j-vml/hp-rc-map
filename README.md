@@ -41,7 +41,7 @@ It is built from these inputs:
 
 Press **Shift + O** to open the options panel in the bottom-right corner. It holds layout experiments that can be switched on and off. (Version 1 had a "Goldfields takes in the NG lands" option; it is gone from version 2, as the client doesn't need the region drawing to change.)
 
-- **Region-specific colours (version 2 only):** gives each service area a flat colour of its own with no outlines (Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF`; Perth and the south west stay blank). Off keeps the original neutral sand colours. Link parameter: `?regionColours=1`.
+- **Region-specific colours (version 2 only):** gives each service area a flat colour of its own with no outlines (Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF`; Perth and the south west stay blank, and the sea behind the map is `#F3F3F4`). Off keeps the original neutral sand colours. Link parameter: `?regionColours=1`.
 
 Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?regionColours=1`), which overrides the remembered settings, so you can send someone a specific layout.
 

@@ -446,6 +446,7 @@ img.hero { width: 100%; border-radius: 0; }
   flex: 1; position: relative; overflow: hidden;
   background: var(--map-bg);
 }
+.map.region-colours { background: #f3f3f4; } /* option "Region-specific colours": a pale grey sea instead of the blue */
 .map-viewport {
   position: absolute; inset: 0;
   touch-action: none; cursor: grab;
