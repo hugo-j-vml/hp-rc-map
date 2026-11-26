@@ -469,11 +469,12 @@ img.hero { width: 100%; border-radius: 0; }
 .marker.pin .marker-art { width: 26px; height: 26px; }
 .marker.pin-large { width: 42px; height: 42px; }
 .marker.pin-large .marker-art { width: 23.4px; height: 32.47px; }
+.marker.pin-large.is-story .marker-art { width: 28.6px; height: 37.67px; } /* the green pin carries a 2px green ring (22 × 29 art, same centre) */
 .marker.faded .marker-art, .marker.dot .marker-art { width: 14px; height: 14px; }
 /* A community with a story: a larger bush green (#4C6A48) dot (client edit), its name a little further out. */
-.marker.dot-story .marker-art { width: 20px; height: 20px; }
-.marker.dot-story .marker-label { --gap: 17px; --corner: 7px; }
-.marker.dot-story .tooltip { bottom: calc(50% + 18px); } /* version 2: the unselected community is a Mid 1 dot */
+.marker.dot-story .marker-art { width: 22px; height: 22px; }
+.marker.dot-story .marker-label { --gap: 18px; --corner: 7px; }
+.marker.dot-story .tooltip { bottom: calc(50% + 19px); } /* version 2: the unselected community is a Mid 1 dot */
 .marker.selected { z-index: 3; }
 /* --gap is the space between the marker's centre and its name: the pin's half-width, or the large pin's plus 3px. */
 .marker-label {

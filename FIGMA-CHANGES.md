@@ -147,5 +147,5 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Smooth zoom:** the wheel and +/- buttons ease over about a quarter of a second instead of jumping 1.6 × in one frame; not a visual change to any frame.
 - **Names hold still while zooming:** place names, groups and region names slide with the map during a zoom and are redone once it stops, rather than jumping between spots each frame.
 - **Details under the name:** the facts (Region, Service provider and so on) sit under the place name, above the torn sand band; the band holds only the works.
-- **High content (story) nodes:** a 20px bush green (`#4C6A48`) dot with a white ring and a further 1px green ring outside it (groups containing one are bush green too), larger than the 14px Mid 1 community dots; the Key lists it as Community with a story.
+- **High content (story) nodes:** a 22px bush green (`#4C6A48`) dot with a white ring and a further 2px green ring outside it (the selected green pin has the same ring) (groups containing one are bush green too), larger than the 14px Mid 1 community dots; the Key lists it as Community with a story.
 - **Story nodes, selected:** a selected high content (story) community uses a bush green pin and a bush green highlighted name; other communities keep the red pin and dark red name.
