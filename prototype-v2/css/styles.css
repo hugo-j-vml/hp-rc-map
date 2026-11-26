@@ -149,19 +149,19 @@ a { color: inherit; }
    2px when active. Its one border wraps the search button too (user's choice), so field and button read as one control. */
 .search-field {
   position: relative; display: flex; height: 48px; min-width: 0;
-  border: 2px solid var(--navy); border-radius: var(--radius); background: var(--white); /* 2px to match the Filters button (client edit) */
+  border: 2px solid var(--red); border-radius: var(--radius); background: var(--white); /* Desert/Dark again (client edit, was navy); 2px to match the Filters button (client edit) */
 }
-.search-field:focus-within { box-shadow: 0 0 0 1px var(--navy); } /* the border grows by 1px when active */
+.search-field:focus-within { box-shadow: 0 0 0 1px var(--red); } /* the border grows by 1px when active */
 .search-field input {
   flex: 1; min-width: 0; border: 0; border-radius: var(--radius) 0 0 var(--radius); background: none;
-  padding: 12px 16px; font: inherit; font-size: 16px; font-weight: 400; line-height: 22px; color: var(--navy);
+  padding: 12px 16px; font: inherit; font-size: 16px; font-weight: 400; line-height: 22px; color: var(--red);
 }
 .search-field input:focus-visible { outline: none; } /* the field's active border shows focus instead */
-.search-field input::placeholder { color: var(--navy); opacity: 1; }
+.search-field input::placeholder { color: var(--red); opacity: 1; }
 .search-field > button {
   width: 46px; flex-shrink: 0;
   display: grid; place-items: center;
-  background: var(--navy); color: var(--white); /* Core/Navy, like the field's border (client edit) */
+  background: var(--red); color: var(--white); /* Desert/Dark, like the field's border (client edit) */
   border-radius: 0 2px 2px 0; /* sits just inside the field's 4px corners and 2px border */
 }
 .search-field > button .icon { width: 24px; height: 24px; stroke-width: 1.667; } /* icon buttons: 24px icon, 12px padding */
@@ -172,11 +172,10 @@ a { color: inherit; }
    orange outline with orange text, darkening the same way (the design system's theme buttons do this on hover). */
 .home .btn-primary, .filters .btn-primary { background: var(--orange); color: var(--white); }
 .home .btn-primary:hover, .filters .btn-primary:hover { background: var(--red); }
-.search-field > button:hover { background: var(--red); } /* darkens to Desert/Dark like the other buttons */
-.home .btn-secondary { border-color: var(--navy); color: var(--navy); } /* Filters is navy to go with the search field (client edit) */
-.home .btn-secondary:hover { border-color: var(--red); color: var(--red); }
-.home .search .btn-secondary .count { background: var(--navy); }
-.home .search .btn-secondary:hover .count { background: var(--red); }
+.search-field > button:hover { background: var(--orange); } /* lightens to Core/Orange on hover, as the button is already Desert/Dark */
+.home .btn-secondary { border-color: var(--red); color: var(--red); } /* Filters is Desert/Dark to go with the search field (client edit, was navy) */
+.home .btn-secondary:hover { background: var(--red-tint); }
+.home .search .btn-secondary .count { background: var(--red); }
 .search .btn-secondary .count {
   display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
   border-radius: 11px; background: var(--grey-900); color: var(--white); font-size: 12px;
