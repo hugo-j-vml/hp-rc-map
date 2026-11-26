@@ -155,3 +155,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Photos:** a plain gallery of six placeholder tiles, three across, with no "View all" link or "+ more" tile.
 - **Low content profile details:** the simple profile's details are Region, Languages spoken, Traditional Owners and Service provider, in the same two-column grid as the story profile.
 - **Profile details aligned:** both profiles list Region, Service provider, Traditional Owners and Languages spoken in that order (two columns); the story profile adds Population on a third row.
+- **Filtered-out nodes:** communities outside the current filter are hidden on the map (no blue dots or blue groups), and the Key has no "Not in current filter" row.

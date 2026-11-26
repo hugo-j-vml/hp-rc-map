@@ -360,19 +360,18 @@
 
   function renderMarkers() {
     var zoom = zoomLevel();
-    var filtering = activeFilterCount() > 0;
-    // Stories and the selected community always show on their own; everything else groups when crowded.
-    var solo = [], inFilter = [], outFilter = [];
+    // Communities outside the current filter are left off the map altogether (client edit; version 1 showed them as blue dots).
+    // Stories and the selected community show on their own; everything else groups when crowded. The selected community
+    // always shows its pin, even if the filter would hide it.
+    var solo = [], inFilter = [];
     communities.forEach(function (c) {
-      if (c.id === state.selected || (c.story && zoom >= STORY_SOLO_ZOOM)) solo.push(c);
-      else if (matches(c)) inFilter.push(c);
-      else outFilter.push(c);
+      if (c.id === state.selected) solo.push(c);
+      else if (!matches(c)) return;
+      else if (c.story && zoom >= STORY_SOLO_ZOOM) solo.push(c);
+      else inFilter.push(c);
     });
 
-    var clusters = [].concat(
-      cluster(outFilter).map(function (g) { g.faded = true; return g; }),
-      cluster(inFilter)
-    );
+    var clusters = cluster(inFilter);
     // Nudge any group that would sit on top of a story or selected dot just clear of it.
     solo.forEach(function (c) {
       var p = toScreen(c.x, c.y);
@@ -389,24 +388,22 @@
       clusters,
       solo.map(function (c) {
         var p = toScreen(c.x, c.y);
-        return { sx: p.x, sy: p.y, items: [c], faded: filtering && !matches(c) };
+        return { sx: p.x, sy: p.y, items: [c] };
       })
     );
 
     // Every marker is an obstacle for labels, so a name never sits under a neighbouring dot.
     // Single communities are Mid 1 dots centred on the spot (version 2; the red pin is now only the selected state).
     // The selected community is the larger outlined pin with its tip on the spot, so the marker (and its name) centres on
-    // the pin's head, 14.9px above it. Blue "not in filter" dots centre on the spot too.
+    // the pin's head, 14.9px above it.
     groups.forEach(function (g) {
       if (g.items.length > 1) return;
       var c = g.items[0];
-      if (c.id === state.selected) g.faded = false; // the selected community always shows its pin, even outside the filter
-      if (g.faded) return;
       g.large = c.id === state.selected;
       if (g.large) g.sy -= 14.94;
     });
     var placedLabels = groups.map(function (g, i) {
-      var r = g.items.length > 1 ? 19 : g.large ? 16 : g.items[0].story && !g.faded ? 15 : 11;
+      var r = g.items.length > 1 ? 19 : g.large ? 16 : g.items[0].story ? 15 : 11;
       return { x1: g.sx - r, x2: g.sx + r, y1: g.sy - r, y2: g.sy + r, owner: i };
     });
     var html = groups.map(function (g, i) {
@@ -418,18 +415,18 @@
         var names = g.items.length + " communities, including " + g.items.slice(0, 3).map(function (c) { return c.name; }).join(", ");
         var hasStory = g.items.some(function (c) { return c.story; });
         if (hasStory) names += ", with a community story";
-        return '<button type="button" class="marker is-cluster' + (g.faded ? " faded" : "") + (hasStory ? " has-story" : "") + '" ' + style + pos +
+        return '<button type="button" class="marker is-cluster' + (hasStory ? " has-story" : "") + '" ' + style + pos +
           ' data-cluster="' + g.items.map(function (c) { return c.id; }).join(",") + '" aria-label="' + esc(names) + '. Zoom in.">' +
           '<span class="cluster">' + g.items.length + "</span></button>";
       }
       var c = g.items[0];
       var selected = c.id === state.selected;
-      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story && !g.faded ? 18 : 13) : null;
+      var labelPos = zoom >= LABEL_ZOOM ? placeLabel(placedLabels, i, g.sx, g.sy, c.name, g.large ? 24 : c.story ? 18 : 13) : null;
       // The creative's artwork (images/design/): the larger outlined pin for the selected community (recoloured bush green for a story
       // community, client edit), a Mid 1 dot for the rest, and a blue dot for communities outside the current filter.
-      var storyDot = !g.faded && !g.large && c.story; // a community with a story is a larger bush green dot (client edit)
-      var art = g.faded ? "map-dot-faded" : g.large ? (c.story ? "map-pin-large-green" : "map-pin-large") : storyDot ? "map-dot-story" : "map-dot";
-      return '<button type="button" class="marker' + (g.faded ? " faded" : g.large ? " pin pin-large" : storyDot ? " dot dot-story" : " dot") + (selected ? " selected" : "") + (c.story ? " is-story" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
+      var storyDot = !g.large && c.story; // a community with a story is a larger bush green dot (client edit)
+      var art = g.large ? (c.story ? "map-pin-large-green" : "map-pin-large") : storyDot ? "map-dot-story" : "map-dot";
+      return '<button type="button" class="marker' + (g.large ? " pin pin-large" : storyDot ? " dot dot-story" : " dot") + (selected ? " selected" : "") + (c.story ? " is-story" : "") + (labelPos ? " has-label" : "") + '" ' + style + pos +
         ' data-id="' + c.id + '" aria-label="' + esc(displayName(c)) + (c.story ? ", community with a story" : "") + '">' +
         '<img class="marker-art" src="images/design/' + art + '.svg" alt="">' +
         (labelPos ? '<span class="marker-label at-' + labelPos + '">' + esc(c.name) + "</span>" : "") +

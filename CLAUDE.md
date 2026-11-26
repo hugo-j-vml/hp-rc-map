@@ -31,6 +31,7 @@ Everything below applies to `prototype-v2/` only; v1 is untouched. Add each chan
 - **Photo gallery (26 Nov 2026):** a story's Photos section is a plain gallery (client edit): six placeholder tiles, three across, running down the panel as needed, with no "View all 12" link and no "+ N more" tile (`photos` in `content.js` is the number of placeholder tiles; only Papulankutja has any).
 - **RSP names in full (26 Nov 2026):** the providers show by full name only, with no abbreviations (KRSP, MMS, NgS), wherever they appear: the Service provider fact and the filter tiles (client edit).
 - **Favicon (26 Nov 2026):** the launch page and version 2 use Horizon Power's favicon (`launch/images/favicon.ico` and `prototype-v2/images/favicon.ico`, our own copies of the icon from the HP Remote Communities site, linked with `<link rel="icon">`), which also stops the browser asking for `/favicon.ico` at the github.io root and logging a 404. Version 1 is frozen, so it still has none.
+- **Filtered-out communities disappear (26 Nov 2026):** on the map, a community outside the current filter is left off altogether, and groups count only what matches (client edit; version 1 showed them as blue dots and groups). The selected community still shows its pin even if the filter would hide it. The Key's "Not in current filter" row and `map-dot-faded.svg` are gone from version 2, and so is the blue styling. This replaces the blue-dot notes above and in the Markers decision.
 
 ## Working rules
 

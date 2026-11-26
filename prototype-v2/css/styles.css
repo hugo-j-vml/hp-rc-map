@@ -481,7 +481,7 @@ img.hero { width: 100%; border-radius: 0; }
 .marker.pin-large { width: 42px; height: 42px; }
 .marker.pin-large .marker-art { width: 23.4px; height: 32.47px; }
 .marker.pin-large.is-story .marker-art { width: 26px; height: 36.4px; } /* the green pin: teardrop, 2px white, 2px green (20 × 28 art, same centre) */
-.marker.faded .marker-art, .marker.dot .marker-art { width: 14px; height: 14px; }
+.marker.dot .marker-art { width: 14px; height: 14px; }
 /* A community with a story: a larger bush green (#4C6A48) dot (client edit), its name a little further out. */
 .marker.dot-story .marker-art { width: 22px; height: 22px; }
 .marker.dot-story .marker-label { --gap: 18px; --corner: 7px; }
@@ -505,7 +505,6 @@ img.hero { width: 100%; border-radius: 0; }
 .marker-label.at-top-left { left: auto; right: calc(50% + var(--corner)); top: auto; bottom: calc(50% + var(--gap)); transform: none; }
 .marker-label.at-bottom-right { left: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
 .marker-label.at-bottom-left { left: auto; right: calc(50% + var(--corner)); top: calc(50% + var(--gap)); transform: none; }
-.marker.faded .marker-label { color: #6e87b4; }
 /* Hover, focus and selection highlight the name where it already sits (the design's "Highlight" map label).
    Dots without a visible name get the tooltip, styled the same. */
 .marker:hover .marker-label, .marker:focus-visible .marker-label, .marker.selected .marker-label, .tooltip {
@@ -529,9 +528,7 @@ img.hero { width: 100%; border-radius: 0; }
   font-family: "Inter", sans-serif; font-size: 14px; font-weight: 700;
 }
 .marker.is-cluster { width: 36px; height: 36px; }
-.marker.is-cluster.faded .cluster { background: #6e87b4; }
 .marker.is-cluster.has-story .cluster { background: var(--bush); box-shadow: 0 0 0 2px var(--bush); } /* a group with a story is bush green too (client edit) */
-.marker.is-cluster.faded.has-story .cluster { box-shadow: 0 0 0 2px #6e87b4; }
 
 .legend {
   position: absolute; z-index: 6; left: 24px; bottom: 24px; /* above the map pins and labels, hovered ones included */
