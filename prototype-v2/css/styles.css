@@ -474,6 +474,7 @@ img.hero { width: 100%; border-radius: 0; }
 .map-stage.rc-palette .region-gascoyne { fill: #f07a3f; }   /* Desert / Mid 2 */
 .map-stage.rc-palette .region-goldfields { fill: #4c6a48; } /* Bush / Mid 1 */
 /* Esperance/Goldfields is dark in this palette, so its name goes white. */
+.map.rc-palette { background: #fcf0d8; } /* the sea is Desert / Light 20 in this palette (client edit) */
 .map.rc-palette .region-label-goldfields { color: #fff; text-shadow: none; }
 /* 3px centred on the edge and clipped to the state leaves the design's 1.5px stroke on the inside. */
 .map-stage .state-edge { fill: none; stroke: var(--navy); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-width: 3; }

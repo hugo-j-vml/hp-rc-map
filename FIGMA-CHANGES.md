@@ -162,4 +162,4 @@ The landing Filters button is Core/Navy `#001E3C` (2px outline, text and count b
 - **Info icon:** the circled "i" is removed everywhere (explainer headings and the emergency line); the text stands alone.
 - **Option: region colours** (Shift + O, off by default): flat region fills with no outlines: Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF`; SWIS area blank; map background (sea) `#F3F3F4`.
 - **Options:** the "Goldfields takes in the NG lands" option is removed; Esperance/Goldfields is always the poster's drawing.
-- **Option: RC palette colours** (Shift + O, off by default; alternative to region colours): flat fills, no outlines: Kimberley `#9EA790`, Pilbara `#F2B63E`, Gascoyne/Mid West `#F07A3F`, Esperance/Goldfields `#4C6A48` with a white name; sea `#F3F3F4`.
+- **Option: RC palette colours** (Shift + O, off by default; alternative to region colours): flat fills, no outlines: Kimberley `#9EA790`, Pilbara `#F2B63E`, Gascoyne/Mid West `#F07A3F`, Esperance/Goldfields `#4C6A48` with a white name; sea `#FCF0D8` (Desert Light 20).
