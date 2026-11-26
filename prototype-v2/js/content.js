@@ -18,9 +18,9 @@ window.RC_CONTENT = {
     goldfields: "ngs",
   },
   rspList: [
-    { id: "krsp", name: "Kimberley Regional Service Providers (KRSP)" },
-    { id: "mms", name: "Meta Maya Services (MMS)" },
-    { id: "ngs", name: "Ngaanyatjarra Services (NgS)" },
+    { id: "krsp", name: "Kimberley Regional Service Providers" },
+    { id: "mms", name: "Meta Maya Services" },
+    { id: "ngs", name: "Ngaanyatjarra Services" },
   ],
 
 
