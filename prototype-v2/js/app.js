@@ -1152,7 +1152,7 @@
     { id: "ngLands", label: "Goldfields takes in the NG lands",
       description: "Redraws Esperance/Goldfields north along the border to cover the Ngaanyatjarra lands communities it services, instead of the poster's straight band.", initial: false },
     { id: "regionColours", label: "Region-specific colours",
-      description: "Gives each service area its own flat colour with no borders: a pale green Kimberley, pale teal Pilbara, pale yellow Gascoyne/Mid West and pale blue Esperance/Goldfields. Off keeps the original neutral sand colours and outlines. Perth and the south west stay blank either way.", initial: false },
+      description: "Gives each service area its own flat colour with no borders: a pale green Kimberley, pale teal Pilbara, pale yellow Gascoyne/Mid West and pale blue Esperance/Goldfields.", initial: false },
   ];
   var OPTIONS_KEY = "rcm-prototype-options";
   el.options = document.getElementById("options");
