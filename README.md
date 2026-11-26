@@ -42,7 +42,7 @@ It is built from these inputs:
 Press **Shift + O** to open the options panel in the bottom-right corner. It holds layout experiments that can be switched on and off.
 
 - **Goldfields takes in the NG lands:** the poster puts the 11 Ngaanyatjarra lands communities (Papulankutja, Warburton, Warakurna and others) inside the Gascoyne/Mid West band, but Horizon Power's district codes put them in Esperance/Goldfields. Either way they are counted in Esperance/Goldfields; this toggle only changes the drawing, redrawing Esperance/Goldfields north along the border so the shading matches.
-- **Region-specific colours (version 2 only):** gives each service area a flat colour of its own with no outlines (Kimberley `#A9BC98`, Pilbara `#8ED0D4`, Gascoyne/Mid West `#F2B63E`, Esperance/Goldfields `#C8D7F0`; Perth and the south west stay blank). Off keeps the original neutral sand colours. Link parameter: `?regionColours=1`.
+- **Region-specific colours (version 2 only):** gives each service area a flat colour of its own with no outlines (Kimberley `#D5E7C7`, Pilbara `#E8F6F6`, Gascoyne/Mid West `#FCF0D8`, Esperance/Goldfields `#DFEDFF`; Perth and the south west stay blank). Off keeps the original neutral sand colours. Link parameter: `?regionColours=1`.
 
 Settings are remembered in your browser. **Copy link with these options** gives a link with the settings in it (e.g. `?ngLands=1`), which overrides the remembered settings, so you can send someone a specific layout.
 
